@@ -22,6 +22,7 @@ struct sim_node {
     uint32_t hung_since, boots, wdg_resets;
     int running_slot; uint32_t image_version; int behavior;
     uint32_t next_tick_ms;
+    uint32_t reboot_at;          /* 0 = none. The real app waits 100 ms so the DONE ack can leave the TX FIFO */
 };
 
 sim_node_t *sim_node_new(int node_id, const uint8_t pubkey[32]) {
@@ -45,7 +46,7 @@ int sim_node_provision(sim_node_t *n, int slot, const uint8_t *blob, uint32_t le
 
 void sim_node_power_on(sim_node_t *n, uint32_t now_ms) {
     fb_boot_result_t r;
-    n->boots++; n->hung = 0; n->alive = 0;
+    n->boots++; n->hung = 0; n->alive = 0; n->reboot_at = 0;
     if (fb_boot_run(&n->fl, (uint8_t)n->id, n->pk, &r) != 0) return;   /* stays in bootloader */
     n->running_slot = r.slot; n->image_version = r.version;
     uint8_t b0 = n->ff.mem[FB_SLOT_ADDR(r.slot) + FB_IMG_HDR_SIZE - FB_FLASH_BASE];
@@ -69,10 +70,9 @@ void sim_node_tick(sim_node_t *n, uint32_t now_ms, int32_t mv, int32_t ma, int32
     if (!n->alive) return;
     fb_sensors_t s = { mv, ma, dc, sensor_ok };
     fb_node_tick(&n->node, now_ms, &s);
-    if (n->node.reboot_requested || n->node.health_deadline_missed) {
-        if (n->node.health_deadline_missed) n->wdg_resets++;
-        sim_node_power_on(n, now_ms);
-    }
+    if (n->node.reboot_requested && !n->reboot_at) n->reboot_at = now_ms + 100;
+    if (n->node.health_deadline_missed) { n->wdg_resets++; n->reboot_at = 0; sim_node_power_on(n, now_ms); return; }
+    if (n->reboot_at && now_ms >= n->reboot_at) { n->reboot_at = 0; sim_node_power_on(n, now_ms); }
 }
 
 int sim_node_pop_tx(sim_node_t *n, uint32_t *id, uint8_t *data, uint8_t *dlc) {

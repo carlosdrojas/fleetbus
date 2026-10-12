@@ -8,8 +8,8 @@ import pytest
 from nacl.signing import SigningKey
 
 ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT / "tools"))
-import sign_image  # noqa: E402
+sys.path.insert(0, str(ROOT / "gateway"))
+from fleetbus import image as sign_image  # noqa: E402
 
 VERIFY = Path(os.environ.get("FB_VERIFY", ROOT / "build" / "host" / "host" / "fb_verify"))
 pytestmark = pytest.mark.skipif(not VERIFY.exists(), reason="host build missing: cmake -S firmware -B build/host && cmake --build build/host")

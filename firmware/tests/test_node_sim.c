@@ -97,7 +97,7 @@ static void test_good_ota_updates_confirms_and_raises_floor(void) {
     uint8_t img[8192]; run(2500);
     size_t n = make_image(img, sizeof img, 2, 1, FB_NODE_BODY, 0);
     TEST_ASSERT_EQUAL(3, ota_push(body, FB_NODE_BODY, 1, img, n));
-    run(10);
+    for (int i = 0; i < 40 && sim_node_slot(body) != 1; i++) run(10);   /* the app waits 100 ms before resetting */
     TEST_ASSERT_EQUAL(1, sim_node_slot(body)); TEST_ASSERT_EQUAL_UINT32(2, sim_node_image_version(body));
     TEST_ASSERT_EQUAL(FB_SLOT_TRIAL, sim_node_slot_status(body, 1));
     run(2000);

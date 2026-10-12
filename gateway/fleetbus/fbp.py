@@ -55,6 +55,12 @@ def decode(buf: bytes) -> Packet:
         raise FbpError("unknown type")
     return Packet(ptype, src, seq, bytes(buf[HEADER.size:HEADER.size + n]), flags)
 
+def set_retransmit(wire: bytes) -> bytes:
+    """Return the same packet with the retransmit flag set and the CRC recomputed."""
+    head = bytearray(wire[:-4])
+    head[5] |= FLAG_RETRANSMIT
+    return bytes(head) + struct.pack("<I", crc32c(bytes(head)))
+
 # ---- payloads ---------------------------------------------------------------------------------
 
 @dataclass(frozen=True)
