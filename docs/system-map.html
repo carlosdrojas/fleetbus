@@ -1,0 +1,490 @@
+<title>FleetBus System Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: a single engineering sheet. Header, then figures in reading order (system → update flow → node → phases → coverage), each figure captioned like a drawing in a spec. */
+:root {
+  --bg: #f3f5f7;
+  --surface: #ffffff;
+  --ink: #16202b;
+  --muted: #586473;
+  --line: #c9d0d8;
+  --zone: #e8ecf0;
+  --tel: #17708f;      /* telemetry: data flowing up to the cloud */
+  --ota: #a95f00;      /* updates: firmware flowing down to the nodes */
+  --ok: #2c7a47;
+  --bad: #b2362c;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1419; --surface: #161c23; --ink: #e5e9ee; --muted: #98a3b1; --line: #2d3640; --zone: #1b222a;
+    --tel: #5cb6d5; --ota: #eea63c; --ok: #5cc083; --bad: #ee6a60; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1419; --surface: #161c23; --ink: #e5e9ee; --muted: #98a3b1; --line: #2d3640; --zone: #1b222a;
+  --tel: #5cb6d5; --ota: #eea63c; --ok: #5cc083; --bad: #ee6a60; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 15px; line-height: 1.55;
+  padding-inline: 20px; padding-block: 28px 56px;
+}
+.sheet { max-width: 1080px; margin: 0 auto; display: grid; gap: 44px; }
+
+header { display: grid; gap: 10px; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 5vw, 46px); line-height: 1.05; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+.lede { max-width: 68ch; margin: 0; color: var(--muted); font-size: 16px; }
+.keys { display: flex; flex-wrap: wrap; gap: 8px 18px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.key { display: inline-flex; align-items: center; gap: 8px; }
+.swatch { width: 22px; height: 0; border-top: 2.5px solid; }
+.swatch.tel { border-color: var(--tel); }
+.swatch.ota { border-color: var(--ota); border-top-style: dashed; }
+.swatch.ro { border-color: var(--muted); border-top-style: dotted; }
+
+section { display: grid; gap: 14px; }
+h2 { font-family: var(--font-display); font-weight: 700; font-size: 21px; margin: 0; text-wrap: balance; }
+h2 .fig { font-family: var(--font-mono); font-weight: 500; font-size: 12px; color: var(--muted); letter-spacing: .06em; margin-right: 10px; vertical-align: 2px; }
+p { margin: 0; max-width: 70ch; }
+.muted { color: var(--muted); }
+
+figure { margin: 0; display: grid; gap: 10px; }
+.drawing { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 14px; overflow-x: auto; }
+.drawing svg { display: block; width: 100%; height: auto; min-width: 760px; }
+figcaption { font-size: 13.5px; color: var(--muted); max-width: 80ch; }
+
+/* SVG drawing classes */
+svg text { font-family: var(--font-body); fill: var(--ink); }
+svg .t-title { font-weight: 700; font-size: 14px; }
+svg .t-sub { font-size: 12px; fill: var(--muted); }
+svg .t-mono { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
+svg .t-zone { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; fill: var(--muted); }
+svg .t-tel { font-family: var(--font-mono); font-size: 11px; fill: var(--tel); }
+svg .t-ota { font-family: var(--font-mono); font-size: 11px; fill: var(--ota); }
+svg .t-ok { font-family: var(--font-mono); font-size: 11px; fill: var(--ok); font-weight: 600; }
+svg .t-bad { font-family: var(--font-mono); font-size: 11px; fill: var(--bad); font-weight: 600; }
+svg .zone { fill: var(--zone); stroke: var(--line); stroke-width: 1; }
+svg .zone-ro { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 2 4; }
+svg .box { fill: var(--surface); stroke: var(--ink); stroke-width: 1.3; }
+svg .box-soft { fill: var(--surface); stroke: var(--line); stroke-width: 1.2; }
+svg .box-ota { fill: var(--surface); stroke: var(--ota); stroke-width: 1.6; }
+svg .box-bad { fill: var(--surface); stroke: var(--bad); stroke-width: 1.4; }
+svg .box-ok { fill: var(--surface); stroke: var(--ok); stroke-width: 1.4; }
+svg .bus { stroke: var(--ink); stroke-width: 2.4; fill: none; }
+svg .ln { stroke: var(--ink); stroke-width: 1.3; fill: none; }
+svg .ln-tel { stroke: var(--tel); stroke-width: 2.2; fill: none; }
+svg .ln-ota { stroke: var(--ota); stroke-width: 2.2; fill: none; stroke-dasharray: 7 5; }
+svg .ln-ro { stroke: var(--muted); stroke-width: 1.8; fill: none; stroke-dasharray: 2 4; }
+svg .ln-ok { stroke: var(--ok); stroke-width: 1.8; fill: none; }
+svg .ln-bad { stroke: var(--bad); stroke-width: 1.8; fill: none; }
+svg .head-ink { fill: var(--ink); }
+svg .head-tel { fill: var(--tel); }
+svg .head-ota { fill: var(--ota); }
+svg .head-ro { fill: var(--muted); }
+svg .head-ok { fill: var(--ok); }
+svg .head-bad { fill: var(--bad); }
+svg .term { fill: var(--ink); }
+
+/* node internals */
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px 18px; display: grid; gap: 10px; min-width: 0; }
+.panel h3 { margin: 0; font-size: 15px; font-weight: 700; }
+.panel .sub { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); letter-spacing: .04em; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; padding: 7px 10px 7px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+td.mono, .mono { font-family: var(--font-mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+.scroll { overflow-x: auto; }
+
+/* phases */
+.timeline { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px 18px 18px; overflow-x: auto; }
+.tl { min-width: 640px; display: grid; grid-template-columns: 200px 1fr; row-gap: 12px; column-gap: 16px; align-items: center; }
+.tl .weeks { display: grid; grid-template-columns: repeat(12, 1fr); font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+.tl .weeks span { border-left: 1px solid var(--line); padding-left: 4px; }
+.tl .label { display: grid; gap: 1px; }
+.tl .label b { font-size: 14px; }
+.tl .label small { font-size: 12px; color: var(--muted); }
+.track { position: relative; height: 26px; background: repeating-linear-gradient(90deg, transparent 0 calc(100%/12 - 1px), var(--line) calc(100%/12 - 1px) calc(100%/12)); border-radius: 3px; }
+.bar { position: absolute; top: 3px; bottom: 3px; border-radius: 3px; background: var(--ink); color: var(--bg); font-family: var(--font-mono); font-size: 11px; display: flex; align-items: center; padding-inline: 8px; white-space: nowrap; overflow: hidden; }
+.bar.tel { background: var(--tel); }
+.bar.ota { background: var(--ota); color: #1b1408; }
+.bar.opt { background: transparent; color: var(--ink); border: 1.5px dashed var(--muted); }
+.stop { font-family: var(--font-mono); font-size: 11px; color: var(--ok); font-weight: 600; }
+
+/* coverage */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font-family: var(--font-mono); font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); white-space: nowrap; }
+.chip.yes { border-color: var(--ok); color: var(--ok); }
+.chip.part { border-color: var(--ota); color: var(--ota); }
+.chip.no { color: var(--muted); }
+
+.rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.rule { border-left: 3px solid var(--bad); padding: 4px 0 4px 12px; font-size: 14px; }
+.rule b { display: block; }
+
+footer { font-size: 12.5px; color: var(--muted); font-family: var(--font-mono); }
+@media (prefers-reduced-motion: no-preference) {
+  .ln-tel { stroke-dashoffset: 0; }
+}
+</style>
+
+<div class="sheet">
+
+<header>
+  <div class="eyebrow">Project proposal · Carlos Rojas · Oct 2026</div>
+  <h1>FleetBus: a car's network and its cloud, at bench scale</h1>
+  <p class="lede">Two STM32 "ECUs" run FreeRTOS on a real CAN bus. A third node rides in a 2025 Nissan Sentra and reads the car without ever writing to it. All three report to a fleet backend, which pushes signed firmware back down one node at a time, and the bootloader rolls back any version that fails its health check.</p>
+  <div class="keys" aria-label="Legend">
+    <span class="key"><span class="swatch tel"></span>telemetry, up to the cloud</span>
+    <span class="key"><span class="swatch ota"></span>firmware updates, down to your nodes</span>
+    <span class="key"><span class="swatch ro"></span>read-only (the car itself)</span>
+  </div>
+</header>
+
+<!-- FIGURE 1: SYSTEM -->
+<section>
+  <h2><span class="fig">FIG 1</span>The whole system</h2>
+  <figure>
+    <div class="drawing">
+      <svg viewBox="0 0 1000 550" role="img" aria-label="System architecture: two STM32 nodes on a bench CAN bus feed a laptop gateway that sends telemetry over a custom UDP protocol to a backend of ingest, queue, Postgres, API and dashboard. In the Nissan Sentra, your own STM32 node reads the OBD-II port without ever writing to the car and reports over a phone hotspot. The OTA service reads node health from Postgres and sends signed firmware to the bench nodes and to your node in the car, never to the car itself.">
+        <defs>
+          <marker id="h-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-ink"/></marker>
+          <marker id="h-tel" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-tel"/></marker>
+          <marker id="h-ota" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-ota"/></marker>
+          <marker id="h-ro" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-ro"/></marker>
+        </defs>
+
+        <!-- Zone: bench car -->
+        <rect class="zone" x="20" y="30" width="320" height="280" rx="6"/>
+        <text class="t-zone" x="36" y="52">BENCH CAR · WHERE UPDATES HAPPEN</text>
+
+        <rect class="box" x="40" y="72" width="135" height="104" rx="4"/>
+        <text class="t-title" x="54" y="96">Battery node</text>
+        <text class="t-sub" x="54" y="116">STM32 · FreeRTOS</text>
+        <text class="t-mono" x="54" y="138">V · I · temp (ADC)</text>
+        <text class="t-mono" x="54" y="156">fault state machine</text>
+
+        <rect class="box" x="187" y="72" width="135" height="104" rx="4"/>
+        <text class="t-title" x="201" y="96">Body node</text>
+        <text class="t-sub" x="201" y="116">STM32 · FreeRTOS</text>
+        <text class="t-mono" x="201" y="138">lights · servo</text>
+        <text class="t-mono" x="201" y="156">limp-home mode</text>
+
+        <!-- stubs to bus -->
+        <line class="ln" x1="107" y1="176" x2="107" y2="232"/>
+        <line class="ln" x1="254" y1="176" x2="254" y2="232"/>
+        <text class="t-mono" x="114" y="208">bootloader</text>
+        <text class="t-mono" x="261" y="208">bootloader</text>
+
+        <!-- CAN bus: two wires -->
+        <line class="bus" x1="40" y1="232" x2="340" y2="232"/>
+        <line class="bus" x1="40" y1="240" x2="340" y2="240"/>
+        <rect class="term" x="34" y="228" width="6" height="16"/>
+        <text class="t-mono" x="40" y="266">CAN bus · 500 kbit/s · 120 Ω at each end</text>
+        <text class="t-mono" x="40" y="284">messages defined in fleetbus.dbc (v1)</text>
+
+        <!-- Zone: real vehicle -->
+        <rect class="zone-ro" x="20" y="340" width="320" height="200" rx="6"/>
+        <text class="t-zone" x="36" y="362">REAL VEHICLE · CAR IS READ-ONLY</text>
+        <rect class="box-soft" x="36" y="378" width="130" height="84" rx="4"/>
+        <text class="t-title" x="48" y="400">2025 Sentra SR</text>
+        <text class="t-mono" x="48" y="420">speed · RPM</text>
+        <text class="t-mono" x="48" y="436">throttle · temp</text>
+        <text class="t-mono" x="48" y="452">battery V</text>
+        <rect class="box-soft" x="178" y="398" width="58" height="44" rx="4"/>
+        <text class="t-title" x="186" y="418">OBD-II</text>
+        <text class="t-sub" x="186" y="434">port</text>
+        <line class="ln-ro" x1="166" y1="420" x2="174" y2="420" marker-end="url(#h-ro)"/>
+        <line class="ln-ro" x1="236" y1="420" x2="244" y2="420" marker-end="url(#h-ro)"/>
+        <rect class="box" x="248" y="378" width="84" height="84" rx="4"/>
+        <text class="t-title" x="258" y="400">Your node</text>
+        <text class="t-mono" x="258" y="420">STM32</text>
+        <text class="t-mono" x="258" y="436">12 V power</text>
+        <text class="t-mono" x="258" y="452">updatable</text>
+        <rect class="box" x="180" y="476" width="152" height="52" rx="4"/>
+        <text class="t-title" x="192" y="497">In-car link</text>
+        <text class="t-mono" x="192" y="514">Pi + phone hotspot</text>
+        <line class="ln" x1="290" y1="462" x2="290" y2="472" marker-end="url(#h-ink)"/>
+        <text class="t-mono" x="36" y="494">reads only,</text>
+        <text class="t-mono" x="36" y="510">never writes</text>
+        <text class="t-mono" x="36" y="526">to the car</text>
+
+        <!-- Zone: gateway -->
+        <rect class="zone" x="400" y="150" width="210" height="230" rx="6"/>
+        <text class="t-zone" x="416" y="172">GATEWAY · LAPTOP</text>
+        <rect class="box" x="418" y="186" width="174" height="46" rx="4"/>
+        <text class="t-title" x="432" y="206">USB-CAN adapter</text>
+        <text class="t-mono" x="432" y="223">also the test harness</text>
+        <rect class="box" x="418" y="244" width="174" height="46" rx="4"/>
+        <text class="t-title" x="432" y="264">Bridge (python-can)</text>
+        <text class="t-mono" x="432" y="281">decodes via .dbc</text>
+        <rect class="box" x="418" y="302" width="174" height="60" rx="4"/>
+        <text class="t-title" x="432" y="322">UDP framer</text>
+        <text class="t-mono" x="432" y="339">seq # · CRC · resend</text>
+        <text class="t-mono" x="432" y="354">custom binary protocol</text>
+
+        <!-- bench <-> gateway -->
+        <line class="ln-tel" x1="340" y1="200" x2="414" y2="200" marker-end="url(#h-tel)"/>
+        <text class="t-tel" x="346" y="192">frames</text>
+        <line class="ln-ota" x1="414" y1="214" x2="344" y2="214" marker-end="url(#h-ota)"/>
+        <text class="t-ota" x="346" y="230">image blocks</text>
+
+
+        <!-- Zone: backend -->
+        <rect class="zone" x="670" y="30" width="310" height="480" rx="6"/>
+        <text class="t-zone" x="686" y="52">FLEET BACKEND</text>
+
+        <rect class="box" x="690" y="66" width="250" height="44" rx="4"/>
+        <text class="t-title" x="704" y="93">UDP ingest</text>
+        <text class="t-mono" x="796" y="93">dedupe · reorder</text>
+        <rect class="box" x="690" y="134" width="250" height="44" rx="4"/>
+        <text class="t-title" x="704" y="161">Queue</text>
+        <text class="t-mono" x="796" y="161">buffers bursts</text>
+        <rect class="box" x="690" y="202" width="250" height="44" rx="4"/>
+        <text class="t-title" x="704" y="229">Postgres</text>
+        <text class="t-mono" x="796" y="229">time series per node</text>
+        <rect class="box" x="690" y="270" width="250" height="44" rx="4"/>
+        <text class="t-title" x="704" y="297">API + alert rules</text>
+        <text class="t-mono" x="852" y="297">node silent</text>
+        <rect class="box" x="690" y="338" width="250" height="44" rx="4"/>
+        <text class="t-title" x="704" y="365">Dashboard</text>
+        <text class="t-mono" x="796" y="365">fleet view · car view</text>
+
+        <line class="ln" x1="815" y1="110" x2="815" y2="130" marker-end="url(#h-ink)"/>
+        <line class="ln" x1="815" y1="178" x2="815" y2="198" marker-end="url(#h-ink)"/>
+        <line class="ln" x1="815" y1="246" x2="815" y2="266" marker-end="url(#h-ink)"/>
+        <line class="ln" x1="815" y1="314" x2="815" y2="334" marker-end="url(#h-ink)"/>
+
+        <rect class="box-ota" x="690" y="420" width="250" height="70" rx="4"/>
+        <text class="t-title" x="704" y="444">OTA service</text>
+        <text class="t-mono" x="704" y="462">Ed25519-signed images</text>
+        <text class="t-mono" x="704" y="478">staged: one node, then the rest</text>
+
+        <!-- health gate: postgres -> OTA -->
+        <polyline class="ln-ota" points="940,224 962,224 962,455 944,455" marker-end="url(#h-ota)"/>
+        <text class="t-ota" x="904" y="408" text-anchor="end">reads node health</text>
+
+        <!-- gateway -> backend telemetry -->
+        <polyline class="ln-tel" points="610,320 640,320 640,88 686,88" marker-end="url(#h-tel)"/>
+        <text class="t-tel" x="646" y="140">UDP</text>
+
+        <!-- backend -> gateway OTA -->
+        <polyline class="ln-ota" points="690,455 652,455 652,346 614,346" marker-end="url(#h-ota)"/>
+        <text class="t-ota" x="618" y="398">signed</text>
+        <text class="t-ota" x="618" y="412">image</text>
+
+        <!-- in-car node <-> backend -->
+        <polyline class="ln-tel" points="332,518 975,518 975,88 944,88" marker-end="url(#h-tel)"/>
+        <text class="t-tel" x="420" y="534">telemetry · UDP over phone hotspot</text>
+        <polyline class="ln-ota" points="760,490 760,498 336,498" marker-end="url(#h-ota)"/>
+        <text class="t-ota" x="420" y="490">signed image · your node only</text>
+      </svg>
+    </div>
+    <figcaption>Telemetry flows left to right: CAN frames and OBD-II replies are decoded at the gateway and shipped over your own UDP protocol into the backend. Updates flow back the other way, and only to the bench nodes. The OTA service reads each node's health from Postgres before it promotes an update to the next node. In the Sentra, your own node reads the OBD-II port and reports over a phone hotspot. It takes updates like the bench nodes do, but nothing is ever written to the car itself. Early on, you can plug the USB-CAN adapter straight into the OBD-II port instead.</figcaption>
+  </figure>
+</section>
+
+<!-- FIGURE 2: OTA FLOW -->
+<section>
+  <h2><span class="fig">FIG 2</span>One firmware update, start to finish</h2>
+  <figure>
+    <div class="drawing">
+      <svg viewBox="0 0 1000 270" role="img" aria-label="Update flow: sign the image, stage it on one node, the bootloader verifies signature and version, writes it to slot B, trial-boots it, and waits for a healthy report. Healthy means commit and promote to the next node. Unhealthy means roll back to slot A and halt the rollout. A bad signature or downgrade is rejected before anything is written.">
+        <defs>
+          <marker id="f-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-ink"/></marker>
+          <marker id="f-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-ok"/></marker>
+          <marker id="f-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-bad"/></marker>
+        </defs>
+
+        <text class="t-zone" x="20" y="22">BACKEND</text>
+        <text class="t-zone" x="320" y="22">BOOTLOADER ON THE NODE</text>
+
+        <rect class="box-ota" x="20" y="86" width="125" height="56" rx="4"/>
+        <text class="t-title" x="34" y="110">Sign image</text>
+        <text class="t-mono" x="34" y="128">Ed25519 · v1.4</text>
+
+        <rect class="box-ota" x="170" y="86" width="125" height="56" rx="4"/>
+        <text class="t-title" x="184" y="110">Stage node 1</text>
+        <text class="t-mono" x="184" y="128">others wait</text>
+
+        <rect class="box" x="320" y="86" width="125" height="56" rx="4"/>
+        <text class="t-title" x="334" y="110">Verify</text>
+        <text class="t-mono" x="334" y="128">sig · version</text>
+
+        <rect class="box" x="470" y="86" width="125" height="56" rx="4"/>
+        <text class="t-title" x="484" y="110">Write slot B</text>
+        <text class="t-mono" x="484" y="128">slot A untouched</text>
+
+        <rect class="box" x="620" y="86" width="125" height="56" rx="4"/>
+        <text class="t-title" x="634" y="110">Trial boot B</text>
+        <text class="t-mono" x="634" y="128">watchdog armed</text>
+
+        <polygon class="box" points="830,74 885,114 830,154 775,114"/>
+        <text class="t-title" x="830" y="110" text-anchor="middle">Healthy</text>
+        <text class="t-mono" x="830" y="126" text-anchor="middle">in 10 s?</text>
+
+        <line class="ln" x1="145" y1="114" x2="166" y2="114" marker-end="url(#f-ink)"/>
+        <line class="ln" x1="295" y1="114" x2="316" y2="114" marker-end="url(#f-ink)"/>
+        <line class="ln" x1="445" y1="114" x2="466" y2="114" marker-end="url(#f-ink)"/>
+        <line class="ln" x1="595" y1="114" x2="616" y2="114" marker-end="url(#f-ink)"/>
+        <line class="ln" x1="745" y1="114" x2="771" y2="114" marker-end="url(#f-ink)"/>
+
+        <!-- yes -->
+        <polyline class="ln-ok" points="830,74 830,40 856,40" marker-end="url(#f-ok)"/>
+        <text class="t-ok" x="838" y="62">yes</text>
+        <rect class="box-ok" x="860" y="14" width="130" height="54" rx="4"/>
+        <text class="t-title" x="872" y="37">Commit B</text>
+        <text class="t-mono" x="872" y="55">promote: node 2</text>
+
+        <!-- no -->
+        <polyline class="ln-bad" points="830,154 830,214 856,214" marker-end="url(#f-bad)"/>
+        <text class="t-bad" x="838" y="184">no</text>
+        <rect class="box-bad" x="860" y="186" width="130" height="56" rx="4"/>
+        <text class="t-title" x="872" y="209">Roll back to A</text>
+        <text class="t-mono" x="872" y="227">halt rollout</text>
+
+        <!-- verify fail -->
+        <line class="ln-bad" x1="382" y1="142" x2="382" y2="186" marker-end="url(#f-bad)"/>
+        <text class="t-bad" x="390" y="168">bad sig or downgrade</text>
+        <rect class="box-bad" x="320" y="190" width="160" height="52" rx="4"/>
+        <text class="t-title" x="334" y="212">Reject image</text>
+        <text class="t-mono" x="334" y="230">stay on A · report</text>
+      </svg>
+    </div>
+    <figcaption>The node always keeps a known-good copy in slot A. A bad image is refused before it touches flash. A good-but-broken image gets one trial boot, and if it can't report healthy within 10 seconds the bootloader falls back to A and the backend stops the rollout. This is the same fail-closed idea as the Amazon allowlist gating, moved down to firmware.</figcaption>
+  </figure>
+</section>
+
+<!-- NODE INTERNALS -->
+<section>
+  <h2><span class="fig">FIG 3</span>What runs on each node</h2>
+  <div class="two">
+    <div class="panel">
+      <h3>FreeRTOS tasks</h3>
+      <div class="sub">BATTERY NODE · BODY NODE SWAPS SENSE FOR ACTUATE</div>
+      <div class="scroll">
+      <table>
+        <thead><tr><th>Task</th><th>Period</th><th>Priority</th><th>Job</th></tr></thead>
+        <tbody>
+          <tr><td>can_rx</td><td class="mono">ISR → queue</td><td class="mono">high</td><td>Decode frames, hand them to the right task</td></tr>
+          <tr><td>sense</td><td class="mono">10 ms</td><td class="mono">high</td><td>Sample V, I, temp through the ADC</td></tr>
+          <tr><td>control</td><td class="mono">20 ms</td><td class="mono">mid</td><td>Fault state machine, limp-home logic</td></tr>
+          <tr><td>can_tx</td><td class="mono">queue</td><td class="mono">mid</td><td>Send status and fault frames</td></tr>
+          <tr><td>heartbeat</td><td class="mono">100 ms</td><td class="mono">low</td><td>Prove liveness, kick the watchdog</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="muted" style="font-size:13px">Periods are starting values, to tune on the bench.</p>
+    </div>
+    <div class="panel">
+      <h3>CAN messages (fleetbus.dbc v1)</h3>
+      <div class="sub">IDS ARE A STARTING DRAFT · LOWER ID WINS ARBITRATION</div>
+      <div class="scroll">
+      <table>
+        <thead><tr><th>ID</th><th>Message</th><th>From</th><th>Rate</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">0x080</td><td>FAULT</td><td>battery</td><td class="mono">on event</td></tr>
+          <tr><td class="mono">0x100</td><td>BATT_STATUS (V, I, temp)</td><td>battery</td><td class="mono">10 Hz</td></tr>
+          <tr><td class="mono">0x180</td><td>BODY_STATUS</td><td>body</td><td class="mono">10 Hz</td></tr>
+          <tr><td class="mono">0x700+n</td><td>HEARTBEAT (fw version, slot)</td><td>each node</td><td class="mono">10 Hz</td></tr>
+          <tr><td class="mono">0x7E0</td><td>OTA block transfer</td><td>gateway</td><td class="mono">on update</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="muted" style="font-size:13px">If a peer's heartbeat stops for 300 ms, the other node enters its safe state.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PHASES -->
+<section>
+  <h2><span class="fig">FIG 4</span>Build order</h2>
+  <p class="muted">Each phase ends in something you can put on a resume, so stopping early still pays off.</p>
+  <div class="timeline">
+    <div class="tl">
+      <div></div>
+      <div class="weeks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div>
+
+      <div class="label"><b>1 · Bus up</b><small>FreeRTOS on both nodes, .dbc</small></div>
+      <div class="track"><div class="bar" style="left:0;width:calc(100%/12*2)">RTOS + CAN</div></div>
+
+      <div class="label"><b>2 · Tested</b><small>Unity in CI, replay harness</small></div>
+      <div class="track"><div class="bar" style="left:calc(100%/12*1);width:calc(100%/12*2)">tests + HIL</div></div>
+
+      <div class="label"><b>3 · Fleet</b><small>UDP, Postgres, dashboard</small></div>
+      <div class="track"><div class="bar tel" style="left:calc(100%/12*2);width:calc(100%/12*3)">data · network · monitoring</div></div>
+
+      <div class="label"><b>4 · OTA</b><small>bootloader, signing, rollback</small></div>
+      <div class="track"><div class="bar ota" style="left:calc(100%/12*4);width:calc(100%/12*4)">updates · security · bare-metal</div></div>
+
+      <div class="label"><b>4b · In-car node</b><small>optional · same OTA, in the Sentra</small></div>
+      <div class="track"><div class="bar opt" style="left:calc(100%/12*8);width:calc(100%/12*2)">your node in the car</div></div>
+
+      <div class="label"><b>5 · Hardware</b><small>optional custom PCB</small></div>
+      <div class="track"><div class="bar opt" style="left:calc(100%/12*8);width:calc(100%/12*4)">PCB · bring-up · scope captures</div></div>
+
+      <div></div>
+      <div class="stop">✓ end of week 3: embedded resume fixed · ✓ week 5: SWE data gaps closed · ✓ week 8: full bench demo · ✓ week 10: update a device in a real car</div>
+    </div>
+  </div>
+</section>
+
+<!-- COVERAGE -->
+<section>
+  <h2><span class="fig">FIG 5</span>Who this is for</h2>
+  <div class="scroll panel">
+    <table>
+      <thead><tr><th>Target</th><th>What the project proves</th><th>Phases</th></tr></thead>
+      <tbody>
+        <tr><td>Tesla embedded<br><span class="muted" style="font-size:12px">Optimus · Firmware Platforms · AI Platforms · New Programs</span></td><td><div class="chips"><span class="chip yes">RTOS</span><span class="chip yes">CAN</span><span class="chip yes">firmware tests</span><span class="chip yes">bare-metal + RTOS</span></div></td><td class="mono">1 · 2 · 4</td></tr>
+        <tr><td>Tesla Update Systems / Validation</td><td><div class="chips"><span class="chip yes">OTA</span><span class="chip yes">rollback</span><span class="chip yes">HIL testing</span><span class="chip yes">in-vehicle update</span></div></td><td class="mono">2 · 4 · 4b</td></tr>
+        <tr><td>Tesla AI Data Infra / Diagnostics</td><td><div class="chips"><span class="chip yes">Postgres</span><span class="chip yes">queue</span><span class="chip yes">monitoring</span></div></td><td class="mono">3</td></tr>
+        <tr><td>Tesla Red Team / Product Security</td><td><div class="chips"><span class="chip yes">signed images</span><span class="chip yes">downgrade protection</span></div></td><td class="mono">4</td></tr>
+        <tr><td>SpaceX Software Engineering</td><td><div class="chips"><span class="chip yes">C on hardware</span><span class="chip yes">custom UDP protocol</span><span class="chip yes">testing</span></div></td><td class="mono">1 · 2 · 3</td></tr>
+        <tr><td>SpaceX Engineering · Tesla electrical</td><td><div class="chips"><span class="chip part">only with the custom PCB</span></div></td><td class="mono">5</td></tr>
+        <tr><td class="muted">Not covered</td><td><div class="chips"><span class="chip no">controls theory</span><span class="chip no">camera / ML</span></div></td><td class="mono">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PARTS + RULES -->
+<section>
+  <h2><span class="fig">FIG 6</span>Parts and rules</h2>
+  <div class="two">
+    <div class="panel">
+      <h3>Parts list</h3>
+      <div class="sub">ABOUT $60–80 · PRICES TO CONFIRM BEFORE ORDERING</div>
+      <table>
+        <tbody>
+          <tr><td class="mono">2×</td><td>STM32 Nucleo-G431RB</td><td class="muted">built-in CAN controller</td></tr>
+          <tr><td class="mono">2×</td><td>CAN transceiver module</td><td class="muted">SN65HVD230 or TCAN1042</td></tr>
+          <tr><td class="mono">1×</td><td>USB-to-CAN adapter</td><td class="muted">e.g. CANable</td></tr>
+          <tr><td class="mono">1×</td><td>OBD-II cable</td><td class="muted">for the Sentra</td></tr>
+          <tr><td class="mono">1 set</td><td>INA219, thermistor, servo, LEDs, jumpers</td><td class="muted">sensing + actuation</td></tr>
+          <tr><td class="mono">opt.</td><td>Custom PCB run</td><td class="muted">+$30–50, phase 5</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <h3>Rules that don't bend</h3>
+      <div class="rules">
+        <div class="rule"><b>Never write to the car.</b>Standard diagnostic requests only. No flashing, fuzzing or injected frames.</div>
+        <div class="rule"><b>Update your nodes, never the car's.</b>Your node in the Sentra can take updates. Nissan's modules are never written to, and fault injection stays on the bench.</div>
+        <div class="rule"><b>Don't drain the battery.</b>The OBD-II port is powered with the car off. Sleep or unplug the node.</div>
+        <div class="rule"><b>Glanceable screens only.</b>A passenger operates or films. Nothing mounted on the windshield.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>Source: ~/Documents/Dev/fleetbus/docs/proposal.md · proposal, nothing built yet</footer>
+</div>

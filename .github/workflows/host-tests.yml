@@ -1,0 +1,9 @@
+name: host-tests
+on: [push, pull_request]
+jobs:
+  unity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { submodules: recursive }
+      - run: echo "M1 adds Unity host tests for firmware/common"
