@@ -13,13 +13,14 @@ typedef struct fb_flash {
 
 #define FB_FLASH_PAGE 2048u
 
-/* Flash map for STM32G431RB (128 KB). TARGET layout, checked against measured bootloader size in M9. */
+/* Flash map for STM32G431RB (128 KB), exactly full. Bootloader grew from the 24 KB plan to 28 KB after measuring:
+ * with Monocypher Ed25519 the 24 KB build was 24,504 B (99.7 %). */
 #define FB_FLASH_BASE   0x08000000u
 #define FB_BOOT_BASE    0x08000000u
-#define FB_BOOT_SIZE    (24u * 1024u)
-#define FB_META_A_ADDR  0x08006000u
-#define FB_META_B_ADDR  0x08006800u
-#define FB_SLOT_A_ADDR  0x08007000u
-#define FB_SLOT_B_ADDR  0x08013000u
+#define FB_BOOT_SIZE    (28u * 1024u)
+#define FB_META_A_ADDR  0x08007000u
+#define FB_META_B_ADDR  0x08007800u
+#define FB_SLOT_A_ADDR  0x08008000u
+#define FB_SLOT_B_ADDR  0x08014000u
 #define FB_SLOT_SIZE    (48u * 1024u)
 #define FB_SLOT_ADDR(s) ((s) == 0 ? FB_SLOT_A_ADDR : FB_SLOT_B_ADDR)

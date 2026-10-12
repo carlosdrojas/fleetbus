@@ -1,6 +1,15 @@
-# MOCK(M2): toolchain file for STM32G431RB (Cortex-M4F, hard float). Flags are unverified.
+# Cross toolchain for STM32G431RB (Cortex-M4F). Use: cmake -S firmware -B build/fw -G Ninja -DCMAKE_TOOLCHAIN_FILE=firmware/cmake/arm-none-eabi.cmake
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 set(CMAKE_C_COMPILER arm-none-eabi-gcc)
-set(CMAKE_C_FLAGS_INIT "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb --specs=nano.specs")
+set(CMAKE_ASM_COMPILER arm-none-eabi-gcc)
+set(CMAKE_OBJCOPY arm-none-eabi-objcopy)
+set(CMAKE_SIZE arm-none-eabi-size)
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(FB_MCU "-mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb")
+set(CMAKE_C_FLAGS_INIT "${FB_MCU} -ffunction-sections -fdata-sections -fno-common")
+set(CMAKE_ASM_FLAGS_INIT "${FB_MCU}")
+set(CMAKE_EXE_LINKER_FLAGS_INIT "${FB_MCU}")
+set(CMAKE_C_FLAGS_RELEASE_INIT "-Os -g3")
+set(CMAKE_BUILD_TYPE Release CACHE STRING "")

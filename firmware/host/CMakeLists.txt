@@ -3,3 +3,7 @@ add_library(fbsim SHARED fbsim.c)
 target_link_libraries(fbsim PRIVATE fake_flash fb_common monocypher)
 target_include_directories(fbsim PRIVATE ../common ../tests)
 set_target_properties(fbsim PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+add_executable(fb_verify fb_verify.c)
+target_link_libraries(fb_verify PRIVATE fake_flash fb_common monocypher)
+target_include_directories(fb_verify PRIVATE ../common ../tests)

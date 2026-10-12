@@ -3,9 +3,6 @@ set(TP ${CMAKE_CURRENT_SOURCE_DIR}/../third_party)
 add_library(unity STATIC ${TP}/unity/src/unity.c)
 target_include_directories(unity PUBLIC ${TP}/unity/src)
 
-add_library(monocypher STATIC ${TP}/monocypher/src/monocypher.c ${TP}/monocypher/src/optional/monocypher-ed25519.c)
-target_include_directories(monocypher PUBLIC ${TP}/monocypher/src ${TP}/monocypher/src/optional)
-
 add_library(fake_flash STATIC fake_flash.c image_builder.c)
 target_link_libraries(fake_flash PUBLIC fb_common monocypher)
 target_include_directories(fake_flash PUBLIC .)
