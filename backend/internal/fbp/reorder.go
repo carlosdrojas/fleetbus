@@ -16,6 +16,11 @@ func NewReorderer(window uint32) *Reorderer {
 	return &Reorderer{Window: window, next: 1, held: map[uint32]Packet{}}
 }
 
+// NewReordererAt resumes after a restart: everything up to and including `cursor` is already stored.
+func NewReordererAt(window, cursor uint32) *Reorderer {
+	return &Reorderer{Window: window, next: cursor + 1, held: map[uint32]Packet{}}
+}
+
 // CumAck is the highest seq such that all seqs <= it were delivered (0 if none).
 func (r *Reorderer) CumAck() uint32 { return r.next - 1 }
 

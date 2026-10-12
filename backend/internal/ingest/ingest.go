@@ -21,6 +21,11 @@ type Sink interface {
 	WriteBatch(ctx context.Context, b store.Batch) error
 }
 
+// CursorLoader is implemented by sinks that persist per-gateway cursors (store.PG does).
+type CursorLoader interface {
+	LoadCursors(ctx context.Context) (map[int16]uint32, error)
+}
+
 type Config struct {
 	Addr        string
 	QueueSize   int           // bounded queue between the UDP loop and the writer
@@ -106,13 +111,14 @@ type Server struct {
 	conn  *net.UDPConn
 	queue chan item
 
-	mu    sync.Mutex
-	peers map[uint8]*peer
+	mu      sync.Mutex
+	peers   map[uint8]*peer
+	cursors map[uint8]uint32 // committed sequence per gateway at startup
 }
 
 func New(cfg Config, sink Sink, m *Metrics) *Server {
 	cfg.defaults()
-	return &Server{cfg: cfg, sink: sink, m: m, queue: make(chan item, cfg.QueueSize), peers: map[uint8]*peer{}}
+	return &Server{cfg: cfg, sink: sink, m: m, queue: make(chan item, cfg.QueueSize), peers: map[uint8]*peer{}, cursors: map[uint8]uint32{}}
 }
 
 func (s *Server) LocalAddr() net.Addr { return s.conn.LocalAddr() }
@@ -132,6 +138,18 @@ func (s *Server) Listen() error {
 }
 
 func (s *Server) Run(ctx context.Context) error {
+	if cl, ok := s.sink.(CursorLoader); ok {
+		cur, err := cl.LoadCursors(ctx)
+		if err != nil {
+			return err
+		}
+		for g, c := range cur {
+			s.cursors[uint8(g)] = c
+		}
+		if len(cur) > 0 {
+			s.cfg.Logf("ingest: resuming %d gateway cursor(s) from the database", len(cur))
+		}
+	}
 	if s.conn == nil {
 		if err := s.Listen(); err != nil {
 			return err
@@ -155,7 +173,8 @@ func (s *Server) getPeer(src uint8) *peer {
 	defer s.mu.Unlock()
 	p, ok := s.peers[src]
 	if !ok {
-		p = &peer{src: src, re: fbp.NewReorderer(s.cfg.Window), nacked: map[uint32]time.Time{}}
+		cur := s.cursors[src]
+		p = &peer{src: src, re: fbp.NewReordererAt(s.cfg.Window, cur), committed: cur, lastAcked: cur, nacked: map[uint32]time.Time{}}
 		s.peers[src] = p
 		s.m.Gateways.Set(int64(len(s.peers)))
 	}

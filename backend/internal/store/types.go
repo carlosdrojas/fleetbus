@@ -90,6 +90,7 @@ type Batch struct {
 	Faults      []FaultRow
 	Heartbeats  []NodeHeartbeat
 	OtaStatuses []OtaStatusRow
+	Cursors     map[int16]uint32 // gateway id -> highest FBP seq covered by this batch
 }
 
 type NodeEvent struct {

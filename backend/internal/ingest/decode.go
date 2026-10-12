@@ -24,8 +24,17 @@ type item struct {
 // passed its CRC but has a bad payload is a gateway bug, and must not wedge the pipeline.
 func buildBatch(items []item, m *Metrics) store.Batch {
 	var b store.Batch
+	b.Cursors = map[int16]uint32{}
+	epochOf := map[uint8]uint32{}
 	seenGW := map[uint8]int{}
 	for _, it := range items {
+		// The cursor is the highest seq of the newest session (epoch); items of an older session cannot move it.
+		if e, ok := epochOf[it.src]; !ok || it.epoch > e {
+			epochOf[it.src] = it.epoch
+			b.Cursors[int16(it.src)] = it.seq
+		} else if it.epoch == e && it.seq > b.Cursors[int16(it.src)] {
+			b.Cursors[int16(it.src)] = it.seq
+		}
 		gw := int16(it.src)
 		if i, ok := seenGW[it.src]; !ok {
 			seenGW[it.src] = len(b.Gateways)

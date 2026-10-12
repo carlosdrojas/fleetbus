@@ -109,14 +109,22 @@ def main() -> None:
     src.add_argument("--can", metavar="INTERFACE:CHANNEL", help="python-can adapter, e.g. slcan:/dev/tty.usbmodem1 or gs_usb:0")
     ap.add_argument("--bitrate", type=int, default=500000)
     ap.add_argument("--read-only", action="store_true", help="never transmit on the bus (use for anything near the car)")
+    ap.add_argument("--control", metavar="HOST:PORT", help="(--sim only) fault-injection HTTP port, e.g. 127.0.0.1:7001")
     ap.add_argument("--duration", type=float, default=0, help="stop after N seconds (0 = run forever)")
     a = ap.parse_args()
 
     if a.sim:
         from .simfleet import make_sim_fleet
         from .canio import SimBackend
-        can = SimBackend(make_sim_fleet())
+        fleet = make_sim_fleet()
+        can = SimBackend(fleet)
+        if a.control:
+            from .control import serve
+            h, p = a.control.rsplit(":", 1)
+            serve(fleet, h, int(p))
     else:
+        if a.control:
+            ap.error("--control only exists in --sim mode")
         iface, channel = a.can.split(":", 1)
         can = PythonCanBackend(iface, channel, a.bitrate, read_only=a.read_only)
     t0 = time.monotonic()

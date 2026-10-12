@@ -89,6 +89,12 @@ func (p *PG) WriteBatch(ctx context.Context, b Batch) error {
 	}
 	defer tx.Rollback(ctx)
 
+	for gw, seq := range b.Cursors {
+		if _, err := tx.Exec(ctx, `INSERT INTO gateway_cursors(gateway_id, committed_seq) VALUES ($1,$2)
+			ON CONFLICT (gateway_id) DO UPDATE SET committed_seq=EXCLUDED.committed_seq, updated_at=now()`, gw, int64(seq)); err != nil {
+			return fmt.Errorf("cursor: %w", err)
+		}
+	}
 	for _, g := range b.Gateways {
 		if _, err := tx.Exec(ctx, `INSERT INTO gateways(id, addr, simulated, first_seen, last_seen) VALUES ($1,$2,$3,$4,$4)
 			ON CONFLICT (id) DO UPDATE SET addr=EXCLUDED.addr, simulated=EXCLUDED.simulated, last_seen=GREATEST(gateways.last_seen, EXCLUDED.last_seen)`,
@@ -230,6 +236,25 @@ func addEvent(ctx context.Context, tx pgx.Tx, h NodeHeartbeat, kind string, deta
 }
 
 // ---- reads -------------------------------------------------------------------------------------------------
+
+// LoadCursors returns the committed FBP sequence number per gateway.
+func (p *PG) LoadCursors(ctx context.Context) (map[int16]uint32, error) {
+	rows, err := p.Pool.Query(ctx, `SELECT gateway_id, committed_seq FROM gateway_cursors`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	out := map[int16]uint32{}
+	for rows.Next() {
+		var g int16
+		var c int64
+		if err := rows.Scan(&g, &c); err != nil {
+			return nil, err
+		}
+		out[g] = uint32(c)
+	}
+	return out, rows.Err()
+}
 
 func (p *PG) ListGateways(ctx context.Context) ([]Gateway, error) {
 	rows, err := p.Pool.Query(ctx, `SELECT id, COALESCE(addr,''), simulated, first_seen, last_seen, uptime_s, unacked, spooled, resent FROM gateways ORDER BY id`)

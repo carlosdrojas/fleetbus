@@ -101,6 +101,15 @@ class SimFleet:
         for n in self.nodes.values():
             n.power_on(self.now)
 
+    def set_power(self, node_id: int, on: bool) -> None:
+        """Remove/restore power. Restoring power is a real boot: the bootloader runs and RAM state (FSMs) starts clean."""
+        n = self.nodes[node_id]
+        if on and not n.powered:
+            n.powered = True
+            n.power_on(self.now)
+        elif not on:
+            n.powered = False
+
     def inject(self, can_id: int, data: bytes) -> None:
         for n in self.nodes.values():
             if n.powered:

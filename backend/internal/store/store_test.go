@@ -141,3 +141,21 @@ func TestRolloutPlanning(t *testing.T) {
 		t.Fatal("duplicate (node, version) must be refused")
 	}
 }
+
+func TestCursorsAreCommittedAtomicallyWithData(t *testing.T) {
+	pg := storetest.New(t)
+	ctx := context.Background()
+	now := time.Now()
+	if err := pg.WriteBatch(ctx, store.Batch{Gateways: []store.GatewayUpdate{{ID: 1, TS: now}}, Cursors: map[int16]uint32{1: 77}}); err != nil {
+		t.Fatal(err)
+	}
+	// A failing batch (FK violation) must not advance the cursor.
+	err := pg.WriteBatch(ctx, store.Batch{Cursors: map[int16]uint32{1: 99}, Heartbeats: []store.NodeHeartbeat{hb(9, 1, 1, 0, false, 1, now)}})
+	if err == nil {
+		t.Fatal("expected failure")
+	}
+	c, _ := pg.LoadCursors(ctx)
+	if c[1] != 77 {
+		t.Fatalf("cursor advanced by a failed batch: %v", c)
+	}
+}

@@ -19,6 +19,7 @@ type fakeSink struct {
 	batches []store.Batch
 	block   chan struct{} // when non-nil WriteBatch waits for it to close
 	fail    atomic.Int32  // number of upcoming calls to fail
+	cursors map[int16]uint32
 }
 
 func (f *fakeSink) WriteBatch(ctx context.Context, b store.Batch) error {
@@ -35,8 +36,24 @@ func (f *fakeSink) WriteBatch(ctx context.Context, b store.Batch) error {
 	f.fail.Store(0)
 	f.mu.Lock()
 	f.batches = append(f.batches, b)
+	if f.cursors == nil {
+		f.cursors = map[int16]uint32{}
+	}
+	for g, c := range b.Cursors {
+		f.cursors[g] = c
+	}
 	f.mu.Unlock()
 	return nil
+}
+
+func (f *fakeSink) LoadCursors(context.Context) (map[int16]uint32, error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	out := map[int16]uint32{}
+	for g, c := range f.cursors {
+		out[g] = c
+	}
+	return out, nil
 }
 func (f *fakeSink) frames() (n int) {
 	f.mu.Lock()
@@ -298,4 +315,31 @@ func TestSendToGatewayUsesLearnedAddress(t *testing.T) {
 		}
 	}
 	t.Fatal("offer not received")
+}
+
+func TestRestartResumesFromCommittedCursorWithoutRestoringOrStalling(t *testing.T) {
+	sink := &fakeSink{}
+	r1 := newRig(t, sink, nil)
+	for s := uint32(1); s <= 30; s++ {
+		r1.hbPkt(t, s)
+	}
+	if got := r1.lastAck(300 * time.Millisecond); got != 30 {
+		t.Fatalf("ack = %d", got)
+	}
+	r1.stop() // ingest process dies; the gateway is at seq 30 and keeps going
+	time.Sleep(50 * time.Millisecond)
+	r2 := newRig(t, sink, nil)
+	for s := uint32(28); s <= 40; s++ { // 28-30 are retransmits of data already in the database, 31+ are new
+		r2.send(t, fbp.TypeHeartbeat, s, make([]byte, 14), fbp.FlagRetransmit)
+	}
+	if got := r2.lastAck(300 * time.Millisecond); got != 40 {
+		t.Fatalf("after restart ack = %d, want 40 (stalled at seq > 1?)", got)
+	}
+	eventually(t, "10 new items", func() bool { return r2.m.Items.Value() == 10 })
+	if r2.m.Dups.Value() != 3 {
+		t.Fatalf("retransmits of committed data must be dropped as duplicates: dups=%d", r2.m.Dups.Value())
+	}
+	if sink.cursors[7] != 40 {
+		t.Fatalf("cursor = %d", sink.cursors[7])
+	}
 }
