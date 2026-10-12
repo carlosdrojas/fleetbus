@@ -14,6 +14,8 @@ const (
 	MaxDatagram    = 1200
 	MaxPayload     = MaxDatagram - HeaderSize - 4
 	FlagRetransmit = 0x01
+	FlagSimulated  = 0x02
+	FlagsMask      = FlagRetransmit | FlagSimulated
 )
 
 const (
@@ -53,7 +55,7 @@ func Encode(p Packet) ([]byte, error) {
 	if len(p.Payload) > MaxPayload {
 		return nil, ErrTooLarge
 	}
-	if p.Type < TypeTelemetry || p.Type > TypeOtaStatus || p.Flags&^FlagRetransmit != 0 {
+	if p.Type < TypeTelemetry || p.Type > TypeOtaStatus || p.Flags&^FlagsMask != 0 {
 		return nil, ErrField
 	}
 	b := make([]byte, HeaderSize+len(p.Payload)+4)
@@ -86,7 +88,7 @@ func Decode(b []byte) (Packet, error) {
 	if binary.LittleEndian.Uint32(b[len(b)-4:]) != crc32.Checksum(b[:len(b)-4], castagnoli) {
 		return Packet{}, ErrCRC
 	}
-	if b[5]&^FlagRetransmit != 0 {
+	if b[5]&^FlagsMask != 0 {
 		return Packet{}, ErrFlags
 	}
 	if b[3] < TypeTelemetry || b[3] > TypeOtaStatus {
@@ -96,3 +98,6 @@ func Decode(b []byte) (Packet, error) {
 }
 
 func crcOf(b []byte) uint32 { return crc32.Checksum(b, castagnoli) }
+
+// CRC32C exposes the protocol checksum for tools that patch headers in place (retransmit flag).
+func CRC32C(b []byte) uint32 { return crcOf(b) }

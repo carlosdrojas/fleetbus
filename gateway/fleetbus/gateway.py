@@ -37,10 +37,11 @@ class UdpTransport(Transport):
             return None
 
 class Gateway:
-    def __init__(self, gw_id: int, can: CanBackend, transport: Transport, spool: Spool, start_ms: int = 0):
+    def __init__(self, gw_id: int, can: CanBackend, transport: Transport, spool: Spool, start_ms: int = 0, simulated: bool = False, epoch_ms: int = 0):
         self.id = gw_id
         self.can, self.tp = can, transport
-        self.sender = ReliableSender(gw_id, transport, spool)
+        self.sender = ReliableSender(gw_id, transport, spool, simulated=simulated)
+        self.epoch_ms = epoch_ms                   # wall-clock ms at gateway time 0, so telemetry carries unix time
         self.ota = OtaRelay(can.send, self._ota_status)
         self.batch: list[tuple[int, int, bytes]] = []
         self.batch_start = 0
@@ -76,7 +77,7 @@ class Gateway:
         base = self.batch[0][0]
         recs = [fbp.CanRecord(min(ts - base, 0xFFFF), cid, data) for ts, cid, data in self.batch]
         self.batch = []
-        self.sender.send(fbp.TELEMETRY, fbp.enc_telemetry(base, recs))
+        self.sender.send(fbp.TELEMETRY, fbp.enc_telemetry(self.epoch_ms + base, recs))
 
     def _on_datagram(self, raw: bytes, now_ms: int) -> None:
         try:
@@ -120,7 +121,7 @@ def main() -> None:
         can = PythonCanBackend(iface, channel, a.bitrate, read_only=a.read_only)
     t0 = time.monotonic()
     ms = lambda: int((time.monotonic() - t0) * 1000)
-    gw = Gateway(a.id, can, UdpTransport(a.backend), Spool(a.spool), start_ms=ms())
+    gw = Gateway(a.id, can, UdpTransport(a.backend), Spool(a.spool), start_ms=ms(), simulated=a.sim, epoch_ms=int(time.time() * 1000) - ms())
     print(f"gateway {a.id} -> {a.backend} ({'sim' if a.sim else a.can}); Ctrl-C to stop")
     try:
         while a.duration == 0 or time.monotonic() - t0 < a.duration:

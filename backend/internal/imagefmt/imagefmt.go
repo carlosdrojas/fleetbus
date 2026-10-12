@@ -1,0 +1,74 @@
+// Package imagefmt parses and verifies FleetBus signed firmware images (layout in firmware/common/image.h). The API uses
+// it to refuse a bad upload up front; the device verifies again on its own, this is not a trust boundary.
+package imagefmt
+
+import (
+	"bytes"
+	"crypto/ed25519"
+	"crypto/sha512"
+	"encoding/binary"
+	"errors"
+	"fmt"
+)
+
+const (
+	Magic     = 0x4D494246
+	HeaderLen = 0x200
+	SignedLen = 0x60
+	SlotSize  = 48 * 1024
+	HwG431    = 0x4301
+)
+
+type Header struct {
+	HwID    uint16
+	Slot    uint8
+	Version uint32
+	Size    uint32
+	Node    uint8
+	SHA512  [64]byte
+	Sig     [64]byte
+}
+
+func Parse(b []byte) (Header, error) {
+	if len(b) < HeaderLen+1 {
+		return Header{}, errors.New("image too short")
+	}
+	if len(b) > SlotSize {
+		return Header{}, fmt.Errorf("image is %d bytes, slot holds %d", len(b), SlotSize)
+	}
+	if binary.LittleEndian.Uint32(b) != Magic {
+		return Header{}, errors.New("bad magic")
+	}
+	if b[7] != 1 {
+		return Header{}, errors.New("unsupported header version")
+	}
+	h := Header{HwID: binary.LittleEndian.Uint16(b[4:]), Slot: b[6], Version: binary.LittleEndian.Uint32(b[8:]), Size: binary.LittleEndian.Uint32(b[12:]), Node: b[0x10]}
+	copy(h.SHA512[:], b[0x20:0x60])
+	copy(h.Sig[:], b[0x60:0xA0])
+	if h.HwID != HwG431 {
+		return h, fmt.Errorf("hardware id 0x%04x is not an STM32G431", h.HwID)
+	}
+	if h.Slot > 1 {
+		return h, errors.New("bad slot")
+	}
+	if int(h.Size) != len(b)-HeaderLen {
+		return h, fmt.Errorf("header says %d body bytes, file has %d", h.Size, len(b)-HeaderLen)
+	}
+	return h, nil
+}
+
+// Verify checks structure, the SHA-512 of the body and the Ed25519 signature over header bytes [0, 0x60).
+func Verify(b []byte, pub ed25519.PublicKey) (Header, error) {
+	h, err := Parse(b)
+	if err != nil {
+		return h, err
+	}
+	sum := sha512.Sum512(b[HeaderLen:])
+	if !bytes.Equal(sum[:], h.SHA512[:]) {
+		return h, errors.New("body hash does not match header")
+	}
+	if !ed25519.Verify(pub, b[:SignedLen], h.Sig[:]) {
+		return h, errors.New("bad signature")
+	}
+	return h, nil
+}

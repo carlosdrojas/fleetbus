@@ -10,10 +10,8 @@ ROOT = Path(__file__).resolve().parent.parent
 def main() -> int:
     db = cantools.database.load_file(ROOT / "can" / "fleetbus.dbc")
     out = ROOT / "firmware" / "common"
-    header, source, _, _ = db.as_c_source("can_msgs") if hasattr(db, "as_c_source") else (None,) * 4
-    if header is None:
-        from cantools.database.can.c_source import generate
-        header, source, _, _ = generate(db, "can_msgs", "can_msgs.h", "can_msgs.c", "can_msgs_fuzzer.c")
+    from cantools.database.can.c_source import generate
+    header, source, _, _ = generate(db, "can_msgs", "can_msgs.h", "can_msgs.c", "can_msgs_fuzzer.c")
     (out / "can_msgs.h").write_text(header)
     (out / "can_msgs.c").write_text(source)
     print(f"wrote {out/'can_msgs.h'} and {out/'can_msgs.c'} ({len(db.messages)} messages)")

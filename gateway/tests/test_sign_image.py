@@ -58,3 +58,10 @@ def test_real_arm_binary_roundtrip(tmp_path):
     blob = sign_image.build_image(binp.read_bytes(), 2, 0, 1, KEY)
     assert len(blob) <= sign_image.SLOT_SIZE
     assert c_verify(tmp_path, blob)[0] == 0
+
+def test_golden_image_from_vector_file_verifies_in_c(tmp_path):
+    import json
+    g = json.loads((ROOT / "protocol" / "golden_vectors.json").read_text())["golden_image"]
+    rc, out = c_verify(tmp_path, bytes.fromhex(g["blob_hex"]), node=g["node"], pub=g["pubkey_hex"])
+    assert rc == 0, out
+    assert f"version={g['version']}" in out

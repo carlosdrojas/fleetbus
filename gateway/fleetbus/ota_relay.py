@@ -39,6 +39,11 @@ class OtaRelay:
 
     # ---- from the backend (FBP)
     def on_offer(self, node, slot, version, size, image_id, now_ms):
+        if size == 0:                                   # cancel
+            if self.state != IDLE and node == self.node:
+                self.can_send(*canmsg.encode("OtaCtrl", Cmd=2, TotalBlocks=0, Slot=self.slot, TargetNode=self.node))
+                self.reset()
+            return
         if self.state != IDLE and image_id == self.image_id and node == self.node:
             self._report(fbp.OTA_PROGRESS, now_ms)      # duplicate offer: just re-report where we are
             return

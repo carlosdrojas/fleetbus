@@ -12,6 +12,8 @@ HEADER = struct.Struct("<2sBBBBIH")   # magic, ver, type, src, flags, seq, len  
 MAX_DATAGRAM = 1200
 MAX_PAYLOAD = MAX_DATAGRAM - HEADER.size - 4
 FLAG_RETRANSMIT = 0x01
+FLAG_SIMULATED = 0x02
+FLAGS_MASK = FLAG_RETRANSMIT | FLAG_SIMULATED
 
 TELEMETRY, HEARTBEAT, ACK, NACK, OTA_OFFER, OTA_CHUNK, OTA_STATUS = range(1, 8)
 OTA_ACCEPTED, OTA_PROGRESS, OTA_TRANSFERRED, OTA_FAILED, OTA_VERIFY_FAILED, OTA_CONFIRMED, OTA_ROLLED_BACK = range(7)
@@ -30,7 +32,7 @@ class Packet:
 def encode(p: Packet) -> bytes:
     if len(p.payload) > MAX_PAYLOAD:
         raise FbpError("payload too large")
-    if not (1 <= p.type <= 7) or not (0 <= p.src <= 255) or not (0 <= p.seq <= 0xFFFFFFFF) or p.flags & ~FLAG_RETRANSMIT:
+    if not (1 <= p.type <= 7) or not (0 <= p.src <= 255) or not (0 <= p.seq <= 0xFFFFFFFF) or p.flags & ~FLAGS_MASK:
         raise FbpError("bad header field")
     head = HEADER.pack(MAGIC, VERSION, p.type, p.src, p.flags, p.seq, len(p.payload)) + p.payload
     return head + struct.pack("<I", crc32c(head))
@@ -49,7 +51,7 @@ def decode(buf: bytes) -> Packet:
         raise FbpError("payload too large")
     if struct.unpack_from("<I", buf, len(buf) - 4)[0] != crc32c(buf[:-4]):
         raise FbpError("bad crc")
-    if flags & ~FLAG_RETRANSMIT:
+    if flags & ~FLAGS_MASK:
         raise FbpError("reserved flags set")
     if not (1 <= ptype <= 7):
         raise FbpError("unknown type")

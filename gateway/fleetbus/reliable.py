@@ -10,8 +10,9 @@ class Transport:
     def recv(self) -> bytes | None: ...
 
 class ReliableSender:
-    def __init__(self, src: int, transport: Transport, spool: Spool, window: int = 64, rto_ms: int = 250, max_rto_ms: int = 4000, nack_damp_ms: int = 100):
+    def __init__(self, src: int, transport: Transport, spool: Spool, window: int = 64, rto_ms: int = 250, max_rto_ms: int = 4000, nack_damp_ms: int = 100, simulated: bool = False):
         self.src, self.tp, self.spool = src, transport, spool
+        self.flags = fbp.FLAG_SIMULATED if simulated else 0
         self.window, self.rto, self.max_rto, self.nack_damp_ms = window, rto_ms, max_rto_ms, nack_damp_ms
         self.sent_upto = spool.acked            # highest seq transmitted at least once (restart: resend everything unacked)
         self.inflight: dict[int, list[int]] = {}   # seq -> [last_sent_ms, tries]
@@ -21,7 +22,7 @@ class ReliableSender:
     # ---- producing
     def send(self, ptype: int, payload: bytes) -> int | None:
         seq = self.spool.next_seq()
-        wire = fbp.encode(fbp.Packet(ptype, self.src, seq, payload))
+        wire = fbp.encode(fbp.Packet(ptype, self.src, seq, payload, self.flags))
         return seq if self.spool.put(seq, wire) else None
 
     # ---- feedback from the backend

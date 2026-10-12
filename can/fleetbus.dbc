@@ -10,7 +10,9 @@ BO_ 256 Heartbeat: 8 BATTERY
  SG_ NodeId : 0|8@1+ (1,0) [0|255] "" Vector__XXX
  SG_ FwVersion : 8|16@1+ (1,0) [0|65535] "" Vector__XXX
  SG_ UptimeS : 24|24@1+ (1,0) [0|16777215] "s" Vector__XXX
- SG_ State : 48|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ State : 48|4@1+ (1,0) [0|15] "" Vector__XXX
+ SG_ Slot : 52|1@1+ (1,0) [0|1] "" Vector__XXX
+ SG_ Trial : 53|1@1+ (1,0) [0|1] "" Vector__XXX
  SG_ ProtoVer : 56|8@1+ (1,0) [0|255] "" Vector__XXX
 
 BO_ 512 BatteryStatus: 8 BATTERY
@@ -62,6 +64,8 @@ BO_ 1280 VehicleObd: 8 TELEMATICS
 
 CM_ BO_ 256 "10 Hz from every node (TARGET). Not all nodes are BATTERY; sender column is nominal.";
 CM_ SG_ 256 State "Node state, see VAL_ table";
+CM_ SG_ 256 Slot "Running A/B slot: 0 = A, 1 = B";
+CM_ SG_ 256 Trial "1 = running image is in trial boot and not yet confirmed";
 CM_ SG_ 513 LimpHome "1 = body node is in limp-home";
 
 VAL_ 256 State 0 "BOOT" 1 "NORMAL" 2 "WARNING" 3 "FAULT" 4 "SAFE" 5 "LIMP_HOME" 6 "UPDATING" ;
