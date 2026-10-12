@@ -29,7 +29,7 @@ void bsp_log_init(void) {
     HAL_GPIO_Init(GPIOA, &g);
     LPUART1->CR1 = 0;
     LPUART1->BRR = (uint32_t)(((uint64_t)HAL_RCC_GetPCLK1Freq() * 256u + 57600u) / 115200u);   /* 8N1 */
-    LPUART1->CR1 = USART_CR1_TE | USART_CR1_UE;
+    LPUART1->CR1 = USART_CR1_TE | USART_CR1_RE | USART_CR1_UE;
 }
 static void putc_(char c) {
     uint32_t t = 100000;
@@ -59,4 +59,13 @@ void bsp_log(const char *fmt, ...) {
         }
     }
     va_end(ap);
+}
+
+/* Serial link (telematics node <-> gateway) on the same LPUART1 / ST-LINK VCP: the Nucleo's USB port is the Pi cable. */
+void bsp_link_write(const uint8_t *b, size_t n) { for (size_t i = 0; i < n; i++) putc_((char)b[i]); }
+int bsp_link_read_byte(uint8_t *b) {
+    if (LPUART1->ISR & (USART_ISR_ORE | USART_ISR_FE | USART_ISR_NE)) LPUART1->ICR = USART_ICR_ORECF | USART_ICR_FECF | USART_ICR_NECF;
+    if (!(LPUART1->ISR & USART_ISR_RXNE_RXFNE)) return 0;
+    *b = (uint8_t)LPUART1->RDR;
+    return 1;
 }

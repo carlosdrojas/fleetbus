@@ -3,7 +3,7 @@ name = "fleetbus-gateway"
 version = "0.1.0"
 description = "CAN <-> FBP/UDP gateway for FleetBus"
 requires-python = ">=3.11"
-dependencies = ["python-can>=4.4", "cantools>=39"]
+dependencies = ["python-can>=4.4", "cantools>=39", "pyserial>=3.5"]
 
 [project.optional-dependencies]
 dev = ["pytest", "pynacl"]

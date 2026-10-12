@@ -42,6 +42,10 @@ def lib():
         for n in ("lights", "servo", "limp"):
             f = getattr(L, f"sim_node_{n}"); f.argtypes = [P]; f.restype = ctypes.c_uint8
         L.sim_node_flip_byte.argtypes = [P, ctypes.c_int, ctypes.c_uint32]
+        L.sim_link_encode.restype = ctypes.c_size_t
+        L.sim_link_encode.argtypes = [ctypes.c_uint32, ctypes.c_char_p, ctypes.c_uint8, ctypes.c_char_p]
+        L.sim_crc8.restype = ctypes.c_uint8
+        L.sim_crc8.argtypes = [ctypes.c_char_p, ctypes.c_size_t]
         _lib = L
     return _lib
 
@@ -136,3 +140,10 @@ class SimFleet:
     def close(self):
         for n in self.nodes.values():
             n.close()
+
+
+def c_link_encode(can_id: int, data: bytes) -> bytes:
+    """The firmware's own serial-link encoder (for cross-language tests)."""
+    out = ctypes.create_string_buffer(64)
+    n = lib().sim_link_encode(can_id, data, len(data), out)
+    return out.raw[:n]

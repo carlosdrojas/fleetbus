@@ -1,6 +1,7 @@
 #pragma once
 /* Host simulator of one FleetBus node: real node_core + real boot logic + fake flash.
  * C ABI so Python can drive it through ctypes (gateway --sim, hil/). NOT firmware; used for tests and demos. */
+#include <stddef.h>
 #include <stdint.h>
 #ifdef __cplusplus
 extern "C" {
@@ -29,6 +30,9 @@ uint32_t sim_node_boots(const sim_node_t *n);
 uint32_t sim_node_resets_by_wdg(const sim_node_t *n);
 /* Corrupt one byte of a slot (test hook for flash corruption). */
 void sim_node_flip_byte(sim_node_t *n, int slot, uint32_t offset);
+/* serial-link codec exposed for cross-language tests */
+size_t sim_link_encode(uint32_t id, const uint8_t *data, uint8_t dlc, uint8_t *out);
+uint8_t sim_crc8(const uint8_t *d, size_t n);
 #ifdef __cplusplus
 }
 #endif

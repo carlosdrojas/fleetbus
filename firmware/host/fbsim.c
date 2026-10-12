@@ -4,6 +4,7 @@
 #include "node_core.h"
 #include "boot_logic.h"
 #include "image.h"
+#include "uart_link.h"
 #include "../tests/fake_flash.h"
 
 /* Image body byte 0 selects simulated app behaviour (bench-only fault injection; real boards use a separate
@@ -94,3 +95,6 @@ uint8_t sim_node_limp(const sim_node_t *n) { return n->node.act.limp_home; }
 uint32_t sim_node_boots(const sim_node_t *n) { return n->boots; }
 uint32_t sim_node_resets_by_wdg(const sim_node_t *n) { return n->wdg_resets; }
 void sim_node_flip_byte(sim_node_t *n, int slot, uint32_t off) { n->ff.mem[FB_SLOT_ADDR(slot) - FB_FLASH_BASE + off] ^= 0xFF; }
+
+size_t sim_link_encode(uint32_t id, const uint8_t *data, uint8_t dlc, uint8_t *out) { return fb_link_encode(id, data, dlc, out); }
+uint8_t sim_crc8(const uint8_t *d, size_t n) { return fb_crc8(d, n); }

@@ -11,7 +11,7 @@ add_library(fbsim_static STATIC ../host/fbsim.c)
 target_link_libraries(fbsim_static PUBLIC fake_flash fb_common monocypher)
 target_include_directories(fbsim_static PUBLIC ../host ../common .)
 
-foreach(t crc can_msgs fsm obd boot_meta image ota node_sim)
+foreach(t crc can_msgs fsm obd boot_meta image ota node_sim telematics)
   add_executable(test_${t} test_${t}.c)
   target_link_libraries(test_${t} unity fbsim_static fake_flash fb_common monocypher)
   add_test(NAME ${t} COMMAND test_${t})

@@ -107,6 +107,7 @@ def main() -> None:
     src = ap.add_mutually_exclusive_group(required=True)
     src.add_argument("--sim", action="store_true", help="simulated battery+body nodes (real firmware logic, no hardware)")
     src.add_argument("--can", metavar="INTERFACE:CHANNEL", help="python-can adapter, e.g. slcan:/dev/tty.usbmodem1 or gs_usb:0")
+    src.add_argument("--serial", metavar="PORT", help="in-car mode: serial link to the telematics node, e.g. /dev/ttyACM0")
     ap.add_argument("--bitrate", type=int, default=500000)
     ap.add_argument("--read-only", action="store_true", help="never transmit on the bus (use for anything near the car)")
     ap.add_argument("--control", metavar="HOST:PORT", help="(--sim only) fault-injection HTTP port, e.g. 127.0.0.1:7001")
@@ -122,6 +123,9 @@ def main() -> None:
             from .control import serve
             h, p = a.control.rsplit(":", 1)
             serve(fleet, h, int(p))
+    elif a.serial:
+        from .canio import SerialBackend
+        can = SerialBackend(a.serial)
     else:
         if a.control:
             ap.error("--control only exists in --sim mode")
@@ -130,7 +134,7 @@ def main() -> None:
     t0 = time.monotonic()
     ms = lambda: int((time.monotonic() - t0) * 1000)
     gw = Gateway(a.id, can, UdpTransport(a.backend), Spool(a.spool), start_ms=ms(), simulated=a.sim, epoch_ms=int(time.time() * 1000) - ms())
-    print(f"gateway {a.id} -> {a.backend} ({'sim' if a.sim else a.can}); Ctrl-C to stop")
+    print(f"gateway {a.id} -> {a.backend} ({'sim' if a.sim else a.serial or a.can}); Ctrl-C to stop", flush=True)
     try:
         while a.duration == 0 or time.monotonic() - t0 < a.duration:
             gw.poll(ms())

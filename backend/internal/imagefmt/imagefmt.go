@@ -72,3 +72,24 @@ func Verify(b []byte, pub ed25519.PublicKey) (Header, error) {
 	}
 	return h, nil
 }
+
+// Build assembles and signs an image (used by tests and tooling; production images come from tools/sign_image.py).
+func Build(body []byte, node, slot uint8, version uint32, priv ed25519.PrivateKey) []byte {
+	b := make([]byte, HeaderLen, HeaderLen+len(body))
+	for i := range b {
+		b[i] = 0xFF
+	}
+	for i := 0; i < 0x20; i++ {
+		b[i] = 0
+	}
+	binary.LittleEndian.PutUint32(b[0:], Magic)
+	binary.LittleEndian.PutUint16(b[4:], HwG431)
+	b[6], b[7] = slot, 1
+	binary.LittleEndian.PutUint32(b[8:], version)
+	binary.LittleEndian.PutUint32(b[12:], uint32(len(body)))
+	b[0x10] = node
+	sum := sha512.Sum512(body)
+	copy(b[0x20:], sum[:])
+	copy(b[0x60:], ed25519.Sign(priv, b[:SignedLen]))
+	return append(b, body...)
+}
