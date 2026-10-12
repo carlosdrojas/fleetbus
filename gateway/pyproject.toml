@@ -1,6 +1,18 @@
 [project]
 name = "fleetbus-gateway"
-version = "0.0.0"
-description = "MOCK(M6): CAN <-> FBP/UDP gateway"
+version = "0.1.0"
+description = "CAN <-> FBP/UDP gateway for FleetBus"
 requires-python = ">=3.11"
-dependencies = ["python-can", "cantools"]
+dependencies = ["python-can>=4.4", "cantools>=39"]
+
+[project.optional-dependencies]
+dev = ["pytest", "pynacl"]
+
+[project.scripts]
+fleetbus-gateway = "fleetbus.gateway:main"
+
+[tool.setuptools]
+packages = ["fleetbus"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "../protocol", "../hil"]

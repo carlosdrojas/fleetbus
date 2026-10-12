@@ -55,6 +55,16 @@ static void test_power_loss_mid_transfer_never_yields_valid_image(void) {
     TEST_ASSERT_FALSE(acked_all); TEST_ASSERT_EQUAL(FB_OTA_FAILED, rx.state);
     fake_flash_power_on(&ff); TEST_ASSERT_NOT_EQUAL(FB_IMG_OK, verify1());
 }
+static void test_begin_does_not_stall_node_with_bulk_erase(void) {
+    fb_ota_begin(&rx, 1, nblocks); TEST_ASSERT_EQUAL(0, ff.erase_count);
+    uint16_t next; for (uint16_t b = 0; b < nblocks; b++) send(b, &next);
+    TEST_ASSERT_EQUAL((blob_len + FB_FLASH_PAGE - 1) / FB_FLASH_PAGE, ff.erase_count);   /* only the pages actually used */
+}
+static void test_stale_slot_contents_are_overwritten(void) {
+    memset(ff.mem + (FB_SLOT_B_ADDR - FB_FLASH_BASE), 0x00, FB_SLOT_SIZE);               /* garbage from an older image */
+    uint16_t next; fb_ota_begin(&rx, 1, nblocks); for (uint16_t b = 0; b < nblocks; b++) TEST_ASSERT_EQUAL(FB_OTA_ACK_OK, send(b, &next));
+    TEST_ASSERT_EQUAL(FB_IMG_OK, verify1());
+}
 static void test_blocks_before_begin_rejected(void) { uint16_t next; TEST_ASSERT_EQUAL(FB_OTA_ACK_BAD_BLOCK, send(0, &next)); }
 static void test_begin_validates_size(void) { TEST_ASSERT_EQUAL(-1, fb_ota_begin(&rx, 1, 0)); TEST_ASSERT_EQUAL(-1, fb_ota_begin(&rx, 2, 10)); TEST_ASSERT_EQUAL(-1, fb_ota_begin(&rx, 1, (FB_SLOT_SIZE / 6) + 2)); }
 static void test_only_target_slot_touched(void) {
@@ -66,6 +76,6 @@ int main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_full_transfer_verifies); RUN_TEST(test_duplicates_are_reacked_not_rewritten); RUN_TEST(test_gap_is_rejected_with_expected_block);
     RUN_TEST(test_corrupted_block_fails_verify); RUN_TEST(test_power_loss_mid_transfer_never_yields_valid_image);
-    RUN_TEST(test_blocks_before_begin_rejected); RUN_TEST(test_begin_validates_size); RUN_TEST(test_only_target_slot_touched);
+    RUN_TEST(test_begin_does_not_stall_node_with_bulk_erase); RUN_TEST(test_stale_slot_contents_are_overwritten); RUN_TEST(test_blocks_before_begin_rejected); RUN_TEST(test_begin_validates_size); RUN_TEST(test_only_target_slot_touched);
     return UNITY_END();
 }

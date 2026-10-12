@@ -88,5 +88,7 @@ int fb_meta_mark_new(const fb_flash_t *fl, int slot, uint32_t version) {
     fb_meta_load(fl, &m);
     m.status[slot] = FB_SLOT_NEW;
     m.version[slot] = version;
+    m.active = (uint8_t)slot;     /* try the new image first; the other slot stays as the rollback target */
+    m.attempts = 0;
     return fb_meta_store(fl, &m);
 }

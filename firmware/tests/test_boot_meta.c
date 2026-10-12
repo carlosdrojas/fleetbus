@@ -53,6 +53,12 @@ static void test_failed_verify_marks_bad_and_falls_back(void) {
     TEST_ASSERT_EQUAL(0, fb_boot_decide(&m, ok_only, &only0));
     TEST_ASSERT_EQUAL(FB_SLOT_BAD, m.status[1]);
 }
+static void test_mark_new_makes_slot_preferred(void) {
+    fb_boot_meta_t m; fb_meta_default(&m); m.status[0] = FB_SLOT_CONFIRMED; m.active = 0; fb_meta_store(&fl, &m);
+    TEST_ASSERT_EQUAL(0, fb_meta_mark_new(&fl, 1, 9)); fb_meta_load(&fl, &m);
+    TEST_ASSERT_EQUAL(1, m.active); TEST_ASSERT_EQUAL(FB_SLOT_NEW, m.status[1]); TEST_ASSERT_EQUAL_UINT32(9, m.version[1]);
+    TEST_ASSERT_EQUAL(1, fb_boot_decide(&m, ok_all, NULL));
+}
 static void test_nothing_bootable(void) {
     fb_boot_meta_t m; fb_meta_default(&m);
     TEST_ASSERT_EQUAL(-1, fb_boot_decide(&m, ok_all, NULL));
@@ -76,7 +82,7 @@ int main(void) {
     RUN_TEST(test_blank_flash_gives_default); RUN_TEST(test_store_load_roundtrip_and_seq);
     RUN_TEST(test_power_loss_at_every_point_keeps_a_valid_copy); RUN_TEST(test_new_slot_becomes_trial_and_boots);
     RUN_TEST(test_unconfirmed_trial_rolls_back_after_max_attempts); RUN_TEST(test_failed_verify_marks_bad_and_falls_back);
-    RUN_TEST(test_nothing_bootable); RUN_TEST(test_confirm_raises_antidowngrade_floor);
+    RUN_TEST(test_mark_new_makes_slot_preferred); RUN_TEST(test_nothing_bootable); RUN_TEST(test_confirm_raises_antidowngrade_floor);
     RUN_TEST(test_confirm_of_non_trial_does_not_confirm_a_bad_slot);
     return UNITY_END();
 }

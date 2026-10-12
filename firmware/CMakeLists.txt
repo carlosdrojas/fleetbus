@@ -5,6 +5,7 @@ project(fleetbus_firmware C)
 set(CMAKE_C_STANDARD 11)
 add_compile_options(-Wall -Wextra -Wshadow -Wconversion -Wno-sign-conversion)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(TP ${CMAKE_CURRENT_SOURCE_DIR}/third_party)
 file(GLOB COMMON_SRC common/*.c)
 add_library(fb_common STATIC ${COMMON_SRC})
@@ -13,4 +14,5 @@ target_include_directories(fb_common PUBLIC common ${TP}/monocypher/src ${TP}/mo
 if(NOT CMAKE_CROSSCOMPILING)
   enable_testing()
   add_subdirectory(tests)
+  add_subdirectory(host)
 endif()

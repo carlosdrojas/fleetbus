@@ -6,13 +6,16 @@ void fb_ota_init(fb_ota_rx_t *rx, const fb_flash_t *fl) { memset(rx, 0, sizeof *
 int fb_ota_begin(fb_ota_rx_t *rx, int slot, uint16_t total_blocks) {
     if (slot < 0 || slot > 1 || total_blocks == 0 || (uint32_t)total_blocks * FB_OTA_BLOCK_BYTES > FB_SLOT_SIZE) return -1;
     rx->slot = slot; rx->total_blocks = total_blocks; rx->next_block = 0; rx->written = 0; rx->stage_len = 0;
-    for (uint32_t a = FB_SLOT_ADDR(slot); a < FB_SLOT_ADDR(slot) + FB_SLOT_SIZE; a += FB_FLASH_PAGE)
-        if (rx->fl->erase_page(rx->fl->ctx, a) != 0) { rx->state = FB_OTA_FAILED; return -2; }
+    /* Pages are erased lazily as the write pointer reaches them (see flush_dword): on the single-bank G4 an erase
+     * stalls the CPU for ~22 ms (datasheet-typical, not measured here), so erasing the whole slot up front would
+     * silence the node for ~0.5 s and trip the peer's 500 ms heartbeat timeout. */
     rx->state = FB_OTA_RECEIVING;
     return 0;
 }
 
 static int flush_dword(fb_ota_rx_t *rx) {
+    if (rx->written % FB_FLASH_PAGE == 0 &&
+        rx->fl->erase_page(rx->fl->ctx, FB_SLOT_ADDR(rx->slot) + rx->written) != 0) return -1;
     if (rx->fl->write(rx->fl->ctx, FB_SLOT_ADDR(rx->slot) + rx->written, rx->stage, 8) != 0) return -1;
     rx->written += 8; rx->stage_len = 0;
     return 0;
