@@ -9,7 +9,7 @@ export function Chart({ rows, unit, color = "var(--accent)", min, max, height = 
     const t0 = new Date(rows[0].ts).getTime(), t1 = new Date(rows.at(-1)!.ts).getTime() || t0 + 1;
     const vals = rows.map((r) => r.value);
     let lo = min ?? Math.min(...vals), hi = max ?? Math.max(...vals);
-    if (hi - lo < 1e-9) { hi = lo + 1; }
+    if (hi - lo < 1e-9) { lo -= 1; hi += 1; }   // flat series: draw mid-height, not on the floor
     const pad = (hi - lo) * 0.08; lo -= min === undefined ? pad : 0; hi += max === undefined ? pad : 0;
     const x = (t: number) => ((t - t0) / Math.max(t1 - t0, 1)) * w;
     const y = (v: number) => height - 6 - ((v - lo) / (hi - lo)) * (height - 12);

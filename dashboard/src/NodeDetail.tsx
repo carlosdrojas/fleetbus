@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useLive, NODE_LABEL, type MetricRow, type NodeEvent } from "./api";
 import { Chart } from "./Chart";
 
+const STATES = ["BOOT", "NORMAL", "WARNING", "FAULT", "SAFE", "LIMP HOME", "UPDATING"];
+const fmt = (k: string, v: unknown) => (k === "from" || k === "to") && typeof v === "number" && v < STATES.length && STATES[v] ? STATES[v] : String(v);
+
 const SERIES: Record<number, { name: string; label: string; unit: string; color?: string; min?: number; max?: number }[]> = {
   1: [
     { name: "pack_mv", label: "Pack voltage", unit: "mV" },
@@ -47,7 +50,7 @@ export function NodeDetail({ gw, node }: { gw: number; node: number }) {
       <ul className="events">
         {mine.length === 0 && <li className="muted">Nothing yet.</li>}
         {mine.map((e) => (
-          <li key={e.id}><time className="mono muted">{new Date(e.ts).toLocaleTimeString()}</time><b>{e.kind.replace("_", " ")}</b><span className="muted mono">{Object.entries(e.detail).map(([k, v]) => `${k}=${String(v)}`).join("  ")}</span></li>
+          <li key={e.id}><time className="mono muted">{new Date(e.ts).toLocaleTimeString()}</time><b>{e.kind.replace("_", " ")}</b><span className="muted mono">{Object.entries(e.detail).map(([k, v]) => `${k}=${e.kind === "state" ? fmt(k, v) : String(v)}`).join("  ")}</span></li>
         ))}
       </ul>
     </>
