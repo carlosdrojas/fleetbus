@@ -1,10 +1,16 @@
 cmake_minimum_required(VERSION 3.25)
-# MOCK(M2): the cross build (HAL, FreeRTOS, per-node targets, size report) is added in M2.
-# Today only the host-testable common/ library and the Unity tests are described here.
+# Host build: pure-C common library + Unity tests. The cross build lives in CMakeLists.arm.cmake (M2),
+# selected with -DCMAKE_TOOLCHAIN_FILE=cmake/arm-none-eabi.cmake.
 project(fleetbus_firmware C)
+set(CMAKE_C_STANDARD 11)
+add_compile_options(-Wall -Wextra -Wshadow -Wconversion -Wno-sign-conversion)
 
-add_library(fb_common STATIC common/crc32.c common/fault_fsm.c common/hb_monitor.c common/can_msgs.c)
-target_include_directories(fb_common PUBLIC common)
+set(TP ${CMAKE_CURRENT_SOURCE_DIR}/third_party)
+file(GLOB COMMON_SRC common/*.c)
+add_library(fb_common STATIC ${COMMON_SRC})
+target_include_directories(fb_common PUBLIC common ${TP}/monocypher/src ${TP}/monocypher/src/optional)
 
-enable_testing()
-add_subdirectory(tests)
+if(NOT CMAKE_CROSSCOMPILING)
+  enable_testing()
+  add_subdirectory(tests)
+endif()

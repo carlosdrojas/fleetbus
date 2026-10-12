@@ -1,0 +1,18 @@
+[submodule "firmware/third_party/unity"]
+	path = firmware/third_party/unity
+	url = https://github.com/ThrowTheSwitch/Unity.git
+[submodule "firmware/third_party/freertos"]
+	path = firmware/third_party/freertos
+	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+[submodule "firmware/third_party/monocypher"]
+	path = firmware/third_party/monocypher
+	url = https://github.com/LoupVaillant/Monocypher.git
+[submodule "firmware/third_party/stm32g4xx_hal_driver"]
+	path = firmware/third_party/stm32g4xx_hal_driver
+	url = https://github.com/STMicroelectronics/stm32g4xx_hal_driver.git
+[submodule "firmware/third_party/cmsis_device_g4"]
+	path = firmware/third_party/cmsis_device_g4
+	url = https://github.com/STMicroelectronics/cmsis_device_g4.git
+[submodule "firmware/third_party/cmsis_core"]
+	path = firmware/third_party/cmsis_core
+	url = https://github.com/STMicroelectronics/cmsis_core.git
