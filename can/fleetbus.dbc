@@ -1,0 +1,37 @@
+VERSION "0.1-MOCK(M1)"
+NS_ :
+BS_:
+BU_: BATTERY BODY TELEMATICS GATEWAY
+
+BO_ 256 Heartbeat: 8 BATTERY
+ SG_ NodeId : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ProtoVer : 8|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ FwVersion : 16|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ UptimeS : 32|24@1+ (1,0) [0|16777215] "s" Vector__XXX
+ SG_ State : 56|8@1+ (1,0) [0|255] "" Vector__XXX
+
+BO_ 512 BatteryStatus: 8 BATTERY
+ SG_ PackMilliVolt : 0|16@1+ (1,0) [0|65535] "mV" Vector__XXX
+ SG_ CurrentMilliAmp : 16|16@1- (1,0) [-32768|32767] "mA" Vector__XXX
+ SG_ TempDeciC : 32|16@1- (1,0) [-32768|32767] "0.1C" Vector__XXX
+ SG_ SocPct : 48|8@1+ (1,0) [0|100] "%" Vector__XXX
+
+BO_ 513 BodyStatus: 4 BODY
+ SG_ Lights : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ ServoDeg : 8|8@1+ (1,0) [0|180] "deg" Vector__XXX
+ SG_ LimpHome : 16|1@1+ (1,0) [0|1] "" Vector__XXX
+
+BO_ 768 FaultEvent: 8 BATTERY
+ SG_ FaultCode : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+ SG_ Severity : 16|8@1+ (1,0) [0|3] "" Vector__XXX
+
+BO_ 1024 OtaCtrl: 8 GATEWAY
+ SG_ Cmd : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ TotalBlocks : 8|16@1+ (1,0) [0|65535] "" Vector__XXX
+BO_ 1025 OtaData: 8 GATEWAY
+ SG_ Block : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+BO_ 1026 OtaAck: 4 BATTERY
+ SG_ NextBlock : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
+BO_ 1280 VehicleObd: 8 TELEMATICS
+ SG_ SpeedKph : 0|8@1+ (1,0) [0|255] "km/h" Vector__XXX
+ SG_ Rpm : 8|16@1+ (0.25,0) [0|16383] "rpm" Vector__XXX

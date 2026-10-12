@@ -1,0 +1,7 @@
+{
+  "name": "fleetbus-dashboard",
+  "private": true,
+  "version": "0.0.0",
+  "description": "MOCK(M8): Vite + React + TypeScript dashboard. Dependencies are not installed or pinned yet.",
+  "scripts": { "dev": "vite", "build": "tsc && vite build" }
+}

@@ -28,6 +28,7 @@ Carlos's personal embedded + backend project: STM32 nodes on FreeRTOS + CAN, a f
 ## Status
 - 2026-10-04: proposal + system map done. Nothing ordered or built. No git repo yet.
 - 2026-10-10: parts on the way. On resumes now as "In Progress" with design-stage bullets only (`~/Documents/Dev/Apply/projects/fleetbus.md` has the per-phase rules for upgrading them). Goal: phase 1 working before SHPE National.
+- 2026-10-12: Carlos asked for a full mockup on `main` + stacked branches `m1-…`–`m14-…` for the real implementation (see `MOCKUP.md`). This supersedes "Carlos commits" for these branches; push/GitHub repo still his.
 - 2026-10-12: M0 nearly done: layout, ADRs (`docs/decisions.md`), CI stubs, `docs/toolchain.md`, Postgres compose (verified healthy). Open: install `gcc-arm-embedded` cask (needs sudo), then `git init` + `gh repo create`.
 
 ## Next steps

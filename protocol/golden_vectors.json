@@ -1,0 +1,6 @@
+{
+  "_note": "MOCK(M5): placeholder vector. Real vectors are generated once and must pass in both the Python and Go test suites.",
+  "vectors": [
+    {"name": "heartbeat_minimal", "type": 2, "src": 1, "seq": 1, "payload_hex": "", "wire_hex": null}
+  ]
+}

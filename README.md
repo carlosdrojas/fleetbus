@@ -4,7 +4,7 @@ A car's network and its cloud, at bench scale.
 
 Two STM32 "ECUs" run FreeRTOS on a real CAN bus. A third node of your own rides in a 2025 Nissan Sentra and reads the car through the OBD-II port without ever writing to it. All three report to a fleet backend over a custom UDP protocol. The backend pushes signed firmware back down one node at a time, and the bootloader rolls back any version that fails its health check.
 
-**Status:** M0 (repo skeleton) in progress, 2026-10-12. Parts on the way; no firmware yet.
+**Status:** mockup of the finished repo on `main` (stubs, not implemented); real work lands milestone by milestone on branches. See [`MOCKUP.md`](MOCKUP.md). Parts on the way (2026-10-12).
 
 ```
  ┌──────── bench car (desk) ────────┐      ┌──── real vehicle (read-only) ────┐
