@@ -174,8 +174,6 @@ func TestDatabaseFailureIsRetriedWithoutLossOrDuplication(t *testing.T) {
 	sink := &fakeSink{}
 	sink.fail.Store(2)
 	r := newRig(t, sink, nil)
-	oldSleep := 0
-	_ = oldSleep
 	for s := uint32(1); s <= 5; s++ {
 		r.hbPkt(t, s)
 	}
