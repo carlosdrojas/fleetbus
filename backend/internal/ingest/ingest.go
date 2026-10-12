@@ -101,6 +101,7 @@ type peer struct {
 	dirty     bool
 	nacked    map[uint32]time.Time
 	outSeq    uint32
+	fresh     bool   // no cursor on record: adopt the first seq we see as the stream start
 	epoch     uint32 // bumped when the gateway starts a new session (spool lost, seq restarts at 1)
 }
 
@@ -173,8 +174,8 @@ func (s *Server) getPeer(src uint8) *peer {
 	defer s.mu.Unlock()
 	p, ok := s.peers[src]
 	if !ok {
-		cur := s.cursors[src]
-		p = &peer{src: src, re: fbp.NewReordererAt(s.cfg.Window, cur), committed: cur, lastAcked: cur, nacked: map[uint32]time.Time{}}
+		cur, known := s.cursors[src]
+		p = &peer{src: src, fresh: !known, re: fbp.NewReordererAt(s.cfg.Window, cur), committed: cur, lastAcked: cur, nacked: map[uint32]time.Time{}}
 		s.peers[src] = p
 		s.m.Gateways.Set(int64(len(s.peers)))
 	}
@@ -212,6 +213,15 @@ func (s *Server) reader(ctx context.Context) error {
 			s.cfg.Logf("ingest: gateway %d restarted its sequence (new session)", pkt.Src)
 			p.re, p.committed, p.lastAcked, p.epoch = fbp.NewReorderer(s.cfg.Window), 0, 0, p.epoch+1
 			p.nacked = map[uint32]time.Time{}
+		}
+		if p.fresh {
+			// Never seen (or the database was wiped) but the gateway already has history: start where it is instead of
+			// waiting forever for seq 1. Anything lower that straggles in afterwards is dropped as a duplicate.
+			p.fresh = false
+			if pkt.Seq > p.re.Window { // a few packets ahead is just reordering on first contact: NACK handles that
+				s.cfg.Logf("ingest: gateway %d has no cursor; adopting its stream at seq %d", pkt.Src, pkt.Seq)
+				p.re.StartAt(pkt.Seq)
+			}
 		}
 		p.addr, p.sim, p.dirty = addr, pkt.Flags&fbp.FlagSimulated != 0, true
 		dupsBefore, farBefore := p.re.Dups, p.re.TooFar

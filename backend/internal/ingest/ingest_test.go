@@ -343,3 +343,14 @@ func TestRestartResumesFromCommittedCursorWithoutRestoringOrStalling(t *testing.
 		t.Fatalf("cursor = %d", sink.cursors[7])
 	}
 }
+
+func TestGatewayWithHistoryIsAdoptedWhenBackendHasNoCursor(t *testing.T) {
+	r := newRig(t, &fakeSink{}, nil) // database was wiped: no cursors
+	for s := uint32(500); s <= 510; s++ {
+		r.hbPkt(t, s)
+	}
+	if got := r.lastAck(300 * time.Millisecond); got != 510 {
+		t.Fatalf("gateway at seq 500+ was never adopted (ack %d)", got)
+	}
+	eventually(t, "11 items", func() bool { return r.m.Items.Value() == 11 })
+}

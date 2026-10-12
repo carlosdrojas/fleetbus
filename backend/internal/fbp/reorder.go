@@ -21,6 +21,13 @@ func NewReordererAt(window, cursor uint32) *Reorderer {
 	return &Reorderer{Window: window, next: cursor + 1, held: map[uint32]Packet{}}
 }
 
+// StartAt re-bases an empty reorderer so the stream begins at seq (used for a gateway never seen before).
+func (r *Reorderer) StartAt(seq uint32) {
+	if seq > 0 && len(r.held) == 0 {
+		r.next = seq
+	}
+}
+
 // CumAck is the highest seq such that all seqs <= it were delivered (0 if none).
 func (r *Reorderer) CumAck() uint32 { return r.next - 1 }
 
