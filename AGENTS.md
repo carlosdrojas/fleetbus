@@ -21,21 +21,20 @@ Carlos's personal embedded + backend project: STM32 nodes on FreeRTOS + CAN, a f
 - 2026-10-03 — Real car = 2025 Nissan Sentra SR. Standard PIDs are guaranteed; whether passive sniffing works is unknown → day-one listen-only test.
 - 2026-10-04 — Optional phase 4b: Carlos's own STM32 node rides in the car (12 V, Pi + phone hotspot link) and takes the same OTA.
 - 2026-10-12 — Stack (full tradeoffs in `docs/decisions.md`): **D1** Python gateway (`python-can`) + Go backend, with shared FBP golden vectors to prevent drift · **D2** firmware built with CMake + arm-none-eabi-gcc, HAL/FreeRTOS/Monocypher/Unity as submodules (not CubeIDE, not Zephyr) · **D3** dashboard is a Vite + React + TS SPA over REST/SSE (Grafana optional later via `/metrics`) · defaults: Postgres 16, in-process bounded Go channel as queue, CRC-32C.
-- 2026-10-12 — Implementation runs as milestones M0–M14 (`README.md` → Build order). Claude stops at each; Carlos commits and pushes.
-- 2026-10-12 — Model use: Sonnet for routine milestones, Opus for the protocol/bootloader/OTA/safety ones; one milestone per session; no subagents by default. `claude-router` disabled (cost a lot, no measured benefit). See **Model & session workflow**.
+- 2026-10-12 — Workflow change (Carlos): instead of one milestone per session, the **whole implementation was built in one pass on `main`** and verified in simulation. The M0–M14 branches that existed briefly were mock-up staging and are obsolete. Commits on `main` were made by Claude at Carlos's request; pushing / creating the GitHub repo is still Carlos's.
+- 2026-10-12 — D4–D8 (commit-gated ACKs + stored cursor, simulator = real firmware logic, 28 KB bootloader, fail-closed rollout gate, two timeouts): see `docs/decisions.md`.
+- 2026-10-12 — Model use (superseded for this pass by the one-shot build above): Sonnet for routine milestones, Opus for the protocol/bootloader/OTA/safety ones; one milestone per session; no subagents by default. `claude-router` disabled (cost a lot, no measured benefit). See **Model & session workflow**.
 - Flight computer: not required for SpaceX; only a later optional add-on if SpaceX Engineering becomes the top target.
 
 ## Status
-- 2026-10-04: proposal + system map done. Nothing ordered or built. No git repo yet.
-- 2026-10-10: parts on the way. On resumes now as "In Progress" with design-stage bullets only (`~/Documents/Dev/Apply/projects/fleetbus.md` has the per-phase rules for upgrading them). Goal: phase 1 working before SHPE National.
-- 2026-10-12: Carlos asked for a full mockup on `main` + stacked branches `m1-…`–`m14-…` for the real implementation (see `MOCKUP.md`). This supersedes "Carlos commits" for these branches; push/GitHub repo still his.
-- 2026-10-12: M0 nearly done: layout, ADRs (`docs/decisions.md`), CI stubs, `docs/toolchain.md`, Postgres compose (verified healthy). Open: install `gcc-arm-embedded` cask (needs sudo), then `git init` + `gh repo create`.
+- 2026-10-12: **Whole stack built on `main` and verified in simulation** (see `docs/verification.md`): CAN contract, firmware common (82 host tests), host simulator running the real firmware logic, FBP in Python + Go with golden vectors and fuzzing, gateway with disk spool and OTA relay, Go ingest/api/alerts/rollout engine/fbctl on Postgres (61 tests, -race), React dashboard, HIL harness, in-car node logic, 12 end-to-end scenarios. Firmware cross-compiles and links (bootloader 24.5 KB of 28, apps 37–44 KB of 48.6 KB). **Nothing has run on hardware yet** (parts on the way). CI workflow written, not yet run on GitHub.
+- Next: `docs/bench-guide.md` (Carlos, when parts arrive); push to GitHub and fix CI; phase 5 PCB is not started (optional).
 
 ## Next steps
-1. Order parts (`docs/proposal.md` → Parts). Confirm prices first.
-2. Day one: USB-CAN adapter on the Sentra's OBD-II port in listen-only mode; record what the car exposes.
-3. Phase 1: FreeRTOS on the first Nucleo; draft `fleetbus.dbc`.
-4. `git init` + public GitHub repo early (resumes will link it).
+1. Parts arrive → follow `docs/bench-guide.md` top to bottom; write real measurements into `docs/measured.md` and only then drop TARGET/ESTIMATED labels.
+2. `gh repo create`, push, get `.github/workflows/ci.yml` green.
+3. Replace the dev signing key (`tools/sign_image.py keygen --force`) before anything leaves the bench.
+4. Resume bullets: upgrade only with measured numbers (rules in `~/Documents/Dev/Apply/projects/fleetbus.md`).
 
 ## Model & session workflow (Claude Code)
 Goal: spend premium model usage only where a wrong call is expensive. Claude can't switch its own model, so it **tells Carlos** which one to use.

@@ -9,7 +9,9 @@ brew install --cask gcc-arm-embedded   # arm-none-eabi-gcc; the installer asks f
 
 Use the **cask**, not the `arm-none-eabi-gcc` brew formula: the formula ships no newlib-nano (`--specs=nano.specs` fails), which the firmware needs.
 
-Docker Desktop runs Postgres (`docker compose -f deploy/docker-compose.yml up db`).
+Docker (OrbStack or Docker Desktop) runs Postgres 16: `make db`. The container publishes **host port 5433**, not 5432, because a native Postgres often owns 5432 and silently shadows the container (this bit us: database tests were skipping). Set `FLEETBUS_REQUIRE_DB=1` (the Makefile does) so they fail instead of skip.
+
+Python: `make setup` (venv in `.venv`). Go 1.22+. Node 22 for the dashboard. The Nucleo needs `st-flash` (brew `stlink`).
 
 ## Check
 ```

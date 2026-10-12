@@ -2,7 +2,7 @@
 
 Short ADRs for FleetBus's software stack. Each one covers what was chosen, what it was compared against, the tradeoffs, and when to revisit. One-line summaries live in `AGENTS.md` → Decisions.
 
-Decided 2026-10-12 while planning the implementation (plan: milestones M0–M14 in `README.md` → Build order).
+Decided 2026-10-12 while planning the implementation. D1–D3 were set before building; D4–D8 were made (and in two cases changed) by measuring while building.
 
 ---
 
@@ -57,6 +57,38 @@ Decided 2026-10-12 while planning the implementation (plan: milestones M0–M14 
 **Revisit if** dashboard work starts crowding out phase 4 (OTA). Then cut the SPA to the fleet grid + OTA page and use Grafana for charts.
 
 ---
+
+## D4 — ACK means "committed", and the gateway cursor is stored with the data
+
+**Decision.** Ingest acknowledges a packet only after the transaction containing it has committed, and writes the per-gateway
+committed sequence number (`gateway_cursors`) in that same transaction. On restart it resumes from the cursor.
+**Why.** Acking on receipt loses data on a crash; resuming from seq 1 after a restart stalls any gateway that is already at seq
+500 (found while designing the "kill ingest mid-transfer" e2e). Cost: ACK latency = batch wait + DB commit (measured ~10–50 ms).
+**Revisit if** commit latency dominates RTT; the fix is larger windows, not weaker acks.
+
+## D5 — The simulator runs the real firmware logic (ctypes), not a Python re-implementation
+
+**Decision.** `firmware/host/fbsim.c` wraps the portable node core, boot logic and a fake flash; the gateway `--sim`, HIL and e2e
+tests drive it from Python. **Why.** A re-implementation would test itself. It already caught a real bug (the new slot was not
+made preferred after an OTA). **Cost.** Tests need the host build (`make host-test`) first.
+
+## D6 — Flash layout changed to a 28 KB bootloader
+
+The 24 KB budget in the original plan measured at 24,504 B (99.7 %) with Monocypher Ed25519, so: bootloader 28 KB, metadata 4 KB,
+two 48 KB slots filling the 128 KB part exactly. The Nucleo-G474RE fallback was not needed. OTA pages are erased lazily (one per
+2 KB written): erasing the whole slot up front would stall the single-bank G4 for ~0.5 s and trip the peer's 500 ms timeout.
+
+## D7 — Rollout health gate is fail-closed and lives in the database
+
+A step is healthy only if the node is **fresh**, reports the **target version in the target slot**, has **confirmed** the image
+itself (trial bit clear), is NORMAL/WARNING, has **no fault events** since the update, and stays that way for a soak period.
+Anything else, including silence and DB errors, never counts as healthy. State is in Postgres; the engine is stateless, so a
+restarted API resumes (e2e-tested). One node at a time after the canary.
+
+## D8 — Two timeouts, deliberately
+
+The node's own confirm deadline (10 s, enforced by stopping the IWDG feed) catches a bad image *on the device*, even with no
+backend. The backend's health window (30 s default) catches what the node cannot judge about itself. Neither trusts the other.
 
 ## Smaller defaults
 
