@@ -37,7 +37,7 @@ board. Messages are defined in `can/fleetbus.dbc`; C code is generated from it.
 ## Parts
 
 2× LP-MSPM0G3507, 2× 3.3 V CAN transceiver (SN65HVD230 or TCAN1042), 2× 120 Ω, twisted pair, 10 kΩ pot,
-10 kΩ NTC + 10 kΩ resistor, INA219 breakout, hobby servo + 5 V supply, ST7735 160×128 SPI LCD (EE319K kit),
+10 kΩ NTC + 10 kΩ resistor, INA219 breakout, hobby servo + 5 V supply, Adafruit 1.8" TFT breakout (product 358, ST7735R, 160×128),
 jumper wires. Optional: a USB-CAN adapter (CANable) for the terminal and web dashboards. Pins:
 `firmware/bsp/mspm0g3507/bsp_pins.h`.
 
@@ -70,13 +70,29 @@ the CANable acknowledges frames so the single node does not error out.
 
 ## L3: LCD instrument cluster
 
-Wire the ST7735 to the body LaunchPad: SCK PB9, MOSI PB8, CS PB6, D/C PB16, RESET PB15, VCC 3.3 V, LED 3.3 V, GND.
+Wire the Adafruit 1.8" TFT breakout (ST7735R) to the body LaunchPad:
+
+| Breakout pin | LaunchPad |
+|---|---|
+| VCC | 3V3 |
+| GND | GND |
+| SCK | PB9 (SPI1 clock) |
+| MOSI | PB8 (SPI1 data) |
+| TFT_CS | PB6 |
+| D/C | PB16 |
+| RESET | PB15 |
+| LITE | 3V3 (backlight PWM input; tie high for full brightness) |
+| MISO, CARD_CS | not connected (the microSD slot is unused) |
+
 Flash `lite body` (or any body image built for the MSPM0).
 
 1. The screen shows the cluster (`docs/img/lcd_normal.png` is the real renderer output). With no battery on the
    bus: NO DATA, then BATTERY SILENT once a heartbeat has been seen and stops.
-2. Mirrored, rotated, shifted, or red/blue swapped: change `LCD_MADCTL`, `LCD_X_OFF`, `LCD_Y_OFF` in
-   `firmware/bsp/mspm0g3507/bsp_display.c` and reflash. Record the values that work for your panel.
+2. **Panel tab.** Adafruit has shipped this breakout with different panels ("black tab" / "green tab", after the tab
+   on the protective film), and the label is not always reliable. The default build assumes black tab. If red and blue
+   are swapped (the NORMAL banner shows blue instead of green), or there is a 1–2 px band of junk on one edge, rebuild
+   with `cmake -S firmware -B build/fw-mspm0 -DFB_LCD_GREENTAB=ON ...` and reflash. If it is mirrored or rotated, change
+   `LCD_MADCTL` in `firmware/bsp/mspm0g3507/bsp_display.c`. Record which setting your panel needs.
 3. **The RTOS measurement:** `disp_ms` on the status line is one frame's draw time. Then check the node task kept its
    10 ms period while the display draws: heartbeat spacing on the CANable (`candump -t d` on Linux or the web
    dashboard's frame list) should stay 100 ms ± a tick. Record draw time and heartbeat jitter.

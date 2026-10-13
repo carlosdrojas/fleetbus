@@ -12,9 +12,10 @@
  *   ADC0 ch3 pot standing in for pack V ... PA24 (A0_3)
  *   Servo PWM (TIMA1 CCP0) ................ PB4                 PINCM17
  *   Head light / turn light ............... PB27 / PB22         PINCM58 / PINCM50   (LED2 green / blue on the LaunchPad)
- *   ST7735 LCD (body node, Lite option 4):  SCK PB9 (SPI1)  MOSI PB8 (SPI1)  CS PB6  D/C PB16  RESET PB15  (LED/backlight to 3.3 V)
- *     SPI1 pins as in TI's LP-MSPM0G3507 spi_controller example. If your EE319K LCD wiring used PA13 for anything,
- *     move it: PA13 is MCAN RX here.
+ *   Adafruit 1.8" TFT (ST7735R, product 358) on the body node, Lite option 4. Breakout pin -> LaunchPad:
+ *     VCC -> 3V3   GND -> GND   SCK -> PB9 (SPI1)   MOSI -> PB8 (SPI1)   TFT_CS -> PB6   D/C -> PB16   RESET -> PB15
+ *     LITE -> 3V3 (backlight PWM input; tie high for full brightness)   MISO, CARD_CS -> not connected (no SD card)
+ *     SPI1 pins as in TI's LP-MSPM0G3507 spi_controller example. PA13 is MCAN RX here: don't reuse it for the LCD.
  */
 #include <ti/devices/msp/msp.h>
 

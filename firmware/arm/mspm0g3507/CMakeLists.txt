@@ -30,6 +30,10 @@ add_library(bsp STATIC ${BSPDIR}/bsp_log.c ${BSPDIR}/mspm0g3507/bsp_core.c ${BSP
 target_sources(bsp_boot PRIVATE ${BSPDIR}/mspm0g3507/bsp_flash.c)
 target_link_libraries(bsp PUBLIC bsp_boot freertos)
 target_compile_options(bsp PRIVATE -Wall -Wextra)
+option(FB_LCD_GREENTAB "Adafruit 1.8in TFT is a green-tab panel (BGR + 1/2 px offsets); default black tab" OFF)
+if(FB_LCD_GREENTAB)
+  target_compile_definitions(bsp PRIVATE FB_LCD_GREENTAB=1)
+endif()
 
 function(fb_finish tgt)
   add_custom_command(TARGET ${tgt} POST_BUILD

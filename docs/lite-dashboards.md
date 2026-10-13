@@ -18,8 +18,9 @@ its jumper can be one of the two 120 Ω terminators.
 | 4 | On-board LCD gauge | an ST7735 on the body node becomes the car's instrument cluster: voltage needle over red/amber/green zones at the firmware thresholds, temperature, current, SoC, state banner (NORMAL / WARNING / FAULT / SAFE / BATTERY SILENT / NO DATA / LIMP HOME); no laptop | **built** (renderer `common/gauge_view.c` host-tested, 6 tests; ST7735 driver + display task on MSPM0; **not run on a board**) | bench bring-up only | Lite's headline feature |
 
 ## Option 4 details
-- **Screen:** the **ST7735 160×128 SPI color LCD** (the EE319K kit has one). Wiring in
-  `firmware/bsp/mspm0g3507/bsp_pins.h`: SCK PB9, MOSI PB8 (SPI1), CS PB6, D/C PB16, RESET PB15, backlight to 3.3 V.
+- **Screen:** Carlos's **Adafruit 1.8" TFT breakout** (product 358: ST7735R, 160×128, RGB565). Wiring in
+  `firmware/bsp/mspm0g3507/bsp_pins.h` and `docs/lite.md` L3: SCK PB9, MOSI PB8 (SPI1), TFT_CS PB6, D/C PB16, RESET PB15,
+  LITE to 3.3 V. Default black-tab panel settings; `-DFB_LCD_GREENTAB=ON` for green-tab panels.
 - **Renderer:** `firmware/common/gauge_view.c` draws only through a fill-rectangle callback and repaints only what
   changed. Host tests check every banner, clamping, that 300 random incremental updates always equal a fresh full
   draw, and that an unchanged frame costs one call. `tools/gauge_shots.py` renders the real output to `docs/img/`.

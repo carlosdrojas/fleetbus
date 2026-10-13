@@ -1,15 +1,23 @@
-/* ST7735 160x128 SPI LCD on the body node (FleetBus Lite option 4). NOT YET RUN ON A BOARD.
- * Init sequence: the standard ST7735R one (Sitronix datasheet / the EE319K ST7735 driver lineage), RGB565, landscape.
- * Panels differ between "tabs" and clones: if the picture is mirrored, rotated or offset, or red and blue are
- * swapped, change LCD_MADCTL / LCD_X_OFF / LCD_Y_OFF below (P-L3 bench step). SPI1 at ~8 MHz assuming an 80 MHz
- * bus clock (VERIFY which clock SPI1 runs from; at 40 MHz it is 4 MHz, still fine). */
+/* Adafruit 1.8" TFT breakout (product 358: ST7735R, 160x128, RGB565) on the body node, FleetBus Lite option 4.
+ * NOT YET RUN ON A BOARD. Init: the standard ST7735R sequence (frame rate, power, VCOM, then MADCTL/COLMOD), as in the
+ * Sitronix datasheet and Adafruit's initR() "Rcmd1". Landscape.
+ * Adafruit has shipped this breakout with different panel "tabs" (colour of the tab on the protective film) that need
+ * different colour order and edge offsets, and the label is not always reliable. Default: black tab. If red and blue
+ * are swapped, or there is a stray 1-2 px band on one edge, build with -DFB_LCD_GREENTAB=1 (docs/lite.md, L3).
+ * SPI1 at ~8 MHz assuming an 80 MHz bus clock (VERIFY which clock SPI1 runs from; at 40 MHz it is 4 MHz, still fine). */
 #include <ti/driverlib/driverlib.h>
 #include "bsp.h"
 #include "bsp_pins.h"
 
-#define LCD_MADCTL 0xA8u    /* MY | MV (landscape) | BGR. Try 0x68 / 0xA0 / 0x60 if wrong. */
+#if FB_LCD_GREENTAB
+#define LCD_MADCTL 0xA8u    /* MY | MV (landscape) | BGR: green-tab panels use BGR order */
+#define LCD_X_OFF 1         /* green-tab glass sits 2 columns / 1 row in from RAM origin in portrait = 1, 2 here */
+#define LCD_Y_OFF 2
+#else
+#define LCD_MADCTL 0xA0u    /* MY | MV (landscape), RGB order: black tab (Adafruit initR(INITR_BLACKTAB) + rotation 1) */
 #define LCD_X_OFF 0
 #define LCD_Y_OFF 0
+#endif
 
 static void cs(int lo) { if (lo) DL_GPIO_clearPins(PIN_LCD_PORT, PIN_LCD_CS); else DL_GPIO_setPins(PIN_LCD_PORT, PIN_LCD_CS); }
 static void dc(int data) { if (data) DL_GPIO_setPins(PIN_LCD_PORT, PIN_LCD_DC); else DL_GPIO_clearPins(PIN_LCD_PORT, PIN_LCD_DC); }

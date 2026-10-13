@@ -25,7 +25,7 @@ has a value, the matching claim elsewhere stays labelled TARGET, ESTIMATED or UN
 | L2 | Web dashboard vs bench: decode errors over 10 min | 0 | | |
 | L3 | LCD frame draw time (`disp_ms`) | unknown (SPI ~8 MHz EST) | | |
 | L3 | Heartbeat spacing while the LCD draws | 100 ms ± one tick | | |
-| L3 | Working `LCD_MADCTL` / offsets for this panel | 0xA8 / 0 / 0 (guess) | | |
+| L3 | Adafruit 1.8" panel tab that works (colours and edges correct) | black tab (default) or `FB_LCD_GREENTAB` | | |
 | P6 | Bootloader reset-to-app time | < 1 s (EST: 0.43–0.65 s per verify at 80 MHz, P0) | | |
 | P6 | Power-cut torture test | 200/200 boots | | |
 | P7 | OTA transfer time (~29 KB image, 500 kbit/s) | ~5 s (EST from simulation of a 38 KB image ≈ 6 s) | | |

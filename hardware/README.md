@@ -13,6 +13,7 @@ Bench parts for the primary target (LP-MSPM0G3507 LaunchPad). Wiring per node an
 | INA219 breakout | 1 | battery node current (I2C1, PB2/PB3) |
 | 10 kΩ NTC + 10 kΩ resistor, 10 kΩ pot | 1 each | battery node temperature and "pack voltage" (ADC0 ch2/ch3) |
 | Hobby servo (5 V supply) | 1 | body node actuator (PB4) |
+| Adafruit 1.8" TFT breakout (product 358, ST7735R 160×128) | 1 | FleetBus Lite instrument cluster on the body node (`docs/lite.md` L3) |
 | USB relay or smart plug | 1 | P6 power-cut test (`tools/powercut.py`) |
 
 Test equipment: multimeter; oscilloscope or logic analyzer (a USB logic analyzer covers LED, servo and bit timing;
