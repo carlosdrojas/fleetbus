@@ -3,7 +3,7 @@
 Shared by Claude Code, Codex CLI and Gemini CLI (`CLAUDE.md` is a symlink to this file). Overview in `README.md`; full design in `docs/proposal.md`.
 
 ## What this is
-Carlos's personal embedded + backend project: STM32 nodes on FreeRTOS + CAN, a fleet backend, and signed, rollback-safe OTA updates, with read-only data from his 2025 Nissan Sentra SR. Purpose: close the job-application gaps (RTOS, CAN, firmware tests; plus databases, monitoring, networking, security) for Tesla and SpaceX internships. See `docs/career-fit.md`.
+Carlos's personal embedded + backend project: MSPM0G3507 LaunchPad nodes (STM32 Nucleo kept as a secondary target) on FreeRTOS + CAN, a fleet backend, and signed, rollback-safe OTA updates, with read-only data from his 2025 Nissan Sentra SR. Purpose: close the job-application gaps (RTOS, CAN, firmware tests; plus databases, monitoring, networking, security) for Tesla and SpaceX internships. See `docs/career-fit.md`.
 
 ## Rules (non-negotiable)
 - **Never write to the car.** Only standard OBD-II diagnostic requests. No flashing, fuzzing, or injecting frames on the Sentra's bus or modules.
@@ -20,6 +20,7 @@ Carlos's personal embedded + backend project: STM32 nodes on FreeRTOS + CAN, a f
 - 2026-10-03 — OTA design: Ed25519 signatures (e.g. Monocypher on the MCU), anti-downgrade, A/B slots, trial boot with a 10 s health window, staged rollout gated on health read from Postgres. Same fail-closed idea as Carlos's Amazon allowlist gating.
 - 2026-10-03 — Real car = 2025 Nissan Sentra SR. Standard PIDs are guaranteed; whether passive sniffing works is unknown → day-one listen-only test.
 - 2026-10-04 — Optional phase 4b: Carlos's own STM32 node rides in the car (12 V, Pi + phone hotspot link) and takes the same OTA.
+- 2026-10-12 — **Hardware change (Carlos): primary hardware is the TI LP-MSPM0G3507 LaunchPad (his embedded-systems class board), superseding the 2026-10-03 Nucleo-G431RB choice.** STM32 BSP stays as a secondary target and as the fallback if the P0 feasibility spike fails (bootloader size, Ed25519 verify time on Cortex-M0+). Plan, risks and milestones P0 to P8: `docs/mspm0-port-plan.md`. Not yet verified: any of it on hardware; resume wording still says STM32 until the port is recorded in `~/Documents/Dev/Apply/projects/fleetbus.md`.
 - 2026-10-12 — Stack (full tradeoffs in `docs/decisions.md`): **D1** Python gateway (`python-can`) + Go backend, with shared FBP golden vectors to prevent drift · **D2** firmware built with CMake + arm-none-eabi-gcc, HAL/FreeRTOS/Monocypher/Unity as submodules (not CubeIDE, not Zephyr) · **D3** dashboard is a Vite + React + TS SPA over REST/SSE (Grafana optional later via `/metrics`) · defaults: Postgres 16, in-process bounded Go channel as queue, CRC-32C.
 - 2026-10-12 — Workflow change (Carlos): instead of one milestone per session, the **whole implementation was built in one pass on `main`** and verified in simulation. The M0–M14 branches that existed briefly were mock-up staging and are obsolete. Commits on `main` were made by Claude at Carlos's request; pushing / creating the GitHub repo is still Carlos's.
 - 2026-10-12 — D4–D8 (commit-gated ACKs + stored cursor, simulator = real firmware logic, 28 KB bootloader, fail-closed rollout gate, two timeouts): see `docs/decisions.md`.
@@ -28,7 +29,8 @@ Carlos's personal embedded + backend project: STM32 nodes on FreeRTOS + CAN, a f
 
 ## Status
 - 2026-10-12: **Whole stack built on `main` and verified in simulation** (see `docs/verification.md`): CAN contract, firmware common (82 host tests), host simulator running the real firmware logic, FBP in Python + Go with golden vectors and fuzzing, gateway with disk spool and OTA relay, Go ingest/api/alerts/rollout engine/fbctl on Postgres (61 tests, -race), React dashboard, HIL harness, in-car node logic, 12 end-to-end scenarios. Firmware cross-compiles and links (bootloader 24.5 KB of 28, apps 37–44 KB of 48.6 KB). **Nothing has run on hardware yet** (parts on the way). CI workflow written, not yet run on GitHub.
-- Next: `docs/bench-guide.md` (Carlos, when parts arrive); push to GitHub and fix CI; phase 5 PCB is not started (optional).
+- 2026-10-12: **P0 feasibility spike done without a board** (`docs/p0-feasibility.md`, code in `firmware/spike/p0/`). R1 to R5 pass: M0+ bootloader core is 15.4 KB at `-Os` (MEASURED link; whole bootloader EST 18.4 to 22.6 KB of 28); Ed25519 check is 15.2 M instructions (MEASURED in emulator), about 0.28 s at 80 MHz (EST); WWDT keeps running across the jump and VTOR exists (T1). R6 open: headless flash over XDS110 needs a board. Found: STM32 build actually compiles at `-O3 -fPIC`, boot verifies the chosen image twice, bootloader stack reserve (1.5 KB) is below the measured 1.9 KB Ed25519 peak, and MSPM0 erased flash reads are nondeterministic (ECC reset risk, P6 design item).
+- Next: **P1 board split** (Sonnet), including the P0 fixes listed in `docs/p0-feasibility.md`; close R6 at the start of P2 when a LaunchPad is on the desk; `docs/bench-guide.md` (Carlos, when parts arrive); push to GitHub and fix CI; phase 5 PCB is not started (optional).
 
 ## Next steps
 1. Parts arrive → follow `docs/bench-guide.md` top to bottom; write real measurements into `docs/measured.md` and only then drop TARGET/ESTIMATED labels.
