@@ -59,7 +59,7 @@ footer{color:var(--muted);font-size:12px;max-width:80ch}
 <header>
   <div class="eyebrow">FleetBus · hardware port · TI LP-MSPM0G3507</div>
   <h1>MSPM0 bench</h1>
-  <p>The desk setup the port is building toward: two LaunchPad nodes on a CAN bus, a USB-CAN adapter into the gateway and backend, and an optional third node in the Sentra. Click any part.</p>
+  <p>The desk setup the port is building toward: two LaunchPad nodes on a CAN bus, a USB-CAN adapter into the gateway and backend, and an optional third node in the Sentra with its Raspberry Pi. Turn on “Custom PCB” to see where the phase 5 boards would replace the breadboard. Click any part.</p>
 </header>
 
 <section class="bench">
@@ -68,6 +68,7 @@ footer{color:var(--muted);font-size:12px;max-width:80ch}
     <div class="controls" style="margin-top:10px">
       <label><input type="checkbox" id="tg-tel" checked>Telemetry up</label>
       <label><input type="checkbox" id="tg-ota" checked>Firmware down</label>
+      <label><input type="checkbox" id="tg-pcb">Custom PCB (phase 5)</label>
       <button id="b-reset">Reset view</button><button id="b-top">Top view</button>
       <div class="key" style="margin-left:auto"><span><i style="background:#1D9E75"></i>telemetry</span><span><i style="background:#EF9F27"></i>firmware</span><span><i style="background:#e0b020;border-radius:0"></i>CANH</span><span><i style="background:#2f9e5a;border-radius:0"></i>CANL</span></div>
     </div>
@@ -140,10 +141,12 @@ bx(g,3,1.5,3,0x55ff88,-12,2,-36,Object.assign({emissive:0x1f8f45},o||{}));
 launchpad(part('nodeA',-120,2,40,'battery node',22));
 launchpad(part('nodeB',40,2,40,'body node',22));
 launchpad(part('ghost',215,2,45,'in-car node (later)',22),{transparent:true,opacity:0.35});
-[-120,40].forEach(function(x,i){var g=part('xcvr',x,2,-30,i?'transceivers':null,12);bx(g,22,2,16,0x1f5fa8,0,0,0);bx(g,8,2,6,0x181818,0,2,0)});
+var breadboard=[];   /* breadboard modules the phase 5 board replaces */
+[-120,40].forEach(function(x,i){var g=part('xcvr',x,2,-30,i?'transceivers':null,12);bx(g,22,2,16,0x1f5fa8,0,0,0);bx(g,8,2,6,0x181818,0,2,0);breadboard.push(g)});
 var wires=new T.Group();scene.add(wires);
+var bbw=new T.Group();scene.add(bbw);breadboard.push(bbw);
 [-120,40].forEach(function(x){
-cyl(wires,[x-6,6,-6],[x-5,4,-24],0x6b7378,0.9);cyl(wires,[x+6,6,-6],[x+5,4,-24],0x6b7378,0.9);
+cyl(bbw,[x-6,6,-6],[x-5,4,-24],0x6b7378,0.9);cyl(bbw,[x+6,6,-6],[x+5,4,-24],0x6b7378,0.9);
 cyl(wires,[x-3,4,-38],[x-3,5,-62],0xe0b020,1.2);cyl(wires,[x+3,4,-38],[x+3,3.5,-58],0x2f9e5a,1.2);
 });
 var bus=part('bus',-35,0,-60,'CAN bus · 500 kbit/s',14);
@@ -153,14 +156,35 @@ bx(part('term',142,3,-60,'120 Ω',12),8,5,5,0xd9b27c,0,0,0);
 var CA=part('canable',-190,3,-48,'USB-CAN',16);bx(CA,16,7,38,0x3a4148,0,0,0);bx(CA,8,3,6,0xb8bcc0,0,0,22);
 var GW=part('gateway',-195,2,5,'gateway',30);bx(GW,64,3,44,0x9a9ea3,0,0,0);var scr=bx(GW,64,36,2,0x2b3238,0,19,-22);scr.rotation.x=-0.3;
 var BE=part('backend',-195,2,105,'backend',24);[3,9,15].forEach(function(y,i){bx(BE,50,5,30,i==1?0x4f5b63:0x6a767e,0,y,0)});
-var INA=part('ina',-120,2,108,'INA219',12);bx(INA,22,1.5,14,0x6a3fa0,0,0,0);bx(INA,6,1.5,4,0x181818,0,1.5,0);
-cyl(wires,[-125,5,86],[-125,3,100],0x6b7378,0.9);cyl(wires,[-115,5,86],[-115,3,100],0x6b7378,0.9);
+var INA=part('ina',-120,2,108,'INA219',12);bx(INA,22,1.5,14,0x6a3fa0,0,0,0);bx(INA,6,1.5,4,0x181818,0,1.5,0);breadboard.push(INA);
+cyl(bbw,[-125,5,86],[-125,3,100],0x6b7378,0.9);cyl(bbw,[-115,5,86],[-115,3,100],0x6b7378,0.9);
 var SV=part('servo',40,2,108,'servo',24);bx(SV,24,20,12,0x2a5db0,0,10,0);var horn=bx(SV,22,2,4,0xf1efe8,0,21,0);
 var LD=part('leds',78,2,108,'lights',14);
 [-8,0,8].forEach(function(x){var m=new T.Mesh(new T.SphereGeometry(3,12,8),mat(0xf2c14e,{emissive:0xaa7a10}));m.position.set(x,3,0);LD.add(m)});
 cyl(wires,[36,5,86],[36,3,100],0x6b7378,0.9);cyl(wires,[48,5,86],[72,3,100],0x6b7378,0.9);
 bx(part('obd',215,7,-20,'Sentra OBD-II',16),32,14,20,0x4a5056,0,0,0,{transparent:true,opacity:0.6});
 cyl(wires,[215,5,2],[215,5,-12],0x888780,1,{transparent:true,opacity:0.4});
+var PI=part('pi',268,2,45,'Raspberry Pi (in car)',14);bx(PI,50,2,80,0x2f7d4a,0,0,0,{transparent:true,opacity:0.45});
+bx(PI,14,10,16,0xb8bcc0,-12,6,33,{transparent:true,opacity:0.45});bx(PI,14,10,16,0xb8bcc0,12,6,33,{transparent:true,opacity:0.45});bx(PI,14,2,14,0x1d1d1d,0,2,-8,{transparent:true,opacity:0.45});
+cyl(wires,[230,4,88],[262,4,88],0x888780,1,{transparent:true,opacity:0.4});
+
+/* Phase 5 BoosterPacks (not designed): plug onto the LaunchPad headers and replace the breadboard modules. */
+var pcbs=[];
+function boosterpack(id,x,z,kind,o){
+  var g=part(id,x,13,z,kind==='car'?'in-car node board':'node board',14);pcbs.push(g);
+  bx(g,54,2,74,0x1e6b3a,0,0,2,o);                                     /* green FR-4 */
+  bx(g,3,8,60,0x1b1b1b,-24,-4,2,o);bx(g,3,8,60,0x1b1b1b,24,-4,2,o);   /* stacking headers */
+  bx(g,8,2,6,0x181818,0,2,-22,o);                                     /* CAN transceiver */
+  bx(g,20,8,8,0x2a6fb5,0,4,-33,o);                                    /* CANH/CANL screw terminal */
+  [-14,-8,8,14].forEach(function(tx){bx(g,2.5,3,2.5,0xd9b24a,tx,2.5,-12,o)});   /* test points */
+  if(kind==='battery'){bx(g,6,1.5,4,0x181818,-10,2,18,o);bx(g,10,2,3,0xc0c4c8,-10,2,26,o);bx(g,6,2,4,0xe0b020,14,2,-26,o)}  /* INA219, shunt, termination jumper */
+  if(kind==='body'){bx(g,10,6,6,0x1b1b1b,12,3,28,o);bx(g,6,2,4,0xe0b020,14,2,-26,o)}                                       /* servo header, termination jumper */
+  if(kind==='car'){bx(g,12,8,10,0xb03030,-14,4,30,o);bx(g,6,3,6,0x1d1d1d,0,2,20,o);var ind=new T.Mesh(new T.CylinderGeometry(5,5,6,16),mat(0x3a3f45,o));ind.position.set(10,4,22);g.add(ind)}  /* 12 V input, TVS, buck inductor */
+  g.visible=false;return g;
+}
+boosterpack('pcbBattery',-120,40,'battery');
+boosterpack('pcbBody',40,40,'body');
+boosterpack('pcbCar',215,45,'car',{transparent:true,opacity:0.45});
 
 function mkPath(pts,col,n){var p=pts.map(function(a){return new T.Vector3(a[0],a[1],a[2])}),ls=[],tot=0;
 for(var i=1;i<p.length;i++){var l=p[i].distanceTo(p[i-1]);ls.push(l);tot+=l}
@@ -184,6 +208,10 @@ ina:['INA219','I2C current and voltage sensor','hw','Measures the simulated pack
 servo:['Servo','PWM from a timer pin','hw','Moves with the body node state and stops in limp-home. The sweeping horn in this model only shows activity.'],
 leds:['Lights','GPIO outputs','hw','Headlight and indicator stand-ins driven by the body node.'],
 ghost:['In-car node','Optional · phase 4b','later','Same board class riding in the Sentra on 12 V. It only reads from the car and takes the same signed, rollback-safe OTA. It sleeps or is unplugged when parked.'],
+pcbBattery:['Node board (battery)','Phase 5 · KiCad BoosterPack · not designed','later','Plugs onto the LaunchPad and replaces the breadboard: CAN transceiver, 120 Ω termination on a jumper, INA219 and shunt, thermistor and pot inputs, a screw terminal for CANH/CANL, and test points on CAN, 3.3 V and the ADC inputs. The deliverable is the KiCad design plus a bring-up log with scope captures.'],
+pcbBody:['Node board (body)','Phase 5 · same schematic, body options fitted','later','Same board as the battery node with the servo header and light outputs populated instead of the sensors. One design, two assemblies.'],
+pcbCar:['In-car node board','Phase 5 · the version that survives a car','later','Adds a protected 12 V input (fuse, reverse-polarity protection, TVS for load dump), a buck converter to 5 V and 3.3 V, an ignition-sense input so the node powers down when the car is off, the transceiver silent-mode line, and an OBD-II connector. This is the electrical-engineering part of the project.'],
+pi:['Raspberry Pi (in car)','Phase 4b · gateway --serial','later','Runs the same gateway as the bench laptop, talking to the in-car node over the LaunchPad USB serial link and to the backend over a phone hotspot. Powered from a 12 V car USB charger, not from OBD pin 16, which stays on when the car is off.'],
 obd:['Sentra OBD-II port','Read-only','later','Standard diagnostic requests only (modes 01 and 09), enforced by an allowlist and a CI guard. Nothing is ever written to the car.']};
 var CHIP={hw:'Not on hardware yet',sw:'Verified in simulation',later:'Planned, optional'};
 var info=document.getElementById('info'),sel=null;
@@ -198,10 +226,12 @@ window.addEventListener('resize',rs);rs();
 var down=false,moved=0,lx=0,ly=0,ray=new T.Raycaster();
 cv.addEventListener('pointerdown',function(e){down=true;moved=0;lx=e.clientX;ly=e.clientY;cv.setPointerCapture(e.pointerId);stage.style.cursor='grabbing'});
 cv.addEventListener('pointermove',function(e){if(!down)return;var dx=e.clientX-lx,dy=e.clientY-ly;lx=e.clientX;ly=e.clientY;moved+=Math.abs(dx)+Math.abs(dy);az-=dx*0.007;pol=Math.max(0.2,Math.min(1.45,pol-dy*0.006));place()});
-cv.addEventListener('pointerup',function(e){down=false;stage.style.cursor='grab';if(moved>4)return;var r=cv.getBoundingClientRect();ray.setFromCamera(new T.Vector2((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1),camera);var hit=ray.intersectObjects(pickables,true)[0];if(!hit)return;var o=hit.object;while(o&&!(o.userData&&o.userData.id))o=o.parent;if(!o)return;if(sel)glow(sel,false);sel=o.userData.id;glow(sel,true);show(sel)});
+cv.addEventListener('pointerup',function(e){down=false;stage.style.cursor='grab';if(moved>4)return;var r=cv.getBoundingClientRect();ray.setFromCamera(new T.Vector2((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1),camera);function shown(o){for(;o;o=o.parent)if(!o.visible)return false;return true}
+var hit=ray.intersectObjects(pickables,true).filter(function(h){return shown(h.object)})[0];if(!hit)return;var o=hit.object;while(o&&!(o.userData&&o.userData.id))o=o.parent;if(!o)return;if(sel)glow(sel,false);sel=o.userData.id;glow(sel,true);show(sel)});
 document.getElementById('b-reset').onclick=function(){az=0.55;pol=1.0;place()};
 document.getElementById('b-top').onclick=function(){az=0;pol=0.25;place()};
 var showT=true,showO=true;
+document.getElementById('tg-pcb').onchange=function(e){var on=e.target.checked;pcbs.forEach(function(g){g.visible=on});breadboard.forEach(function(g){g.visible=!on});if(on)show('pcbBattery')};
 document.getElementById('tg-tel').onchange=function(e){showT=e.target.checked};
 document.getElementById('tg-ota').onchange=function(e){showO=e.target.checked};
 var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches,v3=new T.Vector3();
@@ -210,7 +240,7 @@ tel.forEach(function(p,pi){p.ms.forEach(function(m,i){m.visible=showT;m.position
 ota.ms.forEach(function(m,i){m.visible=showO;m.position.copy(at(ota,reduce?(i+0.5)/ota.ms.length:(s*0.09+i/ota.ms.length)%1))});
 horn.rotation.y=reduce?0:Math.sin(s*1.6)*0.7;
 var w=stage.clientWidth,h=stage.clientHeight;
-Object.keys(parts).forEach(function(k){var g=parts[k],d=g.userData.lab;if(!d)return;v3.copy(g.position);v3.y+=g.userData.ly;v3.project(camera);d.style.left=((v3.x*0.5+0.5)*w)+'px';d.style.top=((-v3.y*0.5+0.5)*h)+'px'});
+Object.keys(parts).forEach(function(k){var g=parts[k],d=g.userData.lab;if(!d)return;d.style.display=g.visible?'':'none';if(!g.visible)return;v3.copy(g.position);v3.y+=g.userData.ly;v3.project(camera);d.style.left=((v3.x*0.5+0.5)*w)+'px';d.style.top=((-v3.y*0.5+0.5)*h)+'px'});
 renderer.render(scene,camera);requestAnimationFrame(frame)}
 requestAnimationFrame(frame);
 })();
