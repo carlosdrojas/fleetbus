@@ -47,3 +47,4 @@ int bsp_can_receive(uint32_t *id, uint8_t *data, uint8_t *dlc) {
     return 1;
 }
 uint32_t bsp_can_error_count(void) { return err_count; }
+int bsp_can_set_loopback(int on) { (void)on; return -1; }   /* not wired on the STM32 build */

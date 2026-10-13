@@ -31,6 +31,7 @@ int  bsp_can_init(void);                   /* classic CAN 500 kbit/s */
 int  bsp_can_send(uint32_t id, const uint8_t *data, uint8_t dlc);
 int  bsp_can_receive(uint32_t *id, uint8_t *data, uint8_t *dlc);   /* non-blocking pop from the RX FIFO */
 uint32_t bsp_can_error_count(void);
+int  bsp_can_set_loopback(int on);         /* bench self-test: TX looped to RX inside the controller; -1 if unsupported */
 
 int  bsp_adc_init(void);
 int  bsp_adc_read_mv(int channel_1_or_2);

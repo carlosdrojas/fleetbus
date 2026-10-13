@@ -2,7 +2,7 @@
 # Flash an LP-MSPM0G3507 over its on-board XDS110. UNVERIFIED: no LaunchPad has been flashed with this yet (P0 R6 is
 # open). Proving one of these two paths is the first step of P2 on the bench (docs/mspm0-bench-steps.md).
 #
-#   tools/flash_mspm0.sh bringup                       blink + log image at 0x0 (no bootloader)
+#   tools/flash_mspm0.sh bench bringup|can_selftest|...  bench image at 0x0 (no bootloader; erases the bootloader)
 #   tools/flash_mspm0.sh boot  battery|body|telematics bootloader at 0x0
 #   tools/flash_mspm0.sh app   battery|body|telematics A|B VERSION   sign build/fw-mspm0/.../app_<node>_<slot>.elf.bin
 #                                                                    for this board and write it at the slot base
@@ -32,7 +32,7 @@ write() {   # write <file> <address>
 }
 
 case ${1:-} in
-  bringup) write "$FW/bringup.elf.bin" 0x00000000 ;;
+  bench)   write "$FW/${2:?image}.elf.bin" 0x00000000 ;;
   boot)    write "$FW/bootloader_${2:?node}.elf.bin" 0x00000000 ;;
   app)
     node=${2:?node} slot=${3:?A or B} ver=${4:?version}
