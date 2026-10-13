@@ -13,7 +13,8 @@ void bsp_gpio_init(void);
 void bsp_led(int on);
 void bsp_delay_ms(uint32_t ms);            /* busy wait; bootloader and bring-up only */
 void bsp_log_init(void);
-void bsp_log(const char *fmt, ...);        /* polled UART @ 115200; %d %u %x %c %s only (tiny formatter) */
+void bsp_log(const char *fmt, ...);        /* polled UART @ 115200; %d %u %x %c %s only (bsp/bsp_log.c) */
+void bsp_putc(char c);                     /* board: one byte out of the log UART, polled */
 uint32_t bsp_millis(void);
 void bsp_system_reset(void) __attribute__((noreturn));
 

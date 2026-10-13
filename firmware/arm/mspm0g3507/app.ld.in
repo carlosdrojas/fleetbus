@@ -1,0 +1,9 @@
+/* MSPM0G3507 application linked for one slot. tools/sign_image.py prepends the 0x200-byte signed header, so the
+ * vector table sits at slot base + 0x200: 512-byte aligned for VTOR (TRM table 3-6, P0 R5). */
+__stack_reserve = 0x400;   /* main stack until the scheduler starts; tasks use the FreeRTOS heap */
+MEMORY
+{
+  FLASH (rx)  : ORIGIN = @APP_ORIGIN@, LENGTH = @APP_LENGTH@
+  SRAM  (rwx) : ORIGIN = 0x20200000, LENGTH = 32K
+}
+INCLUDE common.ld

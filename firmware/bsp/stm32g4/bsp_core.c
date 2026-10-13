@@ -1,6 +1,5 @@
-/* App-side board support: HAL timebase on TIM6 (FreeRTOS owns SysTick) and a tiny polled logger on LPUART1.
- * The logger avoids newlib's printf and HAL_UART to save flash (measured: the app slot is tight). */
-#include <stdarg.h>
+/* App-side board support: HAL timebase on TIM6 (FreeRTOS owns SysTick) and the polled LPUART1 behind bsp_log()
+ * (formatter in bsp/bsp_log.c) and the telematics serial link. */
 #include <string.h>
 #include "stm32g4xx_hal.h"
 #include "bsp.h"
@@ -31,38 +30,13 @@ void bsp_log_init(void) {
     LPUART1->BRR = (uint32_t)(((uint64_t)HAL_RCC_GetPCLK1Freq() * 256u + 57600u) / 115200u);   /* 8N1 */
     LPUART1->CR1 = USART_CR1_TE | USART_CR1_RE | USART_CR1_UE;
 }
-static void putc_(char c) {
+void bsp_putc(char c) {
     uint32_t t = 100000;
     while (!(LPUART1->ISR & USART_ISR_TXE_TXFNF) && --t) {}
     LPUART1->TDR = (uint8_t)c;
 }
-static void put_num(unsigned long v, unsigned base, int neg) {
-    char b[12]; int n = 0;
-    do { b[n++] = "0123456789abcdef"[v % base]; v /= base; } while (v && n < 11);
-    if (neg) putc_('-');
-    while (n) putc_(b[--n]);
-}
-/* Supports %d %u %x %c %s %% with optional 'l'. Enough for status lines; not a general printf. */
-void bsp_log(const char *fmt, ...) {
-    va_list ap; va_start(ap, fmt);
-    for (; *fmt; fmt++) {
-        if (*fmt != '%') { putc_(*fmt); continue; }
-        fmt++; if (*fmt == 'l') fmt++;
-        switch (*fmt) {
-        case 'd': { long v = va_arg(ap, long); put_num(v < 0 ? (unsigned long)-v : (unsigned long)v, 10, v < 0); break; }
-        case 'u': put_num(va_arg(ap, unsigned long), 10, 0); break;
-        case 'x': put_num(va_arg(ap, unsigned long), 16, 0); break;
-        case 'c': putc_((char)va_arg(ap, int)); break;
-        case 's': { const char *s = va_arg(ap, const char *); while (s && *s) putc_(*s++); break; }
-        case '%': putc_('%'); break;
-        default: putc_('?'); break;
-        }
-    }
-    va_end(ap);
-}
-
 /* Serial link (telematics node <-> gateway) on the same LPUART1 / ST-LINK VCP: the Nucleo's USB port is the Pi cable. */
-void bsp_link_write(const uint8_t *b, size_t n) { for (size_t i = 0; i < n; i++) putc_((char)b[i]); }
+void bsp_link_write(const uint8_t *b, size_t n) { for (size_t i = 0; i < n; i++) bsp_putc((char)b[i]); }
 int bsp_link_read_byte(uint8_t *b) {
     if (LPUART1->ISR & (USART_ISR_ORE | USART_ISR_FE | USART_ISR_NE)) LPUART1->ICR = USART_ICR_ORECF | USART_ICR_FECF | USART_ICR_NECF;
     if (!(LPUART1->ISR & USART_ISR_RXNE_RXFNE)) return 0;

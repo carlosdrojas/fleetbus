@@ -19,6 +19,8 @@ jobs:
         run: |
           cmake -S firmware -B build/fw -G Ninja -DFB_BOARD=stm32g4 -DCMAKE_TOOLCHAIN_FILE=$PWD/firmware/cmake/arm-none-eabi.cmake -DFB_BENCH_FAULT_IMAGES=ON
           cmake --build build/fw
+      - name: Cross-build for MSPM0G3507 (LaunchPad, primary target)
+        run: make fw-mspm0
       - name: Car-bus transmit guard
         run: tools/check_car_tx.sh
       - uses: actions/upload-artifact@v4

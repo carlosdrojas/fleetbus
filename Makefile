@@ -2,13 +2,15 @@
 PY := .venv/bin/python
 HOST := build/host
 FW := build/fw
+FW_M0 := build/fw-mspm0
 export FLEETBUS_REQUIRE_DB ?= 1
 
-.PHONY: help setup host-test fw go-test py-test hil dashboard e2e test demo demo-down loadgen db clean
+.PHONY: help setup host-test fw fw-mspm0 go-test py-test hil dashboard e2e test demo demo-down loadgen db clean
 help:
 	@echo "setup      create .venv, install python deps"
-	@echo "host-test  firmware host build + Unity tests + simulator + fb_verify"
-	@echo "fw         cross-build bootloader + apps (needs arm-none-eabi-gcc); prints size report"
+	@echo "host-test  firmware host build + Unity tests for both board flash maps + simulator + fb_verify"
+	@echo "fw         cross-build STM32G431 bootloader + apps (needs arm-none-eabi-gcc); prints size report"
+	@echo "fw-mspm0   cross-build MSPM0G3507 (LaunchPad) images into build/fw-mspm0"
 	@echo "go-test    backend tests with the race detector (needs: make db)"
 	@echo "py-test    gateway pytest (reliability, OTA, signing cross-check)"
 	@echo "hil        HIL tests against the simulator (HIL_CAN=slcan:/dev/tty... for a real board)"
@@ -29,6 +31,8 @@ host-test:
 	cmake -S firmware -B $(HOST)-mspm0 -G Ninja -DFB_BOARD=mspm0g3507 >/dev/null && cmake --build $(HOST)-mspm0 && ctest --test-dir $(HOST)-mspm0 --output-on-failure
 fw:
 	cmake -S firmware -B $(FW) -G Ninja -DFB_BOARD=stm32g4 -DCMAKE_TOOLCHAIN_FILE=$(CURDIR)/firmware/cmake/arm-none-eabi.cmake >/dev/null && cmake --build $(FW)
+fw-mspm0:
+	cmake -S firmware -B $(FW_M0) -G Ninja -DFB_BOARD=mspm0g3507 -DCMAKE_TOOLCHAIN_FILE=$(CURDIR)/firmware/cmake/arm-none-eabi.cmake >/dev/null && cmake --build $(FW_M0)
 go-test:
 	cd backend && go vet ./... && go test -race -count=1 ./...
 py-test: host-test

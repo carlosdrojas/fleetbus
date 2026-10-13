@@ -1,0 +1,4 @@
+TexasInstruments/mspm0-sdk mspm0_sdk_2_11_00_07 (20807db79aa17b49f87ab8ec87f6b6d63ee2cb32)
+Vendored by tools/vendor_mspm0_sdk.sh: DriverLib + MSPM0G350x device headers/startup + CMSIS-Core headers only.
+Per-file licenses: BSD-3-Clause (TI DriverLib, device headers, startup) and Apache-2.0 (CMSIS-Core), as stated in
+each file header and in MANIFEST.html. Do not edit files here; adapt in firmware/bsp/mspm0g3507 instead.
