@@ -99,3 +99,27 @@ Goal: the real boot chain on one LaunchPad: bootloader verifies the signed image
 6. **Power cuts.** Power the LaunchPad through a relay (remove the XDS110 3V3 jumper so USB does not back-power it), then `tools/powercut.py --port <uart> --on "<relay on>" --off "<relay off>" --cycles 200`. It cuts power at random points in the first 1.5 s after power-on, while the bootloader updates the attempt counter. Expect 200/200.
 
 Bootloader size when P6 landed: 18,080 B of 28 KB (measured link). Write down: boot time, cycles passed in the power-cut test, reset count in step 4.
+
+## P7 OTA end to end
+
+Goal: a signed update travels laptop → backend → gateway → CAN → LaunchPad, installs, is health-checked and confirmed; a deliberately bad image is rolled back on its own. Same code path the simulator proves in `tests/e2e` (also run against the MSPM0 flash map with `FB_BOARD=mspm0g3507` when P7 landed: see `docs/verification.md`).
+
+Setup: two provisioned, confirmed nodes from P6 (battery v1, body v1) on the P3 bus with the CANable. Start the backend with the **dev** public key (the one `firmware/keys/fleetbus_pub.h` was generated from), not the simulator key that `scripts/demo.sh` uses:
+
+```bash
+make db && (cd backend && go build -o ../build/bin/ ./cmd/...)
+DSN="postgres://fleetbus:fleetbus@localhost:5433/fleetbus?sslmode=disable"
+PUB=$(python3 -c "import re;print(''.join(re.findall(r'0x([0-9a-f]{2})',open('firmware/keys/fleetbus_pub.h').read())))")
+FLEETBUS_DSN=$DSN build/bin/ingest -listen 127.0.0.1:9000 &
+FLEETBUS_DSN=$DSN build/bin/api -listen 127.0.0.1:8080 -static dashboard/dist -pubkey $PUB &
+.venv/bin/python -m fleetbus.gateway --can slcan:/dev/tty.usbmodemXXXX --id 1 --backend 127.0.0.1:9000
+```
+
+1. **Good update.** `make fw-mspm0 && tools/sign_release.sh mspm0g3507 2`, then `build/bin/fbctl image upload -a build/release/mspm0g3507/v2/app_body_A.signed -b build/release/mspm0g3507/v2/app_body_B.signed -notes "bench v2"` and `fbctl rollout start -image <ID> -window 30s -soak 3s`. Watch `fbctl rollout status <ID> -watch` and the node console: transfer, `DONE`, reboot, banner `slot B TRIAL`, then confirmed. Dashboard on :8080 shows the version change.
+   Measure: transfer time for the ~29 KB image (P5 size) and the time from reboot to confirm.
+2. **Unhealthy image.** Build with bench fault images (`cmake ... -DFB_BENCH_FAULT_IMAGES=ON`), `tools/sign_release.sh mspm0g3507 3 _unhealthy`, upload the `_unhealthy` pair, start a rollout. The node boots v3 as TRIAL, never reports healthy, stops feeding the watchdog at its 10 s deadline, the WWDT resets it (this is the P0 R4 proof: the bootloader started it, the app inherited it), and after 3 attempts the bootloader marks the slot BAD and boots v2 again. The rollout engine halts (fail-closed). Measure rollback time from the first v3 boot to the v2 banner, and write it in `docs/measured.md`.
+3. **Hang image.** Same with the `_hang` variant (hangs before starting the scheduler): rollback through the watchdog without the app ever running.
+4. **Wrong board.** Upload an STM32 pair (`tools/sign_release.sh stm32g4 4`) and push it to an MSPM0 node: the node rejects it at the end of the transfer (hw id), stays on its current version, the rollout fails closed.
+5. **Power cut during transfer.** Cut node power halfway through a transfer: it comes back on the old image; the gateway and rollout engine retry or fail closed.
+
+Write down: transfer time, reboot-to-confirm time, rollback time for unhealthy and hang images.

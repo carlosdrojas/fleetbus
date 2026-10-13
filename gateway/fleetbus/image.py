@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import os
 import struct
 
 from nacl.signing import SigningKey, VerifyKey
@@ -10,12 +11,19 @@ MAGIC = 0x4D494246
 HW_G431 = 0x4301          # STM32G431 (Nucleo-G431RB), secondary target
 HW_MSPM0G3507 = 0x3507    # TI MSPM0G3507 (LP-MSPM0G3507), primary target since 2026-10-12
 BOARDS = {"stm32g4": HW_G431, "mspm0g3507": HW_MSPM0G3507}   # firmware/boards/<name>/fb_board.h FB_BOARD_HW_ID
+# Board the simulator, tests and demo tooling build images for: FB_BOARD=mspm0g3507 runs everything against the
+# MSPM0 flash map and hw id (with build/host-mspm0). Default stm32g4 keeps the golden vectors unchanged.
+BOARD = os.environ.get("FB_BOARD", "stm32g4")
+if BOARD not in BOARDS:
+    raise ValueError(f"FB_BOARD={BOARD!r}: expected one of {sorted(BOARDS)}")
+DEFAULT_HW = BOARDS[BOARD]
 HDR_SIZE = 0x200
 SIGNED_LEN = 0x60
 SLOT_SIZE = 48 * 1024
 NODES = {"battery": 1, "body": 2, "telematics": 3}
 
-def build_image(body: bytes, node: int, slot: int, version: int, key: SigningKey, hw_id: int = HW_G431) -> bytes:
+def build_image(body: bytes, node: int, slot: int, version: int, key: SigningKey, hw_id: int | None = None) -> bytes:
+    hw_id = DEFAULT_HW if hw_id is None else hw_id
     if len(body) == 0 or len(body) > SLOT_SIZE - HDR_SIZE:
         raise ValueError(f"image body {len(body)} B does not fit a slot ({SLOT_SIZE - HDR_SIZE} B max)")
     h = bytearray(b"\xff" * HDR_SIZE)

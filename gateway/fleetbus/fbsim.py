@@ -1,5 +1,6 @@
 """ctypes bindings to the host simulator (firmware/host/fbsim.c): the REAL firmware node core, boot logic and flash
-fake, driven from Python. Build it first: cmake -S firmware -B build/host -G Ninja && cmake --build build/host"""
+fake, driven from Python. Build it first: make host-test. FB_BOARD picks the flash map: build/host (stm32g4, default)
+or build/host-mspm0 (mspm0g3507: 1 KB sectors, nondeterministic erased flash, MSPM0 hw id)."""
 from __future__ import annotations
 
 import ctypes
@@ -8,17 +9,18 @@ import sys
 from pathlib import Path
 
 from . import canmsg
-from .image import NODES
+from .image import BOARD, NODES
 
 ROOT = Path(__file__).resolve().parents[2]
 
 def find_lib() -> Path:
     ext = "dylib" if sys.platform == "darwin" else "so"
-    cands = [os.environ.get("FBSIM_LIB", ""), str(ROOT / "build" / "host" / "lib" / f"libfbsim.{ext}")]
+    host = "host" if BOARD == "stm32g4" else "host-mspm0"
+    cands = [os.environ.get("FBSIM_LIB", ""), str(ROOT / "build" / host / "lib" / f"libfbsim.{ext}")]
     for c in cands:
         if c and Path(c).exists():
             return Path(c)
-    raise FileNotFoundError("libfbsim not built: cmake -S firmware -B build/host -G Ninja && cmake --build build/host")
+    raise FileNotFoundError(f"libfbsim for FB_BOARD={BOARD} not built: make host-test")
 
 _lib = None
 

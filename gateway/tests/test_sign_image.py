@@ -1,4 +1,5 @@
-"""tools/sign_image.py (PyNaCl) and the firmware's C verifier (Monocypher) must agree, including on a real ARM binary."""
+"""tools/sign_image.py (PyNaCl) and the firmware's C verifier (Monocypher) must agree, including on a real ARM binary.
+Images here are pinned to the STM32 board (the default verifier is build/host); MSPM0 has its own tests below."""
 import os
 import subprocess
 import sys
@@ -25,12 +26,12 @@ def c_verify(tmp_path, blob, node=2, min_version=0, pub=PUB):
     return r.returncode, r.stdout
 
 def test_python_signed_image_verifies_in_c(tmp_path):
-    rc, out = c_verify(tmp_path, sign_image.build_image(BODY, 2, 0, 7, KEY))
+    rc, out = c_verify(tmp_path, sign_image.build_image(BODY, 2, 0, 7, KEY, sign_image.HW_G431))
     assert rc == 0, out
     assert "version=7" in out
 
 def test_other_slot_header(tmp_path):
-    assert c_verify(tmp_path, sign_image.build_image(BODY, 2, 1, 7, KEY))[0] == 0
+    assert c_verify(tmp_path, sign_image.build_image(BODY, 2, 1, 7, KEY, sign_image.HW_G431))[0] == 0
 
 @pytest.mark.parametrize("name,mutate,code", [
     ("body_bit_flip", lambda b: b[:2000] + bytes([b[2000] ^ 1]) + b[2001:], 6),
@@ -40,12 +41,12 @@ def test_other_slot_header(tmp_path):
     ("magic_wrong", lambda b: b"\x00" + b[1:], 2),
 ])
 def test_tampering_rejected_with_expected_code(tmp_path, name, mutate, code):
-    blob = sign_image.build_image(BODY, 2, 0, 7, KEY)
+    blob = sign_image.build_image(BODY, 2, 0, 7, KEY, sign_image.HW_G431)
     rc, out = c_verify(tmp_path, mutate(blob))
     assert rc == code, (name, out)
 
 def test_wrong_key_node_and_downgrade_rejected(tmp_path):
-    blob = sign_image.build_image(BODY, 2, 0, 7, KEY)
+    blob = sign_image.build_image(BODY, 2, 0, 7, KEY, sign_image.HW_G431)
     assert c_verify(tmp_path, blob, pub=bytes(SigningKey(bytes(32)).verify_key).hex())[0] == 7
     assert c_verify(tmp_path, blob, node=1)[0] == 9
     assert c_verify(tmp_path, blob, min_version=8)[0] == 8
@@ -55,7 +56,7 @@ def test_real_arm_binary_roundtrip(tmp_path):
     binp = ROOT / "build" / "fw" / "arm" / "stm32g4" / "app_body_A.elf.bin"
     if not binp.exists():
         pytest.skip("ARM build missing")
-    blob = sign_image.build_image(binp.read_bytes(), 2, 0, 1, KEY)
+    blob = sign_image.build_image(binp.read_bytes(), 2, 0, 1, KEY, sign_image.HW_G431)
     assert len(blob) <= sign_image.SLOT_SIZE
     assert c_verify(tmp_path, blob)[0] == 0
 
@@ -76,7 +77,7 @@ def test_board_id_is_enforced_by_each_board(tmp_path):
     run = lambda verifier: subprocess.run([str(verifier), PUB, str(p), "2", "0"], capture_output=True, text=True)
     assert run(VERIFY_M0).returncode == 0, "MSPM0 verifier must accept an MSPM0 image"
     assert run(VERIFY).returncode != 0, "STM32 verifier must reject an MSPM0 image"
-    stm = sign_image.build_image(BODY, 2, 0, 7, KEY)
+    stm = sign_image.build_image(BODY, 2, 0, 7, KEY, sign_image.HW_G431)
     p.write_bytes(stm)
     assert run(VERIFY_M0).returncode != 0, "MSPM0 verifier must reject an STM32 image"
 
