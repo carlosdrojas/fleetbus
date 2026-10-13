@@ -3,12 +3,11 @@
  *
  *  node_task  prio 3  10 ms: drain CAN RX -> node core -> drain node TX -> CAN; applies actuators
  *  sense_task prio 2  20 ms: reads sensors (battery role)
- *  wdg_task   prio 4  100 ms: feeds the IWDG only if every task checked in AND the trial-boot health deadline holds
+ *  wdg_task   prio 4  100 ms: feeds the watchdog only if every task checked in AND the trial-boot health deadline holds
  */
 #include <string.h>
 #include "FreeRTOS.h"
 #include "task.h"
-#include "stm32g4xx_hal.h"
 #include "bsp.h"
 #include "node_core.h"
 #include "pubkey_ref.h"
@@ -56,7 +55,7 @@ static void node_task(void *arg) {
             bsp_log("t=%lu st=%d peer=%d can_err=%lu tx_drop=%lu\r\n", (unsigned long)now, g_node.state,
                     fb_hb_peer_alive(&g_node.peer, now), (unsigned long)bsp_can_error_count(), (unsigned long)g_node.tx_dropped);
         }
-        if (g_node.reboot_requested) { vTaskDelay(pdMS_TO_TICKS(100)); NVIC_SystemReset(); }   /* let the DONE ack leave the TX FIFO */
+        if (g_node.reboot_requested) { vTaskDelay(pdMS_TO_TICKS(100)); bsp_system_reset(); }   /* let the DONE ack leave the TX FIFO */
     }
 }
 
@@ -85,17 +84,15 @@ static void wdg_task(void *arg) {
         ok = 0;                                     /* bench-only broken image: runs, never reports healthy */
 #endif
         g_tasks_ok = ok;
-        if (ok && !g_node.health_deadline_missed) bsp_iwdg_feed();
+        if (ok && !g_node.health_deadline_missed) bsp_wdt_feed();
     }
 }
 
-void vApplicationMallocFailedHook(void) { bsp_log("malloc failed\r\n"); for (;;) {} }              /* IWDG resets us */
+void vApplicationMallocFailedHook(void) { bsp_log("malloc failed\r\n"); for (;;) {} }              /* the watchdog resets us */
 void vApplicationStackOverflowHook(TaskHandle_t t, char *name) { (void)t; bsp_log("stack overflow %s\r\n", name); for (;;) {} }
 
 int main(void) {
-    HAL_Init();
-    bsp_clock_init();
-    bsp_gpio_init();
+    bsp_board_init();
     bsp_log_init();
 #ifdef FB_BENCH_HANG_AT_BOOT
     for (;;) {}                                     /* bench-only broken image: hangs; bootloader must roll back */

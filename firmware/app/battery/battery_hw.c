@@ -4,7 +4,7 @@
 #include "app_roles.h"
 
 static const struct { int16_t ratio_milli; int16_t dc; } ntc[] = {
-#include "../../bsp/ntc_lut.inc"
+#include "ntc_lut.inc"
 };
 
 static int32_t ntc_to_dc(int ratio_milli) {          /* ratio falls as temperature rises; linear interpolation, ESTIMATED curve */

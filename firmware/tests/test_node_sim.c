@@ -19,7 +19,7 @@ static struct { uint32_t id; uint8_t d[8]; uint8_t dlc; } gw_rx[256]; static int
 static size_t make_image(uint8_t *out, size_t cap, uint32_t ver, uint8_t slot, uint8_t node, uint8_t behavior) {
     static uint8_t body_[4000];
     memset(body_, 0xA0, sizeof body_); body_[0] = behavior; body_[1] = (uint8_t)ver;
-    return test_build_image(out, cap, sk, ver, slot, node, FB_IMG_HW_G431, body_, sizeof body_);
+    return test_build_image(out, cap, sk, ver, slot, node, FB_BOARD_HW_ID, body_, sizeof body_);
 }
 
 static void boot_fleet(void) {

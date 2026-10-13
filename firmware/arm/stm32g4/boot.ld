@@ -1,6 +1,6 @@
 ENTRY(Reset_Handler)
 _estack = ORIGIN(RAM) + LENGTH(RAM);
-_Min_Stack_Size = 0x600;
+_Min_Stack_Size = 0xC00;   /* P0 measured 1,888 B peak for the Ed25519 check alone (M0+); 3 KB with margin */
 MEMORY
 {
   FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 28K

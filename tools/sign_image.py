@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parent.parent
 KEYDIR = Path(os.environ.get("FLEETBUS_KEYDIR", Path.home() / ".fleetbus" / "keys"))
 PUB_HEADER = ROOT / "firmware" / "keys" / "fleetbus_pub.h"
 sys.path.insert(0, str(ROOT / "gateway"))
-from fleetbus.image import HDR_SIZE, HW_G431, NODES, SIGNED_LEN, SLOT_SIZE, build_image, parse_header, verify_image  # noqa: E402,F401
+from fleetbus.image import BOARDS, HDR_SIZE, HW_G431, NODES, SIGNED_LEN, SLOT_SIZE, build_image, parse_header, verify_image  # noqa: E402,F401
 
 def load_key(path: Path) -> SigningKey:
     return SigningKey(bytes.fromhex(path.read_text().strip()))
@@ -51,10 +51,10 @@ def cmd_keygen(a) -> int:
 def cmd_sign(a) -> int:
     body = Path(a.bin).read_bytes()
     key = load_key(Path(a.key).expanduser())
-    blob = build_image(body, NODES[a.node], a.slot, a.version, key)
+    blob = build_image(body, NODES[a.node], a.slot, a.version, key, BOARDS[a.board])
     out = Path(a.out) if a.out else Path(a.bin).with_suffix(f".v{a.version}.signed")
     out.write_bytes(blob)
-    print(f"{out}: node={a.node} slot={a.slot} version={a.version} body={len(body)} B total={len(blob)} B")
+    print(f"{out}: board={a.board} node={a.node} slot={a.slot} version={a.version} body={len(body)} B total={len(blob)} B")
     return 0
 
 def cmd_info(a) -> int:
@@ -68,6 +68,7 @@ def main() -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     k = sub.add_parser("keygen"); k.add_argument("--name", default="dev"); k.add_argument("--force", action="store_true"); k.set_defaults(fn=cmd_keygen)
     s = sub.add_parser("sign"); s.add_argument("bin"); s.add_argument("--node", choices=NODES, required=True)
+    s.add_argument("--board", choices=BOARDS, default="stm32g4", help="board the image was linked for (sets hw_id)")
     s.add_argument("--slot", type=int, choices=(0, 1), required=True); s.add_argument("--version", type=int, required=True)
     s.add_argument("--key", default=str(KEYDIR / "dev.key")); s.add_argument("-o", "--out"); s.set_defaults(fn=cmd_sign)
     i = sub.add_parser("info"); i.add_argument("file"); i.set_defaults(fn=cmd_info)

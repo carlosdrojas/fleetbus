@@ -22,10 +22,13 @@ setup:
 	python3 -m venv .venv && .venv/bin/pip install -q -e "gateway[dev]" "psycopg[binary]"
 db:
 	docker compose -f deploy/docker-compose.yml up -d --wait db
+# Host tests run once per board flash map: build/host is the STM32 map (also used by the simulator, gateway and e2e),
+# build/host-mspm0 is the MSPM0 map (1 KB sectors, nondeterministic erased flash).
 host-test:
-	cmake -S firmware -B $(HOST) -G Ninja >/dev/null && cmake --build $(HOST) && ctest --test-dir $(HOST) --output-on-failure
+	cmake -S firmware -B $(HOST) -G Ninja -DFB_BOARD=stm32g4 >/dev/null && cmake --build $(HOST) && ctest --test-dir $(HOST) --output-on-failure
+	cmake -S firmware -B $(HOST)-mspm0 -G Ninja -DFB_BOARD=mspm0g3507 >/dev/null && cmake --build $(HOST)-mspm0 && ctest --test-dir $(HOST)-mspm0 --output-on-failure
 fw:
-	cmake -S firmware -B $(FW) -G Ninja -DCMAKE_TOOLCHAIN_FILE=$(CURDIR)/firmware/cmake/arm-none-eabi.cmake >/dev/null && cmake --build $(FW)
+	cmake -S firmware -B $(FW) -G Ninja -DFB_BOARD=stm32g4 -DCMAKE_TOOLCHAIN_FILE=$(CURDIR)/firmware/cmake/arm-none-eabi.cmake >/dev/null && cmake --build $(FW)
 go-test:
 	cd backend && go vet ./... && go test -race -count=1 ./...
 py-test: host-test

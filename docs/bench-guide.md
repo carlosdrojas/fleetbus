@@ -41,7 +41,7 @@ Both bench nodes appear in the dashboard **without** the SIMULATED badge.
 
 ## 5. Real OTA (bench only; fault images never go near the car)
 1. `make fw` (add `-DFB_BENCH_FAULT_IMAGES=ON` for the deliberately broken builds), then sign for both slots:
-   `tools/sign_image.py sign build/fw/arm/app_body_A.elf.bin --node body --slot 0 --version 2` and the `_B` build with `--slot 1`.
+   `tools/sign_image.py sign build/fw/arm/stm32g4/app_body_A.elf.bin --node body --slot 0 --version 2` and the `_B` build with `--slot 1`.
 2. `build/bin/fbctl image upload -a ... -b ...` then `build/bin/fbctl rollout start -image N`.
 3. Expected: transfer, reboot into slot B in TRIAL, confirm within 10 s, rollout healthy. Then repeat with the `_hang` and `_unhealthy` images: the bootloader must return to the old version after 3 watchdog resets / 10 s, and the rollout must halt.
 4. **Measure**: OTA duration for a ~38 KB image, CAN bus load during it, the node's heartbeat gap during each page erase (design says < 500 ms).

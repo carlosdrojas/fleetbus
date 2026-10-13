@@ -12,7 +12,7 @@ static size_t blob_len; static uint16_t nblocks;
 void setUp(void) {
     fake_flash_init(&ff, &fl); test_keypair(sk, pk); fb_ota_init(&rx, &fl);
     for (unsigned i = 0; i < sizeof body; i++) body[i] = (uint8_t)(i ^ 0x5A);
-    blob_len = test_build_image(blob, sizeof blob, sk, 3, 1, FB_NODE_BATTERY, FB_IMG_HW_G431, body, sizeof body);
+    blob_len = test_build_image(blob, sizeof blob, sk, 3, 1, FB_NODE_BATTERY, FB_BOARD_HW_ID, body, sizeof body);
     nblocks = (uint16_t)((blob_len + 5) / 6);
 }
 void tearDown(void) {}

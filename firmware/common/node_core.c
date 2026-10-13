@@ -125,7 +125,7 @@ void fb_node_tick(fb_node_t *n, uint32_t now_ms, const fb_sensors_t *s) {
     if ((uint32_t)(now_ms - n->last_hb_ms) >= FB_HB_PERIOD_MS || n->last_hb_ms == 0) { send_heartbeat(n, now_ms); n->last_hb_ms = now_ms; }
 
     /* Trial-boot health gate: confirm only if every task is alive and the peer is heard, inside the window.
-     * Missing the deadline makes the platform stop feeding the IWDG, which resets into the bootloader's rollback. */
+     * Missing the deadline makes the platform stop feeding the watchdog, which resets into the bootloader's rollback. */
     if (n->trial && !n->confirmed) {
         int need_peer = n->id != FB_NODE_TELEMATICS;
         if (n->tasks_ok && (!need_peer || peer_alive) && n->state != FB_ST_FAULT && n->state != FB_ST_SAFE) {

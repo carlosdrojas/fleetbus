@@ -52,7 +52,7 @@ def test_wrong_key_node_and_downgrade_rejected(tmp_path):
     assert c_verify(tmp_path, blob, min_version=7)[0] == 0
 
 def test_real_arm_binary_roundtrip(tmp_path):
-    binp = ROOT / "build" / "fw" / "arm" / "app_body_A.elf.bin"
+    binp = ROOT / "build" / "fw" / "arm" / "stm32g4" / "app_body_A.elf.bin"
     if not binp.exists():
         pytest.skip("ARM build missing")
     blob = sign_image.build_image(binp.read_bytes(), 2, 0, 1, KEY)
@@ -65,3 +65,17 @@ def test_golden_image_from_vector_file_verifies_in_c(tmp_path):
     rc, out = c_verify(tmp_path, bytes.fromhex(g["blob_hex"]), node=g["node"], pub=g["pubkey_hex"])
     assert rc == 0, out
     assert f"version={g['version']}" in out
+
+VERIFY_M0 = ROOT / "build" / "host-mspm0" / "host" / "fb_verify"
+
+@pytest.mark.skipif(not VERIFY_M0.exists(), reason="MSPM0 host build missing: make host-test")
+def test_board_id_is_enforced_by_each_board(tmp_path):
+    m0 = sign_image.build_image(BODY, 2, 0, 7, KEY, sign_image.HW_MSPM0G3507)
+    p = tmp_path / "m0.signed"
+    p.write_bytes(m0)
+    run = lambda verifier: subprocess.run([str(verifier), PUB, str(p), "2", "0"], capture_output=True, text=True)
+    assert run(VERIFY_M0).returncode == 0, "MSPM0 verifier must accept an MSPM0 image"
+    assert run(VERIFY).returncode != 0, "STM32 verifier must reject an MSPM0 image"
+    stm = sign_image.build_image(BODY, 2, 0, 7, KEY)
+    p.write_bytes(stm)
+    assert run(VERIFY_M0).returncode != 0, "MSPM0 verifier must reject an STM32 image"

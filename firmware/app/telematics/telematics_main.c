@@ -7,7 +7,6 @@
  * stays powered: unplug it when parked until real low-power sleep is implemented and measured). */
 #include "FreeRTOS.h"
 #include "task.h"
-#include "stm32g4xx_hal.h"
 #include "bsp.h"
 #include "node_core.h"
 #include "obd_poller.h"
@@ -55,7 +54,7 @@ static void telematics_task(void *arg) {
         while (fb_node_pop_tx(&g_node, &f)) link_send(f.id, f.data, f.dlc);                                      /* heartbeats / OTA acks -> gateway */
         if ((uint32_t)(now - last_vehicle) >= 200) { last_vehicle = now; uint32_t vid; uint8_t vd[8]; link_send(0x500, vd, fb_obd_vehicle_frame(&g_obd, &vid, vd)); }
         g_chk++;
-        if (g_node.reboot_requested) { vTaskDelay(pdMS_TO_TICKS(100)); NVIC_SystemReset(); }
+        if (g_node.reboot_requested) { vTaskDelay(pdMS_TO_TICKS(100)); bsp_system_reset(); }
     }
 }
 
@@ -65,7 +64,7 @@ static void wdg_task(void *arg) {
     for (;;) {
         vTaskDelay(pdMS_TO_TICKS(100));
         g_tasks_ok = g_chk != prev; prev = g_chk;
-        if (g_tasks_ok && !g_node.health_deadline_missed) bsp_iwdg_feed();
+        if (g_tasks_ok && !g_node.health_deadline_missed) bsp_wdt_feed();
     }
 }
 
@@ -73,7 +72,7 @@ void vApplicationMallocFailedHook(void) { for (;;) {} }
 void vApplicationStackOverflowHook(TaskHandle_t t, char *n) { (void)t; (void)n; for (;;) {} }
 
 int main(void) {
-    HAL_Init(); bsp_clock_init(); bsp_gpio_init(); bsp_log_init();      /* LPUART1 doubles as the gateway link: no text logging here */
+    bsp_board_init(); bsp_log_init();      /* the log UART doubles as the gateway link: no text logging here */
     bsp_can_init();
     xTaskCreate(telematics_task, "telem", 512, 0, 3, 0);
     xTaskCreate(wdg_task, "wdg", 192, 0, 4, 0);

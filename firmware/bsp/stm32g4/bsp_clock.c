@@ -1,6 +1,10 @@
 #include "stm32g4xx_hal.h"
 #include "bsp.h"
 
+void bsp_board_init(void) { HAL_Init(); bsp_clock_init(); bsp_gpio_init(); }
+void bsp_delay_ms(uint32_t ms) { HAL_Delay(ms); }
+void bsp_system_reset(void) { NVIC_SystemReset(); for (;;) {} }
+
 void bsp_clock_init(void) {
     HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
     RCC_OscInitTypeDef osc = {0};
@@ -33,7 +37,7 @@ void bsp_gpio_init(void) {
 }
 void bsp_led(int on) { HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, on ? GPIO_PIN_SET : GPIO_PIN_RESET); }
 
-void bsp_iwdg_start_2s(void) {
+void bsp_wdt_start_2s(void) {    /* IWDG */
     IWDG->KR = 0xCCCC;                          /* start (cannot be stopped until reset) */
     IWDG->KR = 0x5555;                          /* unlock PR/RLR */
     IWDG->PR = 4;                               /* /64: LSI 32 kHz -> 500 Hz */
@@ -41,4 +45,4 @@ void bsp_iwdg_start_2s(void) {
     while (IWDG->SR) {}
     IWDG->KR = 0xAAAA;
 }
-void bsp_iwdg_feed(void) { IWDG->KR = 0xAAAA; }
+void bsp_wdt_feed(void) { IWDG->KR = 0xAAAA; }

@@ -13,11 +13,11 @@ jobs:
       - uses: actions/checkout@v4
         with: { submodules: recursive }
       - run: sudo apt-get update && sudo apt-get install -y cmake ninja-build gcc-arm-none-eabi libnewlib-arm-none-eabi libnewlib-nano-arm-none-eabi
-      - name: Host build + Unity tests + simulator
-        run: cmake -S firmware -B build/host -G Ninja && cmake --build build/host && ctest --test-dir build/host --output-on-failure
-      - name: Cross-build bootloaders + apps (size report in the log)
+      - name: Host build + Unity tests + simulator (both board flash maps)
+        run: make host-test
+      - name: Cross-build bootloaders + apps for STM32G431 (size report in the log)
         run: |
-          cmake -S firmware -B build/fw -G Ninja -DCMAKE_TOOLCHAIN_FILE=$PWD/firmware/cmake/arm-none-eabi.cmake -DFB_BENCH_FAULT_IMAGES=ON
+          cmake -S firmware -B build/fw -G Ninja -DFB_BOARD=stm32g4 -DCMAKE_TOOLCHAIN_FILE=$PWD/firmware/cmake/arm-none-eabi.cmake -DFB_BENCH_FAULT_IMAGES=ON
           cmake --build build/fw
       - name: Car-bus transmit guard
         run: tools/check_car_tx.sh
@@ -25,9 +25,9 @@ jobs:
         with:
           name: firmware-elf-bin-map
           path: |
-            build/fw/arm/*.elf
-            build/fw/arm/*.bin
-            build/fw/*.map
+            build/fw*/arm/*/*.elf
+            build/fw*/arm/*/*.bin
+            build/fw*/arm/*/*.map
 
   backend:
     runs-on: ubuntu-latest

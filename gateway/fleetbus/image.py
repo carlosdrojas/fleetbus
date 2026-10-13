@@ -7,7 +7,9 @@ import struct
 from nacl.signing import SigningKey, VerifyKey
 
 MAGIC = 0x4D494246
-HW_G431 = 0x4301
+HW_G431 = 0x4301          # STM32G431 (Nucleo-G431RB), secondary target
+HW_MSPM0G3507 = 0x3507    # TI MSPM0G3507 (LP-MSPM0G3507), primary target since 2026-10-12
+BOARDS = {"stm32g4": HW_G431, "mspm0g3507": HW_MSPM0G3507}   # firmware/boards/<name>/fb_board.h FB_BOARD_HW_ID
 HDR_SIZE = 0x200
 SIGNED_LEN = 0x60
 SLOT_SIZE = 48 * 1024

@@ -6,7 +6,10 @@ cd "$(dirname "$0")/.."
 bad=0
 hits=$(grep -rn "bsp_can_send(" firmware/app/telematics firmware/common 2>/dev/null | grep -v "car_tx.c" || true)
 if [ -n "$hits" ]; then echo "telematics/common code calls bsp_can_send() outside car_tx.c:"; echo "$hits"; bad=1; fi
-hits=$(grep -rn "HAL_FDCAN_AddMessageToTxFifoQ" firmware --include=*.c | grep -v "third_party" | grep -v "bsp/bsp_can.c" || true)
-if [ -n "$hits" ]; then echo "raw FDCAN transmit outside bsp_can.c:"; echo "$hits"; bad=1; fi
+# Raw transmit primitives of every board's CAN peripheral: STM32 FDCAN (HAL) and MSPM0 MCAN (DriverLib).
+# They may appear only in a board's own driver, firmware/bsp/<board>/bsp_can.c.
+raw='HAL_FDCAN_AddMessageToTxFifoQ|DL_MCAN_writeMsgRam|DL_MCAN_TXBufAddReq'
+hits=$(grep -rnE "$raw" firmware --include=*.c --include=*.h | grep -v "third_party" | grep -vE "^firmware/bsp/[a-z0-9]+/bsp_can\.c:" || true)
+if [ -n "$hits" ]; then echo "raw CAN transmit outside firmware/bsp/<board>/bsp_can.c:"; echo "$hits"; bad=1; fi
 [ $bad = 0 ] && echo "ok: the only car-bus transmit path in the telematics firmware is car_tx() (allowlist-gated)"
 exit $bad

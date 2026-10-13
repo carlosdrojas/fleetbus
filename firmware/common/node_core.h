@@ -54,7 +54,7 @@ typedef struct {
     int tasks_ok;                 /* set by the platform watchdog task: all RTOS tasks checked in */
     int confirmed;                /* running slot is CONFIRMED (or no bootloader involved) */
     int trial;                    /* running slot is in TRIAL and awaiting confirm */
-    int health_deadline_missed;   /* platform must stop feeding the IWDG when this is set */
+    int health_deadline_missed;   /* platform must stop feeding the watchdog when this is set */
 
     fb_can_frame_t txq[FB_TX_QUEUE];
     uint8_t tx_head, tx_tail;

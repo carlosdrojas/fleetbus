@@ -293,8 +293,9 @@ func (s *Server) uploadImage(w http.ResponseWriter, r *http.Request) {
 		fail(w, 422, "slot_b: %v", err)
 		return
 	}
-	if ha.Node != hb.Node || ha.Version != hb.Version {
-		fail(w, 422, "slot A and B builds disagree (node %d v%d vs node %d v%d)", ha.Node, ha.Version, hb.Node, hb.Version)
+	if ha.Node != hb.Node || ha.Version != hb.Version || ha.HwID != hb.HwID {
+		fail(w, 422, "slot A and B builds disagree (node %d v%d hw 0x%04x vs node %d v%d hw 0x%04x)",
+			ha.Node, ha.Version, ha.HwID, hb.Node, hb.Version, hb.HwID)
 		return
 	}
 	id, err := s.Repo.InsertImage(r.Context(), int16(ha.Node), int32(ha.Version), a, b, r.FormValue("notes"))

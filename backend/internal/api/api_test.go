@@ -134,6 +134,8 @@ func TestUploadValidation(t *testing.T) {
 		"wrong key":        {imagefmt.Build(body, 2, 0, 4, other), imagefmt.Build(body, 2, 1, 4, other)},
 		"version mismatch": {imagefmt.Build(body, 2, 0, 5, e.prv), imagefmt.Build(body, 2, 1, 6, e.prv)},
 		"node mismatch":    {imagefmt.Build(body, 1, 0, 7, e.prv), imagefmt.Build(body, 2, 1, 7, e.prv)},
+		"board mismatch":   {imagefmt.Build(body, 2, 0, 8, e.prv), imagefmt.BuildFor(imagefmt.HwMSPM0, body, 2, 1, 8, e.prv)},
+		"unknown board":    {imagefmt.BuildFor(0x9999, body, 2, 0, 9, e.prv), imagefmt.BuildFor(0x9999, body, 2, 1, 9, e.prv)},
 		"garbage":          {[]byte("not an image"), []byte("nope")},
 	}
 	for name, p := range bad {
@@ -141,10 +143,14 @@ func TestUploadValidation(t *testing.T) {
 			t.Errorf("%s accepted or server error: %d %s", name, code, msg)
 		}
 	}
+	m0a, m0b := imagefmt.BuildFor(imagefmt.HwMSPM0, body, 2, 0, 10, e.prv), imagefmt.BuildFor(imagefmt.HwMSPM0, body, 2, 1, 10, e.prv)
+	if code, msg := e.upload(t, m0a, m0b); code != 201 {
+		t.Fatalf("MSPM0 image pair must be accepted: %d %s", code, msg)
+	}
 	var imgs []store.Image
 	e.get(t, "/api/images", &imgs)
-	if len(imgs) != 1 {
-		t.Fatalf("only the good image may be stored, have %d", len(imgs))
+	if len(imgs) != 2 {
+		t.Fatalf("only the two good images may be stored, have %d", len(imgs))
 	}
 }
 

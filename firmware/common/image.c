@@ -11,7 +11,7 @@ int fb_image_verify(const fb_flash_t *fl, int slot, uint8_t node_id, uint32_t mi
     uint8_t h[FB_IMG_OFF_SIG + 64];
     if (fl->read(fl->ctx, base, h, sizeof h) != 0) return FB_IMG_ERR_READ;
     if (rd32(h) != FB_IMG_MAGIC) return FB_IMG_ERR_MAGIC;
-    if ((uint16_t)(h[4] | (h[5] << 8)) != FB_IMG_HW_G431) return FB_IMG_ERR_HW;
+    if ((uint16_t)(h[4] | (h[5] << 8)) != FB_BOARD_HW_ID) return FB_IMG_ERR_HW;
     if (h[6] != (uint8_t)slot) return FB_IMG_ERR_SLOT;
     if (h[7] != 1) return FB_IMG_ERR_MAGIC;
     if (h[0x10] != node_id) return FB_IMG_ERR_NODE;
