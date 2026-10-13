@@ -90,4 +90,5 @@ void bsp_wdt_start_2s(void) {
     DL_WWDT_initWatchdogMode(WWDT0, DL_WWDT_CLOCK_DIVIDE_2, DL_WWDT_TIMER_PERIOD_15_BITS, DL_WWDT_RUN_IN_SLEEP,
                              DL_WWDT_WINDOW_PERIOD_0, DL_WWDT_WINDOW_PERIOD_0);
 }
-void bsp_wdt_feed(void) { DL_WWDT_restart(WWDT0); }
+/* Started by the bootloader. An app started without it (P5 bench, GDB jump) has an unpowered WWDT: skip the feed. */
+void bsp_wdt_feed(void) { if (DL_WWDT_isPowerEnabled(WWDT0)) DL_WWDT_restart(WWDT0); }

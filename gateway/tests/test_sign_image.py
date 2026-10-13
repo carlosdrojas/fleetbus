@@ -79,3 +79,15 @@ def test_board_id_is_enforced_by_each_board(tmp_path):
     stm = sign_image.build_image(BODY, 2, 0, 7, KEY)
     p.write_bytes(stm)
     assert run(VERIFY_M0).returncode != 0, "MSPM0 verifier must reject an STM32 image"
+
+def test_real_mspm0_binary_roundtrip(tmp_path):
+    """An MSPM0 app (Cortex-M0+ build) signed for its board verifies with the MSPM0 board's C verifier."""
+    binp = ROOT / "build" / "fw-mspm0" / "arm" / "mspm0g3507" / "app_body_A.elf.bin"
+    if not binp.exists() or not VERIFY_M0.exists():
+        pytest.skip("MSPM0 build missing: make fw-mspm0 host-test")
+    blob = sign_image.build_image(binp.read_bytes(), 2, 0, 1, KEY, sign_image.HW_MSPM0G3507)
+    assert len(blob) <= sign_image.SLOT_SIZE
+    p = tmp_path / "m0.signed"
+    p.write_bytes(blob)
+    r = subprocess.run([str(VERIFY_M0), PUB, str(p), "2", "0"], capture_output=True, text=True)
+    assert r.returncode == 0, r.stdout

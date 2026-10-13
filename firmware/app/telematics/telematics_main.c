@@ -74,7 +74,7 @@ void vApplicationStackOverflowHook(TaskHandle_t t, char *n) { (void)t; (void)n; 
 int main(void) {
     bsp_board_init(); bsp_log_init();      /* the log UART doubles as the gateway link: no text logging here */
     bsp_can_init();
-    xTaskCreate(telematics_task, "telem", 512, 0, 3, 0);
+    xTaskCreate(telematics_task, "telem", 1024, 0, 3, 0);   /* verifies OTA images: see NODE_STACK_WORDS in app_main.c */
     xTaskCreate(wdg_task, "wdg", 192, 0, 4, 0);
     vTaskStartScheduler();
     for (;;) {}

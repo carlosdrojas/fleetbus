@@ -62,3 +62,27 @@ Wiring: 10 kΩ NTC + 10 kΩ divider into PA25 (ADC ch1, "thermistor"), a 10 kΩ 
 5. **Lights.** LED2 cycles off, green, blue, (LED1 red), green+blue. Swap pins in `bsp_pins.h` if the colours are mapped differently on your board.
 
 Write down: ADC error at three points, INA219 vs multimeter, measured servo pulse widths.
+
+## P5 node roles under FreeRTOS
+
+Goal: the battery and body roles run on two LaunchPads and talk over CAN exactly as the simulator does. The bootloader arrives in P6, so here the app is started by hand from GDB.
+
+Build: `cmake -S firmware -B build/fw-mspm0 -G Ninja -DFB_BOARD=mspm0g3507 -DCMAKE_TOOLCHAIN_FILE=$PWD/firmware/cmake/arm-none-eabi.cmake && cmake --build build/fw-mspm0`. App sizes when P5 landed: battery 29.3 KB, body 28.9 KB, telematics 28.6 KB of the 48.6 KB slot; 15 KB of 32 KB SRAM.
+
+1. **Flash an app into slot A** (no bootloader yet): `tools/flash_mspm0.sh app battery A 1` on node 1, `tools/flash_mspm0.sh app body A 1` on node 2. This signs for the MSPM0 board and writes at 0x8000.
+2. **Start it from GDB** on each board (OpenOCD running):
+   ```
+   arm-none-eabi-gdb build/fw-mspm0/arm/mspm0g3507/app_battery_A.elf
+   (gdb) target extended-remote :3333
+   (gdb) monitor reset halt
+   (gdb) set *(unsigned int *)0xE000ED08 = 0x8200
+   (gdb) set $sp = *(unsigned int *)0x8200
+   (gdb) jump *(*(unsigned int *)0x8204)
+   ```
+   The watchdog is not running without the bootloader (the app skips feeding an unpowered WWDT).
+3. **Console.** Each node prints `t=... st=1 peer=1 can_err=0 tx_drop=0 stk_free=...` once a second. `st=1` is NORMAL. `peer=1` means it sees the other node's heartbeat.
+4. **Fault path.** Turn the pot (pack voltage) below the warning and fault thresholds: the battery node goes WARNING (2) then FAULT (3), and the body node goes LIMP_HOME (5): servo stops, lights change. Unplug the battery node's CAN: the body node goes LIMP_HOME after the heartbeat timeout.
+5. **CANable.** `candump can0` shows the heartbeat 0x100 from both nodes (node id in the first byte), BatteryStatus 0x200 and BodyStatus 0x201; decode with `cantools decode can/fleetbus.dbc`.
+6. **Stack and heap.** Record `stk_free` after 10 minutes and after a CAN storm (`cangen can0 -g 1`). The node task has 4 KB; anything under 512 B free needs a bigger stack. (P5 found the old 1.5 KB stack would overflow during OTA verify on both boards: Ed25519 alone peaks at 1,664 B on M4 and 1,888 B on M0+, measured in emulation.)
+
+Write down: heartbeat period on candump, fault and limp-home transitions, `stk_free` minimum.

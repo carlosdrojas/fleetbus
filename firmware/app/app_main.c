@@ -17,6 +17,12 @@
 #error "APP_SLOT (0 or 1) must be defined by the build"
 #endif
 
+/* The node task verifies a received image (SHA-512 + Ed25519) before it marks it NEW. Measured peak stack of the
+ * Ed25519 check alone (emulated, firmware/spike/p0): 1,664 B on Cortex-M4, 1,888 B on Cortex-M0+; fb_image_verify
+ * adds ~0.7 KB of buffers. The old 384-word (1,536 B) stack would overflow on the first completed OTA on either
+ * board. 1024 words = 4 KB; the status line prints the measured high-water mark ("stk_free") for the bench. */
+#define NODE_STACK_WORDS 1024
+
 static fb_node_t g_node;
 static volatile fb_sensors_t g_sens = { 3800, 0, 250, 1 };
 static volatile uint32_t g_chk_node, g_chk_sense;
@@ -52,8 +58,9 @@ static void node_task(void *arg) {
         g_chk_node++;
         if (now - last_log >= 1000) {
             last_log = now;
-            bsp_log("t=%lu st=%d peer=%d can_err=%lu tx_drop=%lu\r\n", (unsigned long)now, g_node.state,
-                    fb_hb_peer_alive(&g_node.peer, now), (unsigned long)bsp_can_error_count(), (unsigned long)g_node.tx_dropped);
+            bsp_log("t=%lu st=%d peer=%d can_err=%lu tx_drop=%lu stk_free=%lu\r\n", (unsigned long)now, g_node.state,
+                    fb_hb_peer_alive(&g_node.peer, now), (unsigned long)bsp_can_error_count(), (unsigned long)g_node.tx_dropped,
+                    (unsigned long)uxTaskGetStackHighWaterMark(NULL) * 4u);
         }
         if (g_node.reboot_requested) { vTaskDelay(pdMS_TO_TICKS(100)); bsp_system_reset(); }   /* let the DONE ack leave the TX FIFO */
     }
@@ -99,7 +106,7 @@ int main(void) {
 #endif
     app_hw_init();
     if (bsp_can_init() != 0) bsp_log("CAN init failed\r\n");
-    xTaskCreate(node_task, "node", 384, 0, 3, 0);
+    xTaskCreate(node_task, "node", NODE_STACK_WORDS, 0, 3, 0);
 #if APP_HAS_SENSE_TASK
     xTaskCreate(sense_task, "sense", 256, 0, 2, 0);
 #endif
