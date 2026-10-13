@@ -76,6 +76,20 @@ static void test_fleet_boots_and_exchanges_heartbeats(void) {
     TEST_ASSERT_EQUAL(FB_ST_NORMAL, sim_node_state(bat)); TEST_ASSERT_EQUAL(FB_ST_NORMAL, sim_node_state(body));
     TEST_ASSERT_EQUAL(0, sim_node_limp(body));
 }
+/* Lite option 4: the body node keeps the battery's latest measurements for its gauge display. */
+static void test_body_node_holds_latest_battery_status(void) {
+    int32_t b[5];
+    TEST_ASSERT_EQUAL(0, sim_node_peer_battery(body, now, b));
+    mv = 3712; ma = -842; dc = 251;
+    run(300);
+    TEST_ASSERT_EQUAL(1, sim_node_peer_battery(body, now, b));
+    TEST_ASSERT_EQUAL_INT32(3712, b[0]); TEST_ASSERT_EQUAL_INT32(-842, b[1]); TEST_ASSERT_EQUAL_INT32(251, b[2]);
+    TEST_ASSERT_EQUAL_INT32((3712 - 3000) * 100 / 1200, b[3]);
+    TEST_ASSERT_TRUE(b[4] >= 0 && b[4] <= 110);            /* refreshed every 100 ms */
+    bat_unplugged = 1; run(1000);
+    sim_node_peer_battery(body, now, b);
+    TEST_ASSERT_TRUE(b[4] >= 1000);                        /* stale value ages: the display can show "battery silent" */
+}
 static void test_overtemp_puts_body_in_limp_home(void) {
     run(2500); uint32_t t0 = now; dc = 700;
     while (!sim_node_limp(body) && now - t0 < 3000) run(10);
@@ -147,7 +161,7 @@ static void test_flash_corruption_of_active_slot_falls_back_to_unavailable_then_
 
 int main(void) {
     UNITY_BEGIN();
-    RUN_TEST(test_fleet_boots_and_exchanges_heartbeats); RUN_TEST(test_overtemp_puts_body_in_limp_home);
+    RUN_TEST(test_fleet_boots_and_exchanges_heartbeats); RUN_TEST(test_body_node_holds_latest_battery_status); RUN_TEST(test_overtemp_puts_body_in_limp_home);
     RUN_TEST(test_unplugged_battery_puts_body_in_limp_home); RUN_TEST(test_good_ota_updates_confirms_and_raises_floor);
     RUN_TEST(test_hanging_ota_image_rolls_back); RUN_TEST(test_unhealthy_ota_image_misses_deadline_and_rolls_back);
     RUN_TEST(test_downgrade_and_wrong_node_images_rejected); RUN_TEST(test_corrupted_transfer_rejected);

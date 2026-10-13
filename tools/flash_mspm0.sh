@@ -3,6 +3,7 @@
 # open). Proving one of these two paths is the first step of P2 on the bench (docs/mspm0-bench-steps.md).
 #
 #   tools/flash_mspm0.sh bench bringup|can_selftest|...  bench image at 0x0 (no bootloader; erases the bootloader)
+#   tools/flash_mspm0.sh lite  battery|body            FleetBus Lite node app at 0x0 (no bootloader, starts its own watchdog)
 #   tools/flash_mspm0.sh boot  battery|body|telematics bootloader at 0x0
 #   tools/flash_mspm0.sh provision battery|body|telematics VERSION   fresh board: bootloader + slot A image + metadata
 #                                                                    marking slot A NEW (tools/provision_meta.py)
@@ -35,6 +36,7 @@ write() {   # write <file> <address>
 
 case ${1:-} in
   bench)   write "$FW/${2:?image}.elf.bin" 0x00000000 ;;
+  lite)    write "$FW/lite_${2:?battery|body}.elf.bin" 0x00000000 ;;
   boot)    write "$FW/bootloader_${2:?node}.elf.bin" 0x00000000 ;;
   app)
     node=${2:?node} slot=${3:?A or B} ver=${4:?version}
@@ -50,5 +52,5 @@ case ${1:-} in
     meta=build/fw-mspm0/meta_${node}.bin
     addr=$(.venv/bin/python tools/provision_meta.py --board mspm0g3507 --slot 0 --version "$ver" -o "$meta")
     write "$meta" "$addr" ;;
-  *) sed -n '2,19p' "$0"; exit 1 ;;
+  *) sed -n '2,20p' "$0"; exit 1 ;;
 esac

@@ -75,6 +75,11 @@ void fb_node_on_can(fb_node_t *n, uint32_t now_ms, uint32_t id, const uint8_t *d
         if (can_msgs_heartbeat_unpack(&h, data, dlc) != 0 || h.proto_ver != FB_PROTO_VER) return;
         fb_node_id_t peer = n->id == FB_NODE_BATTERY ? FB_NODE_BODY : FB_NODE_BATTERY;
         if (n->id != FB_NODE_TELEMATICS && h.node_id == peer) { fb_hb_feed(&n->peer, now_ms); n->peer_state = (fb_state_t)h.state; n->peer_id_seen = 1; }
+    } else if (id == CAN_MSGS_BATTERY_STATUS_FRAME_ID && n->id == FB_NODE_BODY) {
+        struct can_msgs_battery_status_t b;
+        if (can_msgs_battery_status_unpack(&b, data, dlc) != 0 || b.proto_ver != FB_PROTO_VER) return;
+        n->peer_batt = (fb_peer_battery_t){ .pack_mv = b.pack_milli_volt, .ma = b.current_milli_amp, .temp_dc = b.temp_deci_c,
+                                            .soc_pct = b.soc_pct, .at_ms = now_ms ? now_ms : 1, .valid = 1 };
     } else if (id == CAN_MSGS_OTA_CTRL_FRAME_ID) on_ota_ctrl(n, data, dlc);
     else if (id == CAN_MSGS_OTA_DATA_FRAME_ID) on_ota_data(n, data, dlc);
 }

@@ -111,3 +111,16 @@ foreach(role battery body telematics)
     endif()
   endforeach()
 endforeach()
+
+# ---- FleetBus Lite (docs/lite-dashboards.md, P2-P5 on hardware): battery and body apps linked at 0x0 with no
+# bootloader, no boot metadata and no OTA; the app starts the 2 s watchdog itself. Flash: tools/flash_mspm0.sh lite <node>
+foreach(role battery body)
+  string(TOUPPER ${role} ROLE_UP)
+  add_executable(lite_${role} ../../app/app_main.c ../../app/${role}/${role}_hw.c ${STARTUP})
+  target_include_directories(lite_${role} PRIVATE ../../app ../../keys)
+  target_compile_definitions(lite_${role} PRIVATE FB_LITE FB_LITE_VERSION=${FB_VERSION} FB_ROLE_${ROLE_UP} APP_SLOT=0)
+  target_link_libraries(lite_${role} bsp freertos)
+  target_link_options(lite_${role} PRIVATE -T${CMAKE_CURRENT_BINARY_DIR}/bringup.ld -L${CMAKE_CURRENT_SOURCE_DIR} -Wl,-Map=lite_${role}.map)
+  set_target_properties(lite_${role} PROPERTIES SUFFIX ".elf" LINK_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/common.ld)
+  fb_finish(lite_${role})
+endforeach()

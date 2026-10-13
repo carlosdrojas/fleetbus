@@ -28,19 +28,30 @@ static volatile fb_sensors_t g_sens = { 3800, 0, 250, 1 };
 static volatile uint32_t g_chk_node, g_chk_sense;
 static volatile int g_tasks_ok = 1;
 
+#ifndef FB_LITE
 static uint32_t slot_image_version(void) {
     const uint32_t *hdr = (const uint32_t *)FB_SLOT_ADDR(APP_SLOT);
     return hdr[2];                                  /* version at header offset 0x08 */
 }
+#endif
 
 static void node_task(void *arg) {
     (void)arg;
+#ifdef FB_LITE
+    int trial = 0;                                  /* Lite: no bootloader, no metadata, no trial boot */
+    uint32_t ver = FB_LITE_VERSION;
+#else
     fb_boot_meta_t m; fb_meta_load(bsp_flash(), &m);
     int trial = m.status[APP_SLOT] == FB_SLOT_TRIAL;
     uint32_t ver = slot_image_version();
+#endif
     fb_node_init(&g_node, APP_NODE_ID, (uint16_t)ver, ver, APP_SLOT, bsp_flash(), FB_PUBKEY_REF, trial);
     g_node.boot_ms = bsp_millis() ? bsp_millis() : 1; g_node.state = FB_ST_NORMAL;
+#ifdef FB_LITE
+    bsp_log("node %d fw v%lu lite (no bootloader)\r\n", APP_NODE_ID, (unsigned long)ver);
+#else
     bsp_log("node %d fw v%lu slot %c %s\r\n", APP_NODE_ID, (unsigned long)ver, (int)(0x41 + APP_SLOT), trial ? "TRIAL" : "confirmed");
+#endif
     TickType_t last = xTaskGetTickCount();
     uint32_t last_log = 0;
     for (;;) {
@@ -101,6 +112,9 @@ void vApplicationStackOverflowHook(TaskHandle_t t, char *name) { (void)t; bsp_lo
 int main(void) {
     bsp_board_init();
     bsp_log_init();
+#ifdef FB_LITE
+    bsp_wdt_start_2s();                             /* Lite: no bootloader to start it, so the app does (same 2 s, same feed rule) */
+#endif
 #ifdef FB_BENCH_HANG_AT_BOOT
     for (;;) {}                                     /* bench-only broken image: hangs; bootloader must roll back */
 #endif

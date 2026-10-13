@@ -26,6 +26,8 @@ typedef struct { uint32_t id; uint8_t dlc; uint8_t data[8]; } fb_can_frame_t;
 
 typedef struct { int32_t pack_mv, ma, temp_dc; int sensor_ok; } fb_sensors_t;   /* battery node inputs */
 typedef struct { uint8_t lights, servo_deg, limp_home; } fb_actuators_t;         /* body node outputs */
+/* Latest BatteryStatus seen by the body node (for its gauge display, FleetBus Lite option 4). */
+typedef struct { int32_t pack_mv, ma, temp_dc; uint8_t soc_pct; uint32_t at_ms; int valid; } fb_peer_battery_t;
 
 typedef struct {
     fb_node_id_t id;
@@ -39,6 +41,7 @@ typedef struct {
     uint32_t boot_ms, last_hb_ms, last_status_ms, last_fault_tx_ms;
     fb_hb_monitor_t peer;
     fb_state_t peer_state;
+    fb_peer_battery_t peer_batt;  /* body: last BatteryStatus received */
     int peer_id_seen;
 
     fb_fault_fsm_t fault;         /* battery */
