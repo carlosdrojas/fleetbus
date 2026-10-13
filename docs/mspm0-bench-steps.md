@@ -48,3 +48,17 @@ Wiring per node: LaunchPad PA12 (CAN_TX) to transceiver TXD, PA13 (CAN_RX) to RX
 Never connect this image to the car: it transmits a non-OBD id ten times a second.
 
 Write down: loopback result, measured bit time, two-node error count after 10 minutes.
+
+## P4 sensors and actuators
+
+Goal: every I/O the node roles use works on the LaunchPad pins in `firmware/bsp/mspm0g3507/bsp_pins.h`. First, check each pin in that file against the LaunchPad schematic and header silkscreen; fix the header before wiring if anything differs.
+
+Wiring: 10 kΩ NTC + 10 kΩ divider into PA25 (ADC ch1, "thermistor"), a 10 kΩ pot between 3.3 V and GND with the wiper on PA24 (ch2, "pack voltage"), INA219 breakout on PB2 (SCL) / PB3 (SDA) with 3.3 V power, servo signal on PB4 (servo powered from a separate 5 V supply, grounds joined), LED2 on the LaunchPad is the head/turn light (PB27 green, PB22 blue).
+
+1. Flash `tools/flash_mspm0.sh bench io_selftest`. Expect `adc 0 i2c 0` on the first line and a status line every 500 ms.
+2. **ADC.** Sweep the pot end to end: ch2 should read about 0 to 3300 mV. Compare three points with a multimeter on PA24 and record the error. Hold the thermistor: ch1 should move.
+3. **INA219.** With nothing through the shunt, expect about 0 mA. Put a known load (for example a 100 Ω resistor from 5 V) through the shunt and compare with a multimeter in series. `NO-ACK` means the I2C wiring, address (0x40) or pull-ups are wrong.
+4. **Servo.** Scope PB4: period 20.0 ms, high time stepping 1.00 / 1.25 / 1.50 / 1.75 / 2.00 ms. If high and low are swapped, the PWM polarity assumption (high time = period − compare) is wrong: fix `bsp_servo_set_deg`.
+5. **Lights.** LED2 cycles off, green, blue, (LED1 red), green+blue. Swap pins in `bsp_pins.h` if the colours are mapped differently on your board.
+
+Write down: ADC error at three points, INA219 vs multimeter, measured servo pulse widths.

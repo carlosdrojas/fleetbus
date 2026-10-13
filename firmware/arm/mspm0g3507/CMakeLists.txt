@@ -25,7 +25,7 @@ add_library(bsp_boot STATIC ${BSPDIR}/mspm0g3507/bsp_clock.c)
 target_link_libraries(bsp_boot PUBLIC driverlib fb_common)
 target_include_directories(bsp_boot PUBLIC ${BSPDIR} ${BSPDIR}/mspm0g3507)
 target_compile_options(bsp_boot PRIVATE -Wall -Wextra)
-add_library(bsp STATIC ${BSPDIR}/bsp_log.c ${BSPDIR}/mspm0g3507/bsp_core.c ${BSPDIR}/mspm0g3507/bsp_can.c)
+add_library(bsp STATIC ${BSPDIR}/bsp_log.c ${BSPDIR}/mspm0g3507/bsp_core.c ${BSPDIR}/mspm0g3507/bsp_can.c ${BSPDIR}/mspm0g3507/bsp_sensors.c)
 target_link_libraries(bsp PUBLIC bsp_boot freertos)
 target_compile_options(bsp PRIVATE -Wall -Wextra)
 
@@ -49,3 +49,4 @@ function(add_bench_image name src)
 endfunction()
 add_bench_image(bringup ../../app/bringup/bringup_main.c)
 add_bench_image(can_selftest ../../app/bringup/can_selftest_main.c)   # P3: BENCH ONLY, never on the car bus
+add_bench_image(io_selftest ../../app/bringup/io_selftest_main.c)     # P4: sensors and actuators
