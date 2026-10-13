@@ -1,7 +1,11 @@
 # Bench guide: what Carlos does when the parts arrive
 
+> **Primary hardware is now the MSPM0G3507 LaunchPad.** Follow [`docs/mspm0-bench-steps.md`](mspm0-bench-steps.md)
+> milestone by milestone (one branch per milestone, P2 to P8). This file still holds the STM32 Nucleo notes and the
+> **car day-one test** (section on the Sentra), which applies to either board.
+
 Everything here is **[BENCH]**: it needs hardware, and nothing in it has been done yet. Software side is already verified
-(`docs/verification.md`); this list closes the gap. Record every real number you measure in `docs/measured.md` (create it) and
+(`docs/verification.md`); this list closes the gap. Record every real number you measure in `docs/measured.md` and
 only then upgrade a TARGET/ESTIMATED label.
 
 ## 0. Toolchain (once)

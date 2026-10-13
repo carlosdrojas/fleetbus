@@ -51,6 +51,8 @@ Follows AGENTS.md workflow (one milestone per session; model per milestone). Gat
 | P7 | OTA end to end | Opus | Signed image sent over CAN from the gateway, installed, health-checked, and a deliberately bad image (hang / never healthy) rolled back. Measure rollback time and write it in `docs/measured.md` |
 | P8 | Bench fault injection and docs | Sonnet | Bus-off injection (short CAN_H/CAN_L, remove termination, baud mismatch) with scope captures and measured recovery; CI builds both boards; `measured.md`, `verification.md`, `bench-guide.md`, `hardware/README.md`, README updated; TARGET/ESTIMATED labels dropped only where measured |
 
+**Status 2026-10-12:** the software side of every milestone is built, committed on `main`, and marked by a branch per milestone (`p0-feasibility`, `p1-board-split`, `p2-bringup`, `p3-can`, `p4-sensors`, `p5-node-roles`, `p6-bootloader`, `p7-ota`, `p8-docs-ci`). Every "done when" item that needs a board is still open and is written up as a bench procedure in `docs/mspm0-bench-steps.md`; results go in `docs/measured.md`. One change from the table: the flash driver landed in P5 (the apps need it for metadata and OTA writes), so P6 covers the bootloader, the jump, provisioning and the power-cut test.
+
 STM32 hardware stays an optional side task: if the Nucleos arrive, P1's board split lets them run the existing build as a second, independent proof of the same protocol.
 
 ## 4. Flash layout (MSPM0G3507, 128 KB, 1 KB sectors): starting point, not final

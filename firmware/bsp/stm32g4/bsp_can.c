@@ -30,8 +30,22 @@ int bsp_can_init(void) {
     return HAL_FDCAN_Start(&hcan) == HAL_OK ? 0 : -3;
 }
 
+/* Bus-off (TEC > 255) sets CCCR.INIT and the HAL never clears it, so without this the node stays silent until reset.
+ * Clearing INIT starts the standard recovery (128 x 11 recessive bits). Polled from send/receive, like the MSPM0 driver. */
+static void recover_if_bus_off(void) {
+    FDCAN_ProtocolStatusTypeDef ps;
+    if (HAL_FDCAN_GetProtocolStatus(&hcan, &ps) == HAL_OK && ps.BusOff) { err_count++; CLEAR_BIT(hcan.Instance->CCCR, FDCAN_CCCR_INIT); }
+}
+
+void bsp_can_counters(uint32_t *tec, uint32_t *rec, int *bus_off) {
+    FDCAN_ErrorCountersTypeDef ec = {0}; FDCAN_ProtocolStatusTypeDef ps = {0};
+    HAL_FDCAN_GetErrorCounters(&hcan, &ec); HAL_FDCAN_GetProtocolStatus(&hcan, &ps);
+    *tec = ec.TxErrorCnt; *rec = ec.RxErrorCnt; *bus_off = ps.BusOff != 0;
+}
+
 int bsp_can_send(uint32_t id, const uint8_t *data, uint8_t dlc) {
     if (dlc > 8) return -1;
+    recover_if_bus_off();
     FDCAN_TxHeaderTypeDef h = { .Identifier = id, .IdType = FDCAN_STANDARD_ID, .TxFrameType = FDCAN_DATA_FRAME,
         .DataLength = ((uint32_t)dlc) << 16, .ErrorStateIndicator = FDCAN_ESI_ACTIVE, .BitRateSwitch = FDCAN_BRS_OFF,
         .FDFormat = FDCAN_CLASSIC_CAN, .TxEventFifoControl = FDCAN_NO_TX_EVENTS, .MessageMarker = 0 };
@@ -40,7 +54,7 @@ int bsp_can_send(uint32_t id, const uint8_t *data, uint8_t dlc) {
 }
 
 int bsp_can_receive(uint32_t *id, uint8_t *data, uint8_t *dlc) {
-    if (HAL_FDCAN_GetRxFifoFillLevel(&hcan, FDCAN_RX_FIFO0) == 0) return 0;
+    if (HAL_FDCAN_GetRxFifoFillLevel(&hcan, FDCAN_RX_FIFO0) == 0) { recover_if_bus_off(); return 0; }
     FDCAN_RxHeaderTypeDef h;
     if (HAL_FDCAN_GetRxMessage(&hcan, FDCAN_RX_FIFO0, &h, data) != HAL_OK) { err_count++; return 0; }
     *id = h.Identifier; *dlc = (uint8_t)(h.DataLength >> 16);

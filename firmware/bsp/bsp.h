@@ -31,7 +31,10 @@ int  bsp_can_init(void);                   /* classic CAN 500 kbit/s */
 int  bsp_can_send(uint32_t id, const uint8_t *data, uint8_t dlc);
 int  bsp_can_receive(uint32_t *id, uint8_t *data, uint8_t *dlc);   /* non-blocking pop from the RX FIFO */
 uint32_t bsp_can_error_count(void);
-int  bsp_can_set_loopback(int on);         /* bench self-test: TX looped to RX inside the controller; -1 if unsupported */
+int  bsp_can_set_loopback(int on);
+/* Error state for the fault-injection bench: transmit/receive error counters and whether the controller is bus-off
+ * (a node recovers automatically: the driver leaves bus-off on the next send/receive poll). */
+void bsp_can_counters(uint32_t *tec, uint32_t *rec, int *bus_off);         /* bench self-test: TX looped to RX inside the controller; -1 if unsupported */
 
 int  bsp_adc_init(void);
 int  bsp_adc_read_mv(int channel_1_or_2);

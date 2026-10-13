@@ -123,3 +123,17 @@ FLEETBUS_DSN=$DSN build/bin/api -listen 127.0.0.1:8080 -static dashboard/dist -p
 5. **Power cut during transfer.** Cut node power halfway through a transfer: it comes back on the old image; the gateway and rollout engine retry or fail closed.
 
 Write down: transfer time, reboot-to-confirm time, rollback time for unhealthy and hang images.
+
+## P8 bench fault injection
+
+Goal: measured behaviour when the bus is physically broken, with scope captures. Use the two-node `can_selftest` setup from P3: it now also prints every error-state transition (`can error-active -> BUS-OFF after N ms (tec=.. rec=..)`), sampled every 5 ms.
+
+1. **Short CANH to CANL** for about 1 s with a jumper. Both nodes go error-passive then bus-off; remove the short and each must recover on its own (`BUS-OFF -> error-active after N ms`). Expected recovery: 128 × 11 recessive bits ≈ 2.8 ms at 500 kbit/s plus up to one 100 ms send poll (the driver leaves bus-off on the next send/receive). Scope CANH/CANL during the event and save the capture.
+2. **Remove one terminator.** Usually still works on a short bench bus; record the waveform ringing and whether error counters climb.
+3. **Remove both terminators.** Expect errors and error-passive; record.
+4. **Bitrate mismatch.** Bring the CANable up at 250 kbit/s on the same bus. The nodes see errors and may go error-passive; nothing should hang. Restore 500 kbit/s and confirm recovery.
+5. **Node roles under faults.** Repeat step 1 with the P5 node apps running: the body node must enter limp-home while the bus is down (no heartbeat), and leave it when the battery node is back.
+
+Then the remaining P8 items, all off-bench: `make test`, `make e2e` and `FB_BOARD=mspm0g3507 make e2e` green; CI green on GitHub (both boards build); every row you measured moved from TARGET/ESTIMATED to measured in `docs/measured.md`, `docs/verification.md` and the README.
+
+Write down: recovery time per fault, scope captures (file names), limp-home enter/exit times.

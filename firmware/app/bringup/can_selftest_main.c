@@ -3,6 +3,7 @@
  *   2. Bus mode: leaves loopback, sends one 0x7F0 counter frame every 100 ms, prints every frame received.
  *      With two LaunchPads (both running this) on one terminated bus, each must print the other's counter;
  *      with the CANable, `candump can0` must show 0x7F0 at 10 Hz from each node.
+ * A third task prints error-state transitions for the P8 fault-injection bench.
  * Board-neutral (bsp.h only). NOT YET RUN ON A BOARD. */
 #include <string.h>
 #include "FreeRTOS.h"
@@ -24,6 +25,27 @@ static int loopback_test(void) {
     bsp_can_set_loopback(0);
     bsp_log("CAN loopback: %d/100 %s, errors=%lu\r\n", ok, ok == 100 ? "PASS" : "FAIL", (unsigned long)bsp_can_error_count());
     return ok == 100 ? 0 : -1;
+}
+
+/* Fault-injection monitor (P8): samples the controller every 5 ms and prints each transition between error-active,
+ * error-passive (TEC or REC >= 128) and bus-off, with the time spent in the previous state. Short CANH to CANL, pull
+ * a terminator, or run the CANable at the wrong bitrate, and read the recovery time off the console. */
+static void fault_task(void *arg) {
+    (void)arg;
+    const char *names[] = { "error-active", "error-passive", "BUS-OFF" };
+    int prev = 0; uint32_t since = bsp_millis();
+    for (;;) {
+        uint32_t tec, rec; int off;
+        bsp_can_counters(&tec, &rec, &off);
+        int st = off ? 2 : (tec >= 128 || rec >= 128) ? 1 : 0;
+        if (st != prev) {
+            uint32_t now = bsp_millis();
+            bsp_log("can %s -> %s after %lu ms (tec=%lu rec=%lu)\r\n", names[prev], names[st], (unsigned long)(now - since),
+                    (unsigned long)tec, (unsigned long)rec);
+            prev = st; since = now;
+        }
+        vTaskDelay(pdMS_TO_TICKS(5));
+    }
 }
 
 static void can_task(void *arg) {
@@ -53,6 +75,7 @@ int main(void) {
     int r = bsp_can_init();
     bsp_log("\r\nFleetBus CAN self-test on %s: init %d\r\n", FB_BOARD_NAME, r);
     xTaskCreate(can_task, "can", 384, 0, 2, 0);
+    xTaskCreate(fault_task, "fault", 256, 0, 3, 0);
     vTaskStartScheduler();
     for (;;) {}
 }

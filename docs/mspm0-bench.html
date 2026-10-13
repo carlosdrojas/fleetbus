@@ -51,7 +51,7 @@ button:hover{border-color:var(--muted)} button:focus-visible,input:focus-visible
 .gate .m{font:400 11px/1 var(--f-mono);color:var(--muted)}
 .gate span.t{font-size:13px}
 .gate .s{font:500 11px/1 var(--f-mono);letter-spacing:.04em}
-.s-now{color:var(--tel)} .s-next{color:var(--muted)} .s-done{color:var(--ok)} .s-gate{border-left:3px solid var(--warn);border-radius:0 6px 6px 0}
+.s-now{color:var(--tel)} .s-next{color:var(--muted)} .s-done{color:var(--ok)} .s-built{color:var(--warn)} .s-gate{border-left:3px solid var(--warn);border-radius:0 6px 6px 0}
 footer{color:var(--muted);font-size:12px;max-width:80ch}
 </style>
 
@@ -83,13 +83,14 @@ footer{color:var(--muted);font-size:12px;max-width:80ch}
     <div class="panel">
       <div class="eyebrow">Status</div>
       <p style="margin-top:6px">Software stack: verified in simulation (82 firmware host tests, 61 Go, 68 gateway, 12 end-to-end). Hardware: nothing has run on a board yet.</p>
-      <p>P0 spike: bootloader core 15.4 KB on M0+ at -Os (measured link); Ed25519 check about 0.28 s at 80 MHz (estimate from emulated instruction counts); watchdog and VTOR fit the design (TI docs). Headless flashing still needs a board.</p>
+      <p>Port built for every milestone (one branch each): MSPM0 bootloader 18.1 KB of 28 KB and apps about 29 KB of 48.6 KB (measured links); full end-to-end suite passes on the MSPM0 flash map in simulation. Headless flashing and every pin, clock and timing number still need a board: see docs/mspm0-bench-steps.md.</p>
     </div>
   </aside>
 </section>
 
 <section class="gates">
   <h2>Port milestones</h2>
+  <p style="margin:-4px 0 10px;color:var(--muted);font-size:13px">Each milestone has a git branch with the code as it was when that milestone was finished; main has all of them.</p>
   <div class="strip" id="strip"></div>
 </section>
 
@@ -99,17 +100,17 @@ footer{color:var(--muted);font-size:12px;max-width:80ch}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 var MILESTONES=[
-['P0','Feasibility spike','Opus','done',true],
-['P1','Board abstraction','Sonnet','now'],
-['P2','Bring-up: blink + log','Sonnet','next'],
-['P3','CAN on MCAN','Sonnet','next'],
-['P4','Sensors and actuators','Sonnet','next'],
-['P5','Node roles under RTOS','Sonnet','next'],
-['P6','Bootloader + flash','Opus','next',true],
-['P7','OTA end to end','Opus','next'],
-['P8','Fault injection + docs','Sonnet','next']];
-var STATE={now:'Up next',next:'Not started',done:'Done · R6 open'};
-document.getElementById('strip').innerHTML=MILESTONES.map(function(m){return '<div class="gate'+(m[4]?' s-gate':'')+'"><b>'+m[0]+'</b><span class="t">'+m[1]+'</span><span class="m">'+m[2]+(m[4]?' · gate':'')+'</span><span class="s s-'+m[3]+'">'+STATE[m[3]]+'</span></div>'}).join('');
+['P0','Feasibility spike','Opus','done',true,'p0-feasibility'],
+['P1','Board abstraction','Sonnet','done',false,'p1-board-split'],
+['P2','Bring-up: blink + log','Sonnet','built',false,'p2-bringup'],
+['P3','CAN on MCAN','Sonnet','built',false,'p3-can'],
+['P4','Sensors and actuators','Sonnet','built',false,'p4-sensors'],
+['P5','Node roles under RTOS','Sonnet','built',false,'p5-node-roles'],
+['P6','Bootloader + flash','Opus','built',true,'p6-bootloader'],
+['P7','OTA end to end','Opus','built',false,'p7-ota'],
+['P8','Fault injection + docs','Sonnet','built',false,'p8-docs-ci']];
+var STATE={done:'Done',built:'Built · bench pending',next:'Not started'};
+document.getElementById('strip').innerHTML=MILESTONES.map(function(m){return '<div class="gate'+(m[4]?' s-gate':'')+'"><b>'+m[0]+'</b><span class="t">'+m[1]+'</span><span class="m">'+m[5]+(m[4]?' · gate':'')+'</span><span class="s s-'+m[3]+'">'+STATE[m[3]]+'</span></div>'}).join('');
 
 (function(){
 var stage=document.getElementById('stage'),cv=document.getElementById('cv'),lab=document.getElementById('labels');

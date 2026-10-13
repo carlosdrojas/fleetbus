@@ -122,3 +122,9 @@ int bsp_can_receive(uint32_t *id, uint8_t *data, uint8_t *dlc) {
 }
 
 uint32_t bsp_can_error_count(void) { return err_count; }
+
+void bsp_can_counters(uint32_t *tec, uint32_t *rec, int *bus_off) {
+    DL_MCAN_ErrCntStatus ec; DL_MCAN_ProtocolStatus ps;
+    DL_MCAN_getErrCounters(CANFD0, &ec); DL_MCAN_getProtocolStatus(CANFD0, &ps);
+    *tec = ec.transErrLogCnt; *rec = ec.recErrCnt; *bus_off = ps.busOffStatus != 0;
+}

@@ -90,11 +90,26 @@ restarted API resumes (e2e-tested). One node at a time after the canary.
 The node's own confirm deadline (10 s, enforced by stopping the IWDG feed) catches a bad image *on the device*, even with no
 backend. The backend's health window (30 s default) catches what the node cannot judge about itself. Neither trusts the other.
 
+## D9 — Primary hardware is the MSPM0G3507 LaunchPad; boards are a build option
+
+Carlos's class board, the TI LP-MSPM0G3507 (Cortex-M0+, 80 MHz, MCAN), replaced the Nucleo-G431RB as the primary target on
+2026-10-12. The STM32 build stays as a second target. Everything above `bsp.h` is shared; each board has
+`firmware/boards/<board>/fb_board.h` (flash map, erase unit, image hw id) and `bsp/<board>/`, chosen with
+`-DFB_BOARD=`. Host tests and the simulator run on either flash map (`FB_BOARD=mspm0g3507`). The P0 spike
+(`docs/p0-feasibility.md`) measured the risks first: bootloader size, Ed25519 time on an M0+ without a 64-bit multiply,
+watchdog continuity, VTOR, flash rules.
+
+Consequences found and fixed while porting: the STM32 build had never compiled at `-Os` (CMake appended `-O3`), the
+node task stack was smaller than the signature check needs (both boards), STM32 never recovered from CAN bus-off,
+fresh boards had no way to get their first metadata record (now `tools/provision_meta.py`), and MSPM0 erased flash
+reads back nondeterministic data that can trigger an ECC reset (reads go through the uncorrected alias; the shared
+logic never treats 0xFF as "erased").
+
 ## Smaller defaults
 
 | Choice | Over | Why |
 |---|---|---|
 | Postgres 16 in Docker | TimescaleDB, SQLite | Plain Postgres with time-partitioned telemetry is enough at this scale; TimescaleDB is a drop-in later. |
 | In-process bounded Go channel as the ingest queue | NATS, Redis Streams, Kafka | No extra infrastructure, and backpressure (drops, queue depth) is measurable. NATS is the upgrade path if ingest and the writer split into separate processes. |
-| Monocypher for Ed25519 verify | mbedTLS, wolfSSL | Small, single-file, easy to audit. Needed to fit the bootloader flash budget (24 KB TARGET). |
+| Monocypher for Ed25519 verify | mbedTLS, wolfSSL | Small, single-file, easy to audit. The bootloader with it links at 17.6 KB (M4) and 18.1 KB (M0+) of 28 KB. |
 | CRC-32C in FBP | CRC-16 | Stronger error detection for UDP payloads up to MTU size. Cheap, table-driven in C, Python and Go. |

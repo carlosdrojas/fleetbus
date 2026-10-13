@@ -2,19 +2,23 @@
 
 A car's network and its cloud, at bench scale.
 
-Two STM32 "ECUs" run FreeRTOS on a real CAN bus. A third node of your own rides in a 2025 Nissan Sentra and reads the car
+Two microcontroller "ECUs" (TI MSPM0G3507 LaunchPads, Cortex-M0+; the STM32G431 build is kept as a second target) run
+FreeRTOS on a real CAN bus. A third node of your own rides in a 2025 Nissan Sentra and reads the car
 through the OBD-II port **without ever writing to it**. All of them report to a fleet backend over a custom UDP protocol, and
 the backend pushes **signed firmware** back down one car at a time: canary first, health-gated, with the bootloader rolling
 back any image that fails its own check.
 
 > **Status (2026-10-12):** the whole software stack is built and verified end to end **in simulation**: the simulator runs the
-> real firmware logic. The firmware **cross-compiles and links** for the STM32G431 but has **not run on a board** (parts have not
-> arrived). See [`docs/verification.md`](docs/verification.md) for exactly what is measured and what is not.
+> real firmware logic, on both boards' flash maps. The firmware **cross-compiles and links** for the MSPM0G3507 (primary) and the
+> STM32G431, but has **not run on a board** (parts have not arrived). The MSPM0 port was done milestone by milestone (P0–P8,
+> one branch each, [`docs/mspm0-port-plan.md`](docs/mspm0-port-plan.md)); the bench procedure is
+> [`docs/mspm0-bench-steps.md`](docs/mspm0-bench-steps.md). See [`docs/verification.md`](docs/verification.md) for exactly what is
+> measured and what is not.
 
 ```
  ┌──────── bench car (desk) ────────┐      ┌──── real vehicle (read-only) ────┐
  │ Battery node      Body node      │      │ Sentra → OBD-II → telematics node│
- │ STM32·FreeRTOS    STM32·FreeRTOS │      │ (allowlisted mode-01 polls only) │
+ │ MSPM0·FreeRTOS    MSPM0·FreeRTOS │      │ (allowlisted mode-01 polls only) │
  │      └──── CAN 500 kbit/s ───┘   │      └───────────────┬──── UART ───────┘
  └──────────────┬───────────────────┘                      │ Pi + phone hotspot
           USB-CAN adapter                                   │
@@ -32,8 +36,10 @@ back any image that fails its own check.
 
 ```bash
 make setup && make db            # python venv, Postgres 16 in Docker (host port 5433)
-make test                        # firmware (82 Unity tests), Go (61, -race), Python (68), HIL (5), dashboard build
+make test                        # firmware (85 Unity tests x 2 board maps), Go (-race), Python, HIL, dashboard build
 make e2e                         # 12 scenarios: real ingest + api + Postgres + 3 simulated cars, with processes being killed
+FB_BOARD=mspm0g3507 make e2e     # same, with the simulator on the MSPM0 flash map and hw id
+make fw-mspm0 fw                 # cross-build MSPM0G3507 and STM32G431 images (needs arm-none-eabi-gcc)
 make demo                        # dashboard on http://localhost:8080 with 3 simulated cars (make demo-down to stop)
 ```
 
