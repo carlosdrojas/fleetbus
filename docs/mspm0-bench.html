@@ -42,6 +42,9 @@ header p{margin:6px 0 0;color:var(--muted);max-width:70ch}
 .controls label{display:flex;gap:6px;align-items:center;cursor:pointer}
 button{font:600 13px var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:6px 10px;cursor:pointer}
 button:hover{border-color:var(--muted)} button:focus-visible,input:focus-visible{outline:2px solid var(--tel);outline-offset:2px}
+.demo-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:100%;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:6px}
+.demo-ctl[hidden]{display:none}
+.demo-msg{flex-basis:100%;font:400 12px/1.5 var(--f-mono);color:var(--muted)}
 .key{display:flex;flex-wrap:wrap;gap:6px 14px;font:400 11px/1.4 var(--f-mono);color:var(--muted)}
 .key i{display:inline-block;width:10px;height:10px;margin-right:5px;vertical-align:-1px;border-radius:50%}
 .gates h2{font:700 24px/1 var(--f-display);margin:0 0 10px}
@@ -59,7 +62,7 @@ footer{color:var(--muted);font-size:12px;max-width:80ch}
 <header>
   <div class="eyebrow">FleetBus · hardware port · TI LP-MSPM0G3507</div>
   <h1>MSPM0 bench</h1>
-  <p>The desk setup the port is building toward: two LaunchPad nodes on a CAN bus, a USB-CAN adapter into the gateway and backend, and an optional third node in the Sentra with its Raspberry Pi. Turn on “Custom PCB” to see where the phase 5 boards would replace the breadboard. Click any part.</p>
+  <p>The desk setup the port is building toward: two LaunchPad nodes on a CAN bus, a USB-CAN adapter into the gateway and backend, and an optional third node in the Sentra with its Raspberry Pi. Turn on “Custom PCB” to see where the phase 5 boards would replace the breadboard, or “Demo kit” for the convention table with interactions to try. Click any part.</p>
 </header>
 
 <section class="bench">
@@ -69,7 +72,14 @@ footer{color:var(--muted);font-size:12px;max-width:80ch}
       <label><input type="checkbox" id="tg-tel" checked>Telemetry up</label>
       <label><input type="checkbox" id="tg-ota" checked>Firmware down</label>
       <label><input type="checkbox" id="tg-pcb">Custom PCB (phase 5)</label>
+      <label><input type="checkbox" id="tg-demo">Demo kit (convention)</label>
       <button id="b-reset">Reset view</button><button id="b-top">Top view</button>
+      <div id="demo-ctl" class="demo-ctl" hidden>
+        <span class="eyebrow">Try it</span>
+        <button data-act="knob">Turn the knob down</button><button data-act="unplug">Flip “unplug”</button>
+        <button data-act="good">Push good update</button><button data-act="bad">Push bad update</button><button data-act="reset">Reset</button>
+        <span id="demo-msg" class="demo-msg" aria-live="polite">Pick an interaction. This page animates what the real board would do.</span>
+      </div>
       <div class="key" style="margin-left:auto"><span><i style="background:#1D9E75"></i>telemetry</span><span><i style="background:#EF9F27"></i>firmware</span><span><i style="background:#e0b020;border-radius:0"></i>CANH</span><span><i style="background:#2f9e5a;border-radius:0"></i>CANL</span></div>
     </div>
   </div>
@@ -136,7 +146,7 @@ bx(g,56,2,92,0xb3261e,0,0,0,o);
 bx(g,3,6,72,0x1b1b1b,-24,4,2,o);bx(g,3,6,72,0x1b1b1b,24,4,2,o);
 bx(g,12,2,12,0x1d1d1d,0,2,6,o);bx(g,10,2,8,0x262626,0,2,28,o);
 bx(g,11,5,9,0xb8bcc0,0,3.5,43,o);
-bx(g,3,1.5,3,0x55ff88,-12,2,-36,Object.assign({emissive:0x1f8f45},o||{}));
+g.userData.led=bx(g,3,1.5,3,0x55ff88,-12,2,-36,Object.assign({emissive:0x1f8f45},o||{}));
 }
 launchpad(part('nodeA',-120,2,40,'battery node',22));
 launchpad(part('nodeB',40,2,40,'body node',22));
@@ -163,10 +173,11 @@ var LD=part('leds',78,2,108,'lights',14);
 [-8,0,8].forEach(function(x){var m=new T.Mesh(new T.SphereGeometry(3,12,8),mat(0xf2c14e,{emissive:0xaa7a10}));m.position.set(x,3,0);LD.add(m)});
 cyl(wires,[36,5,86],[36,3,100],0x6b7378,0.9);cyl(wires,[48,5,86],[72,3,100],0x6b7378,0.9);
 bx(part('obd',215,7,-20,'Sentra OBD-II',16),32,14,20,0x4a5056,0,0,0,{transparent:true,opacity:0.6});
-cyl(wires,[215,5,2],[215,5,-12],0x888780,1,{transparent:true,opacity:0.4});
+var carw=new T.Group();scene.add(carw);
+cyl(carw,[215,5,2],[215,5,-12],0x888780,1,{transparent:true,opacity:0.4});
 var PI=part('pi',268,2,45,'Raspberry Pi (in car)',14);bx(PI,50,2,80,0x2f7d4a,0,0,0,{transparent:true,opacity:0.45});
 bx(PI,14,10,16,0xb8bcc0,-12,6,33,{transparent:true,opacity:0.45});bx(PI,14,10,16,0xb8bcc0,12,6,33,{transparent:true,opacity:0.45});bx(PI,14,2,14,0x1d1d1d,0,2,-8,{transparent:true,opacity:0.45});
-cyl(wires,[230,4,88],[262,4,88],0x888780,1,{transparent:true,opacity:0.4});
+cyl(carw,[230,4,88],[262,4,88],0x888780,1,{transparent:true,opacity:0.4});
 
 /* Phase 5 BoosterPacks (not designed): plug onto the LaunchPad headers and replace the breadboard modules. */
 var pcbs=[];
@@ -185,6 +196,24 @@ function boosterpack(id,x,z,kind,o){
 boosterpack('pcbBattery',-120,40,'battery');
 boosterpack('pcbBody',40,40,'body');
 boosterpack('pcbCar',215,45,'car',{transparent:true,opacity:0.45});
+
+/* Demo kit (docs/demo-kit.md): what goes on the convention table. Hidden until the toggle is on. */
+var demo=[];
+function dpart(id,x,y,z,text,ly){var g=part(id,x,y,z,text,ly);g.visible=false;demo.push(g);return g}
+var base=dpart('base',-35,-1,22,null);bx(base,390,3,220,0x9c7a4a,0,-1.6,0);
+[-222,152].forEach(function(x){[-86,128].forEach(function(z){var m=new T.Mesh(new T.CylinderGeometry(3,3,4,10),mat(0x9aa0a6));m.position.set(x+35,1,z-22);base.add(m)})});
+var KN=dpart('knob',-70,2,108,'pack-voltage knob',22);
+var kb=new T.Mesh(new T.CylinderGeometry(9,9,4,24),mat(0x2b3238));kb.position.y=2;KN.add(kb);
+var knob=new T.Group();knob.position.y=8;KN.add(knob);
+var kc=new T.Mesh(new T.CylinderGeometry(7,8,12,24),mat(0x15191c));knob.add(kc);bx(knob,1.6,1,7,0xf1efe8,0,6.4,-3);
+var SW=dpart('switch',-120,2,-48,'"unplug" switch',16);bx(SW,12,6,10,0x2b3238,0,3,0);
+var lever=new T.Group();lever.position.set(0,6,0);SW.add(lever);bx(lever,2.4,12,2.4,0xc0c4c8,0,6,0);lever.rotation.x=-0.5;
+var HUB=dpart('hub',-150,2,-12,'USB hub',10);bx(HUB,30,5,12,0x3a4148,0,2.5,0);[-10,-3,4,11].forEach(function(x){bx(HUB,4,2,2,0x1b1b1b,x,4,6.2)});
+var QR=dpart('qr',125,2,100,'QR card',30);var card=new T.Group();card.position.y=14;card.rotation.x=-0.35;QR.add(card);
+bx(QR,24,2,10,0x3a4148,0,1,4);bx(card,26,28,1.5,0xf4f4f0,0,0,0);
+var qrbits=[1,1,1,0,1,0,1,1,1, 1,0,1,0,0,1,1,0,1, 1,1,1,0,1,0,1,1,1, 0,0,0,1,1,0,0,1,0, 1,0,1,1,0,1,0,1,1, 0,1,0,0,1,1,1,0,0, 1,1,1,0,0,1,0,1,0, 1,0,1,0,1,0,1,1,1, 1,1,1,0,1,1,0,0,1];
+qrbits.forEach(function(b,i){if(b)bx(card,2.4,2.4,0.6,0x121a1c,-10+(i%9)*2.5,10-Math.floor(i/9)*2.5,1)});
+var carParts=['ghost','obd','pi','pcbCar','backend'];
 
 function mkPath(pts,col,n){var p=pts.map(function(a){return new T.Vector3(a[0],a[1],a[2])}),ls=[],tot=0;
 for(var i=1;i<p.length;i++){var l=p[i].distanceTo(p[i-1]);ls.push(l);tot+=l}
@@ -212,6 +241,11 @@ pcbBattery:['Node board (battery)','Phase 5 · KiCad BoosterPack · not designed
 pcbBody:['Node board (body)','Phase 5 · same schematic, body options fitted','later','Same board as the battery node with the servo header and light outputs populated instead of the sensors. One design, two assemblies.'],
 pcbCar:['In-car node board','Phase 5 · the version that survives a car','later','Adds a protected 12 V input (fuse, reverse-polarity protection, TVS for load dump), a buck converter to 5 V and 3.3 V, an ignition-sense input so the node powers down when the car is off, the transceiver silent-mode line, and an OBD-II connector. This is the electrical-engineering part of the project.'],
 pi:['Raspberry Pi (in car)','Phase 4b · gateway --serial','later','Runs the same gateway as the bench laptop, talking to the in-car node over the LaunchPad USB serial link and to the backend over a phone hotspot. Powered from a 12 V car USB charger, not from OBD pin 16, which stays on when the car is off.'],
+base:['Demo base board','Convention kit · docs/demo-kit.md','later','Plywood or acrylic, about 30 × 40 cm. Both nodes, the bus, the servo, the lights and the CANable fixed in place and labelled, powered from one USB hub. No mains wiring and no car battery on the table.'],
+knob:['Pack-voltage knob','Panel pot on the battery node','later','The breadboard pot moved to a big panel knob. A visitor turns it down: the battery node goes WARNING then FAULT, the body node goes limp-home, the dashboard raises an alert (1.3 s in simulation; measure the real board before quoting it).'],
+switch:['“Unplug the battery ECU” switch','Toggle in the battery node’s CAN-H stub','later','Flipping it cuts the battery node off the bus: the body node loses the heartbeat and goes limp-home, the dashboard shows the node as silent (3.0 s in simulation). Both terminators sit on nodes that stay connected, so the bus stays terminated.'],
+hub:['Powered USB hub','One cable to the laptop','later','Powers both LaunchPads and the CANable and carries their serial ports, so the whole board unplugs with one cable.'],
+qr:['QR card','Takeaway for recruiters','later','Links to the GitHub repo and this page (share it publicly first). Carries three resume bullets with measured numbers once the bench work exists.'],
 obd:['Sentra OBD-II port','Read-only','later','Standard diagnostic requests only (modes 01 and 09), enforced by an allowlist and a CI guard. Nothing is ever written to the car.']};
 var CHIP={hw:'Not on hardware yet',sw:'Verified in simulation',later:'Planned, optional'};
 var info=document.getElementById('info'),sel=null;
@@ -231,14 +265,47 @@ var hit=ray.intersectObjects(pickables,true).filter(function(h){return shown(h.o
 document.getElementById('b-reset').onclick=function(){az=0.55;pol=1.0;place()};
 document.getElementById('b-top').onclick=function(){az=0;pol=0.25;place()};
 var showT=true,showO=true;
-document.getElementById('tg-pcb').onchange=function(e){var on=e.target.checked;pcbs.forEach(function(g){g.visible=on});breadboard.forEach(function(g){g.visible=!on});if(on)show('pcbBattery')};
+var demoOn=false,knobDown=false,unplugged=false,timers=[],blinkBody=false,bodyLimp=false;
+function setDemo(on){demoOn=on;demo.forEach(function(g){g.visible=on});
+  pickables.forEach(function(g){if(carParts.indexOf(g.userData.id)>=0)g.visible=!on&&(g.userData.id!=='pcbCar'||document.getElementById('tg-pcb').checked)});
+  carw.visible=!on;document.getElementById('demo-ctl').hidden=!on;if(on){az=0.25;pol=0.95;place();show('base')}else{demoReset()}}
+document.getElementById('tg-demo').onchange=function(e){setDemo(e.target.checked)};
+var msg=document.getElementById('demo-msg');
+function say(t){msg.textContent=t}
+function later(ms,f){timers.push(setTimeout(f,ms))}
+function ledColor(node,hex,em){var l=parts[node].userData.led;l.material.color.setHex(hex);l.material.emissive.setHex(em)}
+function lights(hex,em){LD.children.forEach(function(m){m.material.color.setHex(hex);m.material.emissive.setHex(em)})}
+function limp(on){bodyLimp=on;lights(on?0xff8a2a:0xf2c14e,on?0xb04a00:0xaa7a10)}
+function demoReset(){timers.forEach(clearTimeout);timers=[];knobDown=false;unplugged=false;blinkBody=false;limp(false);
+  ledColor('nodeA_-120',0x55ff88,0x1f8f45);ledColor('nodeB_40',0x55ff88,0x1f8f45);lever.rotation.x=-0.5;showO=document.getElementById('tg-ota').checked;
+  say('Reset: both nodes NORMAL on the known-good version.')}
+var ACT={
+  knob:function(){knobDown=true;say('Knob down: pack voltage falls → battery WARNING …');
+    later(700,function(){ledColor('nodeA_-120',0xff4040,0xb01818);say('Battery FAULT → body node enters LIMP-HOME (servo stops, lights amber) · dashboard alert “battery fault”')});
+    later(1200,function(){limp(true)})},
+  unplug:function(){unplugged=!unplugged;lever.rotation.x=unplugged?0.5:-0.5;
+    if(unplugged){say('Battery ECU cut off the bus → body misses heartbeats …');later(900,function(){limp(true);say('Body node LIMP-HOME · dashboard: battery node silent. Flip it back to recover.')})}
+    else{say('Reconnected → heartbeat back → body node NORMAL');later(600,function(){if(!knobDown)limp(false)})}},
+  good:function(){showO=true;say('Rollout v2: canary body node downloads the signed image over CAN …');
+    later(2500,function(){ledColor('nodeB_40',0x6ab7ff,0x1d4f86);say('Body node reboots into slot B as TRIAL, health check running (10 s window) …')});
+    later(5000,function(){ledColor('nodeB_40',0x55ff88,0x1f8f45);say('Confirmed ✓ → rollout continues to the battery node');showO=document.getElementById('tg-ota').checked})},
+  bad:function(){showO=true;say('Rollout v3 (never-healthy build): canary body node downloads it …');
+    later(2500,function(){showO=document.getElementById('tg-ota').checked;ledColor('nodeB_40',0x6ab7ff,0x1d4f86);say('Boots v3 as TRIAL … never reports healthy')});
+    later(4500,function(){blinkBody=true;say('Health deadline missed → stops feeding the watchdog → reset (attempt 1 of 3) …')});
+    later(7500,function(){say('Attempts 2 and 3 fail the same way → bootloader marks slot B BAD')});
+    later(9500,function(){blinkBody=false;ledColor('nodeB_40',0x55ff88,0x1f8f45);say('Rolled back to v2 by itself · rollout HALTED (fail-closed) · nobody touched it')})},
+  reset:demoReset};
+document.querySelectorAll('#demo-ctl button').forEach(function(b){b.onclick=function(){if(b.dataset.act!=='reset'&&b.dataset.act!=='unplug'){timers.forEach(clearTimeout);timers=[]}ACT[b.dataset.act]()}});
+document.getElementById('tg-pcb').onchange=function(e){var on=e.target.checked;pcbs.forEach(function(g){g.visible=on&&!(demoOn&&g.userData.id==='pcbCar')});breadboard.forEach(function(g){g.visible=!on});if(on)show('pcbBattery')};
 document.getElementById('tg-tel').onchange=function(e){showT=e.target.checked};
 document.getElementById('tg-ota').onchange=function(e){showO=e.target.checked};
 var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches,v3=new T.Vector3();
 function frame(t){var s=t/1000;
-tel.forEach(function(p,pi){p.ms.forEach(function(m,i){m.visible=showT;m.position.copy(at(p,reduce?(i+0.5)/p.ms.length:(s*0.11+i/p.ms.length+pi*0.13)%1))})});
+knob.rotation.y+=((knobDown?-2.2:0)-knob.rotation.y)*0.12;
+if(blinkBody)ledColor('nodeB_40',(Math.floor(s*4)%2)?0xff4040:0x222222,(Math.floor(s*4)%2)?0xb01818:0x000000);
+tel.forEach(function(p,pi){p.ms.forEach(function(m,i){m.visible=showT&&!(pi===0&&unplugged);m.position.copy(at(p,reduce?(i+0.5)/p.ms.length:(s*0.11+i/p.ms.length+pi*0.13)%1))})});
 ota.ms.forEach(function(m,i){m.visible=showO;m.position.copy(at(ota,reduce?(i+0.5)/ota.ms.length:(s*0.09+i/ota.ms.length)%1))});
-horn.rotation.y=reduce?0:Math.sin(s*1.6)*0.7;
+if(!bodyLimp)horn.rotation.y=reduce?0:Math.sin(s*1.6)*0.7;
 var w=stage.clientWidth,h=stage.clientHeight;
 Object.keys(parts).forEach(function(k){var g=parts[k],d=g.userData.lab;if(!d)return;d.style.display=g.visible?'':'none';if(!g.visible)return;v3.copy(g.position);v3.y+=g.userData.ly;v3.project(camera);d.style.left=((v3.x*0.5+0.5)*w)+'px';d.style.top=((-v3.y*0.5+0.5)*h)+'px'});
 renderer.render(scene,camera);requestAnimationFrame(frame)}
