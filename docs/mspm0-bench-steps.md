@@ -86,3 +86,16 @@ Build: `cmake -S firmware -B build/fw-mspm0 -G Ninja -DFB_BOARD=mspm0g3507 -DCMA
 6. **Stack and heap.** Record `stk_free` after 10 minutes and after a CAN storm (`cangen can0 -g 1`). The node task has 4 KB; anything under 512 B free needs a bigger stack. (P5 found the old 1.5 KB stack would overflow during OTA verify on both boards: Ed25519 alone peaks at 1,664 B on M4 and 1,888 B on M0+, measured in emulation.)
 
 Write down: heartbeat period on candump, fault and limp-home transitions, `stk_free` minimum.
+
+## P6 bootloader and flash
+
+Goal: the real boot chain on one LaunchPad: bootloader verifies the signed image, boots it as TRIAL, the app confirms, power cuts never brick it.
+
+1. **Provision a fresh board.** `tools/flash_mspm0.sh provision battery 1` flashes `bootloader_battery` at 0x0, signs and writes `app_battery_A` v1 at 0x8000, and writes the metadata record that marks slot A NEW (`tools/provision_meta.py`). Without that record the bootloader sees both slots EMPTY and only blinks LED1 fast (100 ms). That is the correct, fail-closed behaviour, not a bug.
+2. **Boot time.** Scope LED1 / a GPIO from reset release to the app banner `node 1 fw v1 slot A TRIAL`. P0 estimated 0.43 to 0.65 s for one image verify at 80 MHz; the whole bootloader should be under about 1 s. Record the number.
+3. **Confirm.** After the 10 s health window the app confirms; reboot (reset button) and the banner says `confirmed`.
+4. **Watchdog continuity (P0 R4).** With the confirmed image running, short-circuit the feed: in GDB, `break wdg_task` and leave the target halted is not a test (the WWDT stops while the CPU is halted for debug, TRM ch. 40). Instead run the bench `_unhealthy` image through OTA in P7: the watchdog started by the bootloader keeps running in the app, the app stops feeding when its health deadline passes, and the board resets within 2 s. That is the R4 proof.
+5. **Erased-flash reads.** A fresh board must not reset-loop. Erase the whole chip, flash only the bootloader, power on: LED1 blinks fast (nothing bootable), no reset loop. This is the P0 nondeterministic-erase finding: reads go through the ECC-uncorrected alias.
+6. **Power cuts.** Power the LaunchPad through a relay (remove the XDS110 3V3 jumper so USB does not back-power it), then `tools/powercut.py --port <uart> --on "<relay on>" --off "<relay off>" --cycles 200`. It cuts power at random points in the first 1.5 s after power-on, while the bootloader updates the attempt counter. Expect 200/200.
+
+Bootloader size when P6 landed: 18,080 B of 28 KB (measured link). Write down: boot time, cycles passed in the power-cut test, reset count in step 4.

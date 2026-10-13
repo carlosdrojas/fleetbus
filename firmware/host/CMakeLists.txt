@@ -7,3 +7,7 @@ set_target_properties(fbsim PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_D
 add_executable(fb_verify fb_verify.c)
 target_link_libraries(fb_verify PRIVATE fake_flash fb_common monocypher)
 target_include_directories(fb_verify PRIVATE ../common ../tests)
+
+add_executable(fb_boot fb_boot.c)
+target_link_libraries(fb_boot PRIVATE fake_flash fb_common monocypher)
+target_include_directories(fb_boot PRIVATE ../common ../tests)

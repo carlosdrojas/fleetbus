@@ -4,6 +4,8 @@
 #
 #   tools/flash_mspm0.sh bench bringup|can_selftest|...  bench image at 0x0 (no bootloader; erases the bootloader)
 #   tools/flash_mspm0.sh boot  battery|body|telematics bootloader at 0x0
+#   tools/flash_mspm0.sh provision battery|body|telematics VERSION   fresh board: bootloader + slot A image + metadata
+#                                                                    marking slot A NEW (tools/provision_meta.py)
 #   tools/flash_mspm0.sh app   battery|body|telematics A|B VERSION   sign build/fw-mspm0/.../app_<node>_<slot>.elf.bin
 #                                                                    for this board and write it at the slot base
 # Backend: FLASHER=openocd (default) or FLASHER=dslite.
@@ -41,5 +43,12 @@ case ${1:-} in
     .venv/bin/python tools/sign_image.py sign "$FW/app_${node}_${slot}.elf.bin" --board mspm0g3507 \
       --node "$node" --slot "$idx" --version "$ver" -o "$out"
     write "$out" "$addr" ;;
-  *) sed -n '2,17p' "$0"; exit 1 ;;
+  provision)
+    node=${2:?node} ver=${3:?version}
+    "$0" boot "$node"
+    "$0" app "$node" A "$ver"
+    meta=build/fw-mspm0/meta_${node}.bin
+    addr=$(.venv/bin/python tools/provision_meta.py --board mspm0g3507 --slot 0 --version "$ver" -o "$meta")
+    write "$meta" "$addr" ;;
+  *) sed -n '2,19p' "$0"; exit 1 ;;
 esac

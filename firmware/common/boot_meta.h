@@ -19,7 +19,7 @@ typedef struct {
     uint8_t  active;          /* slot to prefer */
     uint32_t reserved;
     uint32_t crc;             /* CRC-32C over all previous bytes */
-} fb_boot_meta_t;             /* 36 bytes, stored padded to 40 */
+} fb_boot_meta_t;             /* 32 bytes, stored padded to 40 (gateway/fleetbus/bootmeta.py mirrors this layout) */
 
 #define FB_META_MAGIC 0x4D455441u /* "META" */
 

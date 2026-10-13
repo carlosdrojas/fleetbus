@@ -3,6 +3,7 @@
 #include "crc32.h"
 
 #define META_STORED 40u
+_Static_assert(sizeof(fb_boot_meta_t) == 32, "layout is mirrored by gateway/fleetbus/bootmeta.py");
 
 void fb_meta_default(fb_boot_meta_t *m) {
     memset(m, 0, sizeof *m);

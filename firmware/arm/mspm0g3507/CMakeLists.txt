@@ -53,6 +53,23 @@ add_bench_image(bringup ../../app/bringup/bringup_main.c)
 add_bench_image(can_selftest ../../app/bringup/can_selftest_main.c)   # P3: BENCH ONLY, never on the car bus
 add_bench_image(io_selftest ../../app/bringup/io_selftest_main.c)     # P4: sensors and actuators
 
+# ---- bootloader (one per node id because it only boots images built for its node); 28 KB at 0x0
+foreach(role battery body telematics)
+  if(role STREQUAL battery)
+    set(NID 1)
+  elseif(role STREQUAL body)
+    set(NID 2)
+  else()
+    set(NID 3)
+  endif()
+  add_executable(bootloader_${role} ../../bootloader/boot_main.c ${BSPDIR}/mspm0g3507/bsp_boot.c ${STARTUP})
+  target_compile_definitions(bootloader_${role} PRIVATE BOOT_NODE_ID=${NID})
+  target_link_libraries(bootloader_${role} bsp_boot)
+  target_link_options(bootloader_${role} PRIVATE -T${CMAKE_CURRENT_SOURCE_DIR}/boot.ld -L${CMAKE_CURRENT_SOURCE_DIR} -Wl,-Map=bootloader_${role}.map)
+  set_target_properties(bootloader_${role} PROPERTIES SUFFIX ".elf" LINK_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/boot.ld;${CMAKE_CURRENT_SOURCE_DIR}/common.ld")
+  fb_finish(bootloader_${role})
+endforeach()
+
 # ---- node applications: linked once per slot at slot base + 0x200; tools/sign_image.py --board mspm0g3507 prepends
 # the signed header. The bootloader sets VTOR to the app's vector table before jumping (TI startup does not).
 function(add_fb_app role slot variant)

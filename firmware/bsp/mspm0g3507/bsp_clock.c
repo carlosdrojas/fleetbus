@@ -37,12 +37,20 @@ static int pll_locked_right(void) {
     return ratio > 1246u && ratio < 1254u;
 }
 
+/* Back to the reset clock: MCLK on SYSOSC, SYSPLL and HFXT off. Used before reconfiguring and before the bootloader
+ * jumps, so the app always starts from the same clock state as after a reset (disabling the SYSPLL while it is the
+ * MCLK source would stop the CPU clock). */
+void bsp_clock_to_reset_state(void) {
+    if (DL_SYSCTL_getMCLKSource() == DL_SYSCTL_MCLK_SOURCE_HSCLK) DL_SYSCTL_setMCLKSource(HSCLK, SYSOSC);
+    DL_SYSCTL_disableSYSPLL();
+    DL_SYSCTL_disableHFXT();
+}
+
 void bsp_clock_init(void) {
+    bsp_clock_to_reset_state();
     DL_SYSCTL_setBORThreshold(DL_SYSCTL_BOR_THRESHOLD_LEVEL_0);
     DL_SYSCTL_setFlashWaitState(DL_SYSCTL_FLASH_WAIT_STATE_2);       /* required above 48 MHz (datasheet 7.x) */
     DL_SYSCTL_setSYSOSCFreq(DL_SYSCTL_SYSOSC_FREQ_BASE);
-    DL_SYSCTL_disableHFXT();
-    DL_SYSCTL_disableSYSPLL();
     DL_GPIO_initPeripheralAnalogFunction(PIN_HFXIN_IOMUX);
     DL_GPIO_initPeripheralAnalogFunction(PIN_HFXOUT_IOMUX);
     DL_SYSCTL_setHFCLKSourceHFXTParams(DL_SYSCTL_HFXT_RANGE_32_48_MHZ, 10, true);   /* 40 MHz crystal */
