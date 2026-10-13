@@ -12,6 +12,9 @@
  *   ADC0 ch3 pot standing in for pack V ... PA24 (A0_3)
  *   Servo PWM (TIMA1 CCP0) ................ PB4                 PINCM17
  *   Head light / turn light ............... PB27 / PB22         PINCM58 / PINCM50   (LED2 green / blue on the LaunchPad)
+ *   ST7735 LCD (body node, Lite option 4):  SCK PB9 (SPI1)  MOSI PB8 (SPI1)  CS PB6  D/C PB16  RESET PB15  (LED/backlight to 3.3 V)
+ *     SPI1 pins as in TI's LP-MSPM0G3507 spi_controller example. If your EE319K LCD wiring used PA13 for anything,
+ *     move it: PA13 is MCAN RX here.
  */
 #include <ti/devices/msp/msp.h>
 
@@ -48,3 +51,15 @@
 #define PIN_HEAD_IOMUX    IOMUX_PINCM58
 #define PIN_TURN          DL_GPIO_PIN_22
 #define PIN_TURN_IOMUX    IOMUX_PINCM50
+
+#define PIN_LCD_SCK_IOMUX  IOMUX_PINCM26
+#define PIN_LCD_SCK_FUNC   IOMUX_PINCM26_PF_SPI1_SCLK
+#define PIN_LCD_MOSI_IOMUX IOMUX_PINCM25
+#define PIN_LCD_MOSI_FUNC  IOMUX_PINCM25_PF_SPI1_PICO
+#define PIN_LCD_PORT       GPIOB
+#define PIN_LCD_CS         DL_GPIO_PIN_6
+#define PIN_LCD_CS_IOMUX   IOMUX_PINCM23
+#define PIN_LCD_DC         DL_GPIO_PIN_16
+#define PIN_LCD_DC_IOMUX   IOMUX_PINCM33
+#define PIN_LCD_RST        DL_GPIO_PIN_15
+#define PIN_LCD_RST_IOMUX  IOMUX_PINCM32

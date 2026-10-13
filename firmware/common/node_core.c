@@ -140,3 +140,12 @@ void fb_node_tick(fb_node_t *n, uint32_t now_ms, const fb_sensors_t *s) {
         }
     }
 }
+
+void fb_node_gauge_inputs(const fb_node_t *n, uint32_t now_ms, gv_inputs_t *out) {
+    out->have = n->peer_batt.valid;
+    out->pack_mv = n->peer_batt.pack_mv; out->ma = n->peer_batt.ma; out->temp_dc = n->peer_batt.temp_dc;
+    out->soc_pct = n->peer_batt.soc_pct;
+    out->battery_alive = n->peer_id_seen && fb_hb_peer_alive(&n->peer, now_ms);
+    out->battery_state = n->peer_state;
+    out->limp_home = n->act.limp_home;
+}

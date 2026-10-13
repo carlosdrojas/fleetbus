@@ -44,5 +44,10 @@ void bsp_servo_init(void);
 void bsp_servo_set_deg(uint8_t deg);       /* 0..180 -> 1.0..2.0 ms pulse */
 void bsp_lights_set(uint8_t mask);         /* FB_LIGHT_* */
 
+/* Optional 160x128 RGB565 LCD (FleetBus Lite option 4: ST7735 on the body node). init returns 0 if a display driver
+ * exists on this board (the panel itself cannot be detected: it has no read-back on this wiring). */
+int  bsp_display_init(void);
+void bsp_display_fill(int x, int y, int w, int h, uint16_t rgb565);
+
 void bsp_link_write(const uint8_t *b, size_t n);   /* telematics: serial link to the gateway (shares the log UART; use one or the other) */
 int  bsp_link_read_byte(uint8_t *b);                /* non-blocking; 1 if a byte was read */

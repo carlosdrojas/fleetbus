@@ -30,6 +30,9 @@ uint32_t sim_node_boots(const sim_node_t *n);
 uint32_t sim_node_resets_by_wdg(const sim_node_t *n);
 /* Body node only: latest BatteryStatus it received. out = {pack_mv, ma, temp_dc, soc_pct, age_ms}; returns 1 if valid. */
 int  sim_node_peer_battery(const sim_node_t *n, uint32_t now_ms, int32_t out[5]);
+/* Body node only: the instrument-cluster inputs (common/gauge_view.h). */
+#include "gauge_view.h"
+void sim_node_gauge_inputs(const sim_node_t *n, uint32_t now_ms, gv_inputs_t *out);
 /* Corrupt one byte of a slot (test hook for flash corruption). */
 void sim_node_flip_byte(sim_node_t *n, int slot, uint32_t offset);
 /* serial-link codec exposed for cross-language tests */

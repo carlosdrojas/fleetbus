@@ -94,6 +94,7 @@ uint8_t sim_node_servo(const sim_node_t *n) { return n->node.act.servo_deg; }
 uint8_t sim_node_limp(const sim_node_t *n) { return n->node.act.limp_home; }
 uint32_t sim_node_boots(const sim_node_t *n) { return n->boots; }
 uint32_t sim_node_resets_by_wdg(const sim_node_t *n) { return n->wdg_resets; }
+void sim_node_gauge_inputs(const sim_node_t *n, uint32_t now_ms, gv_inputs_t *out) { fb_node_gauge_inputs(&n->node, now_ms, out); }
 int sim_node_peer_battery(const sim_node_t *n, uint32_t now_ms, int32_t out[5]) {
     const fb_peer_battery_t *b = &n->node.peer_batt;
     out[0] = b->pack_mv; out[1] = b->ma; out[2] = b->temp_dc; out[3] = b->soc_pct; out[4] = b->valid ? (int32_t)(now_ms - b->at_ms) : -1;

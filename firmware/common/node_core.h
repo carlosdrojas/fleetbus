@@ -14,6 +14,7 @@
 #include "hb_monitor.h"
 #include "ota_receiver.h"
 #include "boot_meta.h"
+#include "gauge_view.h"
 
 #define FB_NODE_TICK_MS      10u
 #define FB_HB_PERIOD_MS      100u
@@ -69,3 +70,5 @@ void fb_node_init(fb_node_t *n, fb_node_id_t id, uint16_t fw_version, uint32_t i
 void fb_node_on_can(fb_node_t *n, uint32_t now_ms, uint32_t id, const uint8_t *data, uint8_t dlc);
 void fb_node_tick(fb_node_t *n, uint32_t now_ms, const fb_sensors_t *s);
 int  fb_node_pop_tx(fb_node_t *n, fb_can_frame_t *out);
+/* Body node: what its instrument cluster shows right now (Lite option 4). */
+void fb_node_gauge_inputs(const fb_node_t *n, uint32_t now_ms, gv_inputs_t *out);

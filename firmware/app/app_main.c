@@ -12,6 +12,9 @@
 #include "node_core.h"
 #include "pubkey_ref.h"
 #include "app_roles.h"
+#if FB_HAS_DISPLAY
+#include "gauge_view.h"
+#endif
 
 #ifndef APP_SLOT
 #error "APP_SLOT (0 or 1) must be defined by the build"
@@ -27,6 +30,10 @@ static fb_node_t g_node;
 static volatile fb_sensors_t g_sens = { 3800, 0, 250, 1 };
 static volatile uint32_t g_chk_node, g_chk_sense;
 static volatile int g_tasks_ok = 1;
+#if FB_HAS_DISPLAY
+static volatile uint32_t g_chk_disp, g_disp_ms;
+static volatile int g_disp_ready;
+#endif
 
 #ifndef FB_LITE
 static uint32_t slot_image_version(void) {
@@ -69,13 +76,40 @@ static void node_task(void *arg) {
         g_chk_node++;
         if (now - last_log >= 1000) {
             last_log = now;
-            bsp_log("t=%lu st=%d peer=%d can_err=%lu tx_drop=%lu stk_free=%lu\r\n", (unsigned long)now, g_node.state,
+            bsp_log("t=%lu st=%d peer=%d can_err=%lu tx_drop=%lu stk_free=%lu", (unsigned long)now, g_node.state,
                     fb_hb_peer_alive(&g_node.peer, now), (unsigned long)bsp_can_error_count(), (unsigned long)g_node.tx_dropped,
                     (unsigned long)uxTaskGetStackHighWaterMark(NULL) * 4u);
+#if FB_HAS_DISPLAY
+            bsp_log(" disp_ms=%lu", (unsigned long)g_disp_ms);
+#endif
+            bsp_log("\r\n");
         }
         if (g_node.reboot_requested) { vTaskDelay(pdMS_TO_TICKS(100)); bsp_system_reset(); }   /* let the DONE ack leave the TX FIFO */
     }
 }
+
+#if FB_HAS_DISPLAY
+/* Instrument cluster (Lite option 4): lowest application priority, redraws 5x/s from a snapshot of the node. The node
+ * task (prio 3, 10 ms) must keep its period while this draws over SPI: the status line prints the draw time. */
+static gv_t g_gv;
+static void disp_fill(void *ctx, int x, int y, int w, int h, uint16_t c) { (void)ctx; bsp_display_fill(x, y, w, h, c); }
+static void display_task(void *arg) {
+    (void)arg;
+    if (bsp_display_init() != 0) bsp_log("no display driver on this board\r\n");
+    gv_init(&g_gv, (gv_ops_t){ disp_fill, 0 });
+    g_disp_ready = 1;
+    TickType_t last = xTaskGetTickCount();
+    for (;;) {
+        vTaskDelayUntil(&last, pdMS_TO_TICKS(200));
+        gv_inputs_t in;
+        uint32_t now = bsp_millis();
+        taskENTER_CRITICAL(); fb_node_gauge_inputs(&g_node, now, &in); taskEXIT_CRITICAL();
+        gv_draw(&g_gv, &in);
+        g_disp_ms = bsp_millis() - now;
+        g_chk_disp++;
+    }
+}
+#endif
 
 static void sense_task(void *arg) {
     (void)arg;
@@ -98,6 +132,12 @@ static void wdg_task(void *arg) {
         ok = ok && g_chk_sense != ps;
 #endif
         pn = g_chk_node; ps = g_chk_sense;
+#if FB_HAS_DISPLAY
+        static uint32_t pd, disp_seen_ms;                    /* display runs every 200 ms: allow 1 s without progress */
+        uint32_t now_ms = bsp_millis();
+        if (!g_disp_ready || g_chk_disp != pd) { pd = g_chk_disp; disp_seen_ms = now_ms; }
+        ok = ok && (uint32_t)(now_ms - disp_seen_ms) < 1000u;
+#endif
 #ifdef FB_BENCH_NEVER_HEALTHY
         ok = 0;                                     /* bench-only broken image: runs, never reports healthy */
 #endif
@@ -125,6 +165,9 @@ int main(void) {
     xTaskCreate(sense_task, "sense", 256, 0, 2, 0);
 #endif
     xTaskCreate(wdg_task, "wdg", 192, 0, 4, 0);
+#if FB_HAS_DISPLAY
+    xTaskCreate(display_task, "disp", 384, 0, 1, 0);
+#endif
     vTaskStartScheduler();
     for (;;) {}
 }

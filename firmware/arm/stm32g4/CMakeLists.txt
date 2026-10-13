@@ -31,7 +31,7 @@ add_library(bsp_boot STATIC ../../bsp/stm32g4/bsp_clock.c ../../bsp/stm32g4/bsp_
 target_link_libraries(bsp_boot PUBLIC hal fb_common)
 target_include_directories(bsp_boot PUBLIC ../../bsp ../../bsp/stm32g4)
 target_compile_options(bsp_boot PRIVATE -Wall -Wextra)
-add_library(bsp STATIC ../../bsp/bsp_log.c ../../bsp/stm32g4/bsp_core.c ../../bsp/stm32g4/bsp_can.c ../../bsp/stm32g4/bsp_sensors.c)
+add_library(bsp STATIC ../../bsp/bsp_log.c ../../bsp/stm32g4/bsp_core.c ../../bsp/stm32g4/bsp_can.c ../../bsp/stm32g4/bsp_sensors.c ../../bsp/stm32g4/bsp_display.c)
 target_link_libraries(bsp PUBLIC bsp_boot)
 target_compile_options(bsp PRIVATE -Wall -Wextra)
 
