@@ -8,6 +8,11 @@ through the OBD-II port **without ever writing to it**. All of them report to a 
 the backend pushes **signed firmware** back down one car at a time: canary first, health-gated, with the bootloader rolling
 back any image that fails its own check.
 
+> **Scope (2026-10-13): FleetBus Lite is the deliverable** ([`docs/lite.md`](docs/lite.md)): two LaunchPads on FreeRTOS +
+> CAN with limp-home, an LCD instrument cluster and a live web dashboard. Its software is complete; the bench work is next.
+> Everything else below (bootloader, signed OTA, gateway and fleet backend, in-car node) is built and verified in
+> simulation and stays as an optional extension.
+>
 > **Status (2026-10-12):** the whole software stack is built and verified end to end **in simulation**: the simulator runs the
 > real firmware logic, on both boards' flash maps. The firmware **cross-compiles and links** for the MSPM0G3507 (primary) and the
 > STM32G431, but has **not run on a board** (parts have not arrived). The MSPM0 port was done milestone by milestone (P0–P8,
@@ -32,7 +37,7 @@ back any image that fails its own check.
  └──────────────────────────────────────────────────────────────┘
 ```
 
-## FleetBus Lite (the first hardware goal)
+## FleetBus Lite (the deliverable)
 
 Two LaunchPads, FreeRTOS, a CAN bus, an LCD instrument cluster on the body node, and a live web dashboard: the RTOS +
 CAN core without the bootloader, OTA or backend. Guide and bench steps: [`docs/lite.md`](docs/lite.md). Try the dashboard

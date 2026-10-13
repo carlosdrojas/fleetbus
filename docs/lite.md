@@ -1,5 +1,8 @@
 # FleetBus Lite
 
+**This is the version being built on hardware** (decision 2026-10-13). Its software is complete on `main`; nothing has run
+on a board yet.
+
 The smallest version of FleetBus that still covers an RTOS and CAN: two TI LP-MSPM0G3507 LaunchPads run FreeRTOS and
 talk over a 500 kbit/s CAN bus. The battery node measures and broadcasts; the body node drives lights, a servo and an
 LCD instrument cluster, and goes into limp-home when the battery faults or goes silent. No bootloader, no OTA, no

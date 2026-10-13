@@ -25,6 +25,9 @@ Postgres 16 in OrbStack) on 2026-10-12 unless noted.
 | Firmware cross-compiles and links for STM32G431RB (secondary) | Cortex-M4F, STM32 HAL: bootloader 17,552 B of 28 KB; apps 27.3–31.8 KB of 48,640 B; RAM 15.4–15.5 KB of 22 KB. (Before P1 the build silently compiled at `-O3 -fPIC`: 24,500 B and 37–44 KB.) | `make fw` |
 | Each board boots only images built for it | Hardware id in the signed header: the MSPM0 verifier accepts MSPM0 images and rejects STM32 ones and vice versa; the API rejects an A/B pair built for different boards | `gateway/tests/test_sign_image.py`, `go test ./internal/api` |
 | A freshly flashed board can be provisioned, and only that way | `tools/provision_meta.py` + a signed image → the C bootloader logic (`fb_boot`) boots slot A as TRIAL on both board maps; without the record nothing boots; a wrong-board image is marked BAD even when provisioned | `gateway/tests/test_provisioning.py` |
+| FleetBus Lite builds (the deliverable) | Standalone battery/body images at 0x0 with no bootloader: battery 29.5 KB, body 32.7 KB with the LCD task; 15.2 KB of 32 KB SRAM | `make fw-mspm0` |
+| The body node's instrument cluster draws correctly | Renderer (`common/gauge_view.c`) against a 160×128 framebuffer: every banner state, clamping, 300 random incremental updates equal a fresh full draw, an unchanged frame costs 1 fill call; the body node feeds it from real bus traffic in the simulator. Real output in `docs/img/` | `firmware/tests/test_gauge.c`, `tools/gauge_shots.py` |
+| The Lite web dashboard decodes the bus | DBC decoding, node liveness at the firmware's 500 ms timeout, the simulator source driving FAULT/SAFE → LIMP_HOME, HTTP/SSE and the sim controls; checked in a browser at desktop and phone widths | `gateway/tests/test_lite_dash.py`, `make lite-dash` |
 | Bootloader and OTA verify fit the task stacks | Peak stack of the Ed25519 check measured in an instruction-level emulator: 1,888 B (M0+), 1,664 B (M4). Node/telematics task stacks raised from 1.5 KB to 4 KB after this showed the old size would overflow on the first OTA | `firmware/spike/p0/bench_emu.py` |
 | The in-car node cannot transmit anything but allowlisted OBD-II reads | `car_tx()` is the only transmit path; `tools/check_car_tx.sh` fails the build otherwise (proved to fail on a planted raw send); the gateway's serial backend refuses everything but OTA frames for the node itself | `tools/check_car_tx.sh`, `gateway/tests/test_uartlink.py` |
 
@@ -39,6 +42,7 @@ These are written, compile, and the logic above them is covered by simulation, b
 - Flash: sector erase and ECC programming from SRAM, reads through the ECC-uncorrected alias (the fix for nondeterministic erased flash), CPU stall during erase (datasheet: up to 200 ms).
 - Watchdog continuity bootloader → app (TI TRM says it cannot be stopped once started, P0 R4), the M0+ jump (VTOR, one NVIC register), boot time (**ESTIMATED** 0.43–0.65 s per image verify at 80 MHz from emulated instruction counts, P0).
 - Sensor drivers (ADC0 with hardware averaging, I2C1 INA219, TIMA1 servo PWM polarity) and calibration: NTC curve (**ESTIMATED**), FSM thresholds (**TARGET**).
+- Lite: the Adafruit 1.8" ST7735R panel (SPI1 clock, init sequence, black-tab vs green-tab settings), the LCD draw time and whether the 10 ms node task keeps its period while it draws, the web dashboard against a real CANable.
 
 **STM32G431 Nucleo (secondary, unchanged):** clock tree (170 MHz), FDCAN timing (17 prescaler, 15+4 tq, 80 %), HAL flash and page-erase stall, IWDG, jump, drivers and pins (UM2505).
 

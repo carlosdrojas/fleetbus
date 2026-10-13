@@ -26,6 +26,7 @@ Carlos's personal embedded + backend project: TI MSPM0G3507 LaunchPad nodes (STM
 - 2026-10-12 — D9: MSPM0 primary, boards as a build option (`FB_BOARD`), see `docs/decisions.md`.
 - 2026-10-12 — D4–D8 (commit-gated ACKs + stored cursor, simulator = real firmware logic, 28 KB bootloader, fail-closed rollout gate, two timeouts): see `docs/decisions.md`.
 - 2026-10-12 — Model use (superseded for this pass by the one-shot build above): Sonnet for routine milestones, Opus for the protocol/bootloader/OTA/safety ones; one milestone per session; no subagents by default. `claude-router` disabled (cost a lot, no measured benefit). See **Model & session workflow**.
+- 2026-10-13 — **Scope (Carlos): FleetBus Lite is the deliverable** (`docs/lite.md`): two MSPM0 LaunchPads on FreeRTOS + CAN, battery/body roles with limp-home, the Adafruit 1.8" ST7735R instrument cluster, and the live web dashboard. Bootloader, signed OTA, gateway/backend and the in-car node stay in the repo, verified in simulation, as optional extensions (P6–P8); don't present them as running on hardware. Resume uses a descriptive title (no project name) and past-tense bullets with labeled estimates (`~/Documents/Dev/Apply/projects/fleetbus.md`).
 - Flight computer: not required for SpaceX; only a later optional add-on if SpaceX Engineering becomes the top target.
 
 ## Status
@@ -33,10 +34,10 @@ Carlos's personal embedded + backend project: TI MSPM0G3507 LaunchPad nodes (STM
 - 2026-10-12: **P0 feasibility spike done without a board** (`docs/p0-feasibility.md`, `firmware/spike/p0/`): R1 to R5 pass, R6 (headless flash over XDS110) needs a board.
 - 2026-10-12: **MSPM0 port P1-P8 built on `main`, one branch per milestone** (`p1-board-split` ... `p8-docs-ci`, see `docs/mspm0-port-plan.md`). `-DFB_BOARD=stm32g4|mspm0g3507`; TI MSPM0 SDK 2.11 subset vendored. MSPM0 bootloader 18,080 B of 28 KB, apps 28.7-29.4 KB of 48.6 KB (measured link). Host tests (85) pass on both flash maps; full e2e passes with `FB_BOARD=mspm0g3507` (12/12). Fixed on the way: STM32 build really at `-Os` now (bootloader 24.5 -> 17.6 KB), single verify per boot, node task stack too small for OTA verify (both boards), STM32 never left CAN bus-off, no first-boot provisioning (`tools/provision_meta.py`), MSPM0 erased-flash ECC reset risk (reads via the uncorrected alias). **Nothing has run on hardware.** Pinned 3D bench page: https://claude.ai/artifact/PJnjriXdyV3DgxsRAaq5EC (`docs/mspm0-bench.html`).
 - 2026-10-12: **FleetBus Lite built on `main`** (branches `l1-lite-images`, `l2-lite-dash`, `l3-lcd-gauge`, `l4-lite-docs`), the first hardware goal: standalone battery/body images at 0x0 (no bootloader), live web dashboard (`make lite-dash`, sim or CANable), ST7735 instrument cluster on the body node (renderer host-tested, real output in `docs/img/`). Guide: `docs/lite.md`; dashboard options: `docs/lite-dashboards.md`. Nothing on hardware yet.
-- Next: when the LaunchPads arrive, walk `docs/mspm0-bench-steps.md` branch by branch (P2 first: prove the flash path, R6); push to GitHub and get CI green; phase 5 PCB not started (optional).
+- 2026-10-13: Lite chosen as the deliverable; its software is complete (images, dashboard, LCD for the Adafruit 1.8" panel). Next: bench P2 → P5 → L1 → L3 per `docs/lite.md` when the parts arrive; push to GitHub and get CI green. P6–P8 and phase 5 are optional extensions.
 
 ## Next steps
-1. Parts arrive → follow `docs/mspm0-bench-steps.md` milestone by milestone (car day-one test in `docs/bench-guide.md`); write real measurements into `docs/measured.md` and only then drop TARGET/ESTIMATED labels.
+1. Parts arrive → follow `docs/lite.md` (P2–P5 then L1–L3); write real measurements into `docs/measured.md` and only then drop TARGET/ESTIMATED labels. Bootloader/OTA bench steps (P6–P8, `docs/mspm0-bench-steps.md`) only if extending beyond Lite.
 2. `gh repo create`, push, get `.github/workflows/ci.yml` green.
 3. Replace the dev signing key (`tools/sign_image.py keygen --force`) before anything leaves the bench.
 4. Resume bullets: upgrade only with measured numbers (rules in `~/Documents/Dev/Apply/projects/fleetbus.md`).

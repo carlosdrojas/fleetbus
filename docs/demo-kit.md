@@ -18,16 +18,20 @@ dashboard. Then they leave with a link. Nothing here is built yet; it depends on
 - **A printed card** with a QR code to the GitHub repo and the 3D bench page (share it publicly first: the artifact is
   private until you change that in its Share menu), plus three resume bullets with measured numbers.
 
-## The five interactions (each under a minute)
+## The interactions (each under a minute)
+
+With Lite (the deliverable) the table runs 1, 2 and 5 plus the LCD on the body node and the web dashboard
+(`tools/lite_dash.py --can ...`) on the laptop. 3 and 4 need the optional bootloader/OTA extension.
+
 
 1. **Turn the knob down.** The battery node goes WARNING, then FAULT; the body node goes limp-home (servo stops, lights
    change); the dashboard raises an alert. (Simulation: fault alert in 1.3 s, `docs/verification.md`. Measure the real
    board before quoting a number.)
 2. **Flip the "unplug" switch.** The body node loses the heartbeat and goes limp-home; the dashboard shows "node silent"
    (simulation: 3.0 s). Flip it back: everything recovers on its own.
-3. **Push a good update from the dashboard.** Canary first: one node downloads the signed image over CAN, reboots into
+3. *(Full version only: needs the bootloader/OTA extension, P6–P7. Not part of Lite.)* **Push a good update from the dashboard.** Canary first: one node downloads the signed image over CAN, reboots into
    the new slot as TRIAL, passes its health check and confirms, then the next node updates.
-4. **Push a broken update.** The never-healthy image installs, fails its own 10 s health deadline, the watchdog resets
+4. *(Full version only, as above.)* **Push a broken update.** The never-healthy image installs, fails its own 10 s health deadline, the watchdog resets
    it, and after 3 attempts the bootloader rolls back by itself. The rollout halts: fail-closed. This is the one
    recruiters remember.
 5. **"What about a real car?"** The dashboard's car view replays a recorded Sentra drive (the trace from the day-one
@@ -65,6 +69,9 @@ watch me push a bad update: it rolls itself back without me doing anything."
 | Printed QR card / small stand | | link to the repo and the 3D page |
 
 ## What still has to be built (software)
+
+Built since this was written: the Lite web dashboard (`tools/lite_dash.py`, `make lite-dash` for the simulator fallback)
+and the LCD instrument cluster on the body node. Still to build:
 
 - `scripts/expo.sh` with `up` (stack + real-bus gateway), `reset` and `fallback` (switch to simulated nodes).
 - Dashboard kiosk mode (large type, auto-cycling views, an "update" button wired to the pre-signed images).

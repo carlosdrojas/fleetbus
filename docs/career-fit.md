@@ -32,6 +32,11 @@ SWE roles are already covered by existing projects (FleetFlight, Fantasy GM, ARC
 ## Timing
 Don't wait on FleetBus to apply. SWE applications go out now. FleetBus matters for embedded interviews (Tesla grills your own project) and for Summer 2027 reqs (expected late Oct–Nov). On hardware, "FleetBus Lite" (port milestones P2–P5 on two MSPM0 LaunchPads: FreeRTOS + CAN + drivers) is the part that closes the RTOS/CAN/firmware-test gaps; then P6–P7 (bootloader + OTA). The rest of the software is already built and tested in simulation.
 
+## Scope chosen: Lite (2026-10-13)
+Lite (two MSPM0 LaunchPads, FreeRTOS + CAN, limp-home, LCD instrument cluster, web dashboard) closes the three embedded
+gaps on hardware: RTOS, CAN, firmware unit tests. The OTA, update-systems, security and networking rows above are covered
+only in simulation unless the P6–P8 extension is built; label them that way on a resume.
+
 ## Coverage with the other projects (2026-10-12)
 SWE/infra and diagnostics are covered by FleetFlight, Fantasy GM, ARCA, PintOS and the Amazon internship; PCB/EE by the Guitar Hero and Space Invaders boards (measure the buck converter instead of doing phase 5). Only FleetBus covers RTOS + CAN + OTA. Space Invaders (EE319K) used the same MSPM0 chip family.
 
