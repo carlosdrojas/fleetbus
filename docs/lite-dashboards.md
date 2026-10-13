@@ -13,7 +13,7 @@ its jumper can be one of the two 120 Ω terminators.
 | # | Option | What you see | Status | Effort | When |
 |---|---|---|---|---|---|
 | 1 | Terminal view | `cantools monitor can/fleetbus.dbc` on the adapter: every frame decoded by name with live values | **works today** (no code) | none | from P3: the debugging tool |
-| 2 | Live webpage | a small Python script (python-can + cantools) pushes decoded values to a browser page with gauges, node states and heartbeat age; no database | **to build** (`tools/lite_dash.py`, ~200 lines) | an evening | P3–P5, and for a laptop at a career fair without the full stack |
+| 2 | Live webpage | `tools/lite_dash.py --can slcan:/dev/tty…`: decodes the bus with the DBC and serves gauges, node states, heartbeat ages and the raw frames over SSE; no database, no internet. `--sim` runs the real firmware logic with a pack-voltage slider and an "unplug battery" switch | **built** (`gateway/fleetbus/lite_dash.py`, 5 tests; not yet run against a real bus) | done | P3–P5, and for a laptop at a career fair without the full stack |
 | 3 | Full dashboard | the existing Go backend + Postgres + React dashboard, with `gateway --can slcan:/dev/tty…` pointed at the adapter: history, charts, alerts | **built** (verified in simulation) | setup only | after Lite works on the bench |
 | 4 | On-board LCD gauge | an LCD on the body node becomes the car's instrument cluster: voltage needle, temperature, current, state banner, "battery silent" warning; no laptop | **to build** (SPI display driver + low-priority FreeRTOS display task) | a weekend after P5 | Lite's headline feature |
 
