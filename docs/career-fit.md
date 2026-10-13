@@ -30,7 +30,10 @@ SWE roles are already covered by existing projects (FleetFlight, Fantasy GM, ARC
 - Every SpaceX loop ends with a 15–30 min project presentation to 5–10 engineers: depth, design decisions, failure analysis. FleetBus's rollback story is built for that.
 
 ## Timing
-Don't wait on FleetBus to apply. SWE applications go out now. FleetBus matters for embedded interviews (Tesla grills your own project) and for Summer 2027 reqs (expected late Oct–Nov). Phases 1–2 alone (about 3 weeks) put it on the embedded resume.
+Don't wait on FleetBus to apply. SWE applications go out now. FleetBus matters for embedded interviews (Tesla grills your own project) and for Summer 2027 reqs (expected late Oct–Nov). On hardware, "FleetBus Lite" (port milestones P2–P5 on two MSPM0 LaunchPads: FreeRTOS + CAN + drivers) is the part that closes the RTOS/CAN/firmware-test gaps; then P6–P7 (bootloader + OTA). The rest of the software is already built and tested in simulation.
+
+## Coverage with the other projects (2026-10-12)
+SWE/infra and diagnostics are covered by FleetFlight, Fantasy GM, ARCA, PintOS and the Amazon internship; PCB/EE by the Guitar Hero and Space Invaders boards (measure the buck converter instead of doing phase 5). Only FleetBus covers RTOS + CAN + OTA. Space Invaders (EE319K) used the same MSPM0 chip family.
 
 ## Target resume bullets (targets, not claims — fill real numbers when built)
 - Built a 2-node CAN network on FreeRTOS with a versioned DBC protocol and heartbeat-based fault propagation
