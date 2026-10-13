@@ -32,6 +32,12 @@ back any image that fails its own check.
  └──────────────────────────────────────────────────────────────┘
 ```
 
+## FleetBus Lite (the first hardware goal)
+
+Two LaunchPads, FreeRTOS, a CAN bus, an LCD instrument cluster on the body node, and a live web dashboard: the RTOS +
+CAN core without the bootloader, OTA or backend. Guide and bench steps: [`docs/lite.md`](docs/lite.md). Try the dashboard
+now against the simulator (real firmware logic): `make lite-dash`, then http://127.0.0.1:8000.
+
 ## Try it (no hardware)
 
 ```bash

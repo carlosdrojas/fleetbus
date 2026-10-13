@@ -150,9 +150,13 @@ var MILESTONES=[
 ['P5','Node roles under RTOS','Sonnet','built',false,'p5-node-roles'],
 ['P6','Bootloader + flash','Opus','built',true,'p6-bootloader'],
 ['P7','OTA end to end','Opus','built',false,'p7-ota'],
-['P8','Fault injection + docs','Sonnet','built',false,'p8-docs-ci']];
+['P8','Fault injection + docs','Sonnet','built',false,'p8-docs-ci'],
+['L1','Lite images (no bootloader)','Opus','built',false,'l1-lite-images'],
+['L2','Lite web dashboard','Opus','built',false,'l2-lite-dash'],
+['L3','LCD instrument cluster','Opus','built',false,'l3-lcd-gauge'],
+['L4','Lite guide','Opus','built',false,'l4-lite-docs']];
 var STATE={done:'Done',built:'Built · bench pending',next:'Not started'};
-document.getElementById('strip').innerHTML=MILESTONES.map(function(m){return '<div class="gate'+(m[4]?' s-gate':'')+'"><b>'+m[0]+'</b><span class="t">'+m[1]+'</span><span class="m">'+m[5]+(m[4]?' · gate':'')+'</span><span class="s s-'+m[3]+'">'+STATE[m[3]]+'</span>'+(['P2','P3','P4','P5'].indexOf(m[0])>=0?'<span class="lite-tag">LITE</span>':'')+'</div>'}).join('');
+document.getElementById('strip').innerHTML=MILESTONES.map(function(m){return '<div class="gate'+(m[4]?' s-gate':'')+'"><b>'+m[0]+'</b><span class="t">'+m[1]+'</span><span class="m">'+m[5]+(m[4]?' · gate':'')+'</span><span class="s s-'+m[3]+'">'+STATE[m[3]]+'</span>'+(['P2','P3','P4','P5','L1','L2','L3','L4'].indexOf(m[0])>=0?'<span class="lite-tag">LITE</span>':'')+'</div>'}).join('');
 
 (function(){
 var stage=document.getElementById('stage'),cv=document.getElementById('cv'),lab=document.getElementById('labels');
@@ -316,7 +320,7 @@ var REAL_LCD=/*REAL_LCD*/{"nodata": "data:image/png;base64,iVBORw0KGgoAAAANSUhEU
 var dash='terminal',hist=[];
 var DASH={
  terminal:{t:'Terminal view',st:'Works today · no code',d:'Run <code>cantools monitor can/fleetbus.dbc</code> with the USB-CAN adapter on the bus. Every frame is decoded by name from the DBC with live values. The everyday debugging tool from P3 on. On macOS the CANable uses slcan firmware through python-can.',lap:true},
- web:{t:'Live webpage',st:'To build · ~200 lines · an evening',d:'A small Python script (python-can + cantools) decodes the adapter and pushes values to a browser page: gauges, node states, heartbeat age. No database, no backend. Good for a laptop at a career fair.',lap:true},
+ web:{t:'Live webpage',st:'Built · make lite-dash (simulator) or --can with the CANable',d:'A small Python script (python-can + cantools) decodes the adapter and pushes values to a browser page: gauges, node states, heartbeat age. No database, no backend. Good for a laptop at a career fair.',lap:true},
  full:{t:'Full dashboard',st:'Built · verified in simulation',d:'The existing Go backend + Postgres + React dashboard, with the gateway pointed at the adapter (<code>gateway --can slcan:/dev/tty…</code>). History, charts, alerts. Heavier: best once Lite works on the bench.',lap:true},
  lcd:{t:'On-board LCD gauge',st:'Built · firmware renderer host-tested; not on a board yet',d:'An ST7735 160×128 SPI LCD (the one from the EE319K kit) on the body node turns it into the instrument cluster: voltage needle, temperature, current, state banner. No laptop. A low-priority FreeRTOS display task redraws ~5×/s while the CAN task keeps its 10 ms period.',lap:false}};
 function model(s){var mv=3700+320*Math.sin(s*0.35)+40*Math.sin(s*2.1),tc=25+5*Math.sin(s*0.12),ma=840+260*Math.sin(s*0.8);

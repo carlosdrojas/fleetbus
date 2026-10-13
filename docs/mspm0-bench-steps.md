@@ -2,6 +2,8 @@
 
 How to test each port milestone on real LaunchPads. Each milestone has a branch (`p1-board-split` … `p8-docs-ci`) that holds the code exactly as it was when that milestone was finished; `main` has all of them. Work through the branches in order: check out the branch, build, flash, run the checks, and write what you measured into `docs/measured.md` (date, board serial if visible, numbers, scope screenshot paths).
 
+**Doing FleetBus Lite first?** Follow P2–P5 here, then the Lite steps L1–L3 in [`docs/lite.md`](lite.md).
+
 Nothing in this file has been done yet. Every expected value is from TI documents or an estimate, and says so.
 
 Common setup:
