@@ -44,6 +44,18 @@ button{font:600 13px var(--f-body);color:var(--ink);background:var(--surface);bo
 button:hover{border-color:var(--muted)} button:focus-visible,input:focus-visible{outline:2px solid var(--tel);outline-offset:2px}
 .scope{display:inline-flex;gap:10px;padding:4px 10px;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
 .lite-tag{font:500 10px/1 var(--f-mono);color:var(--tel);border:1px solid currentColor;border-radius:3px;padding:3px 5px;justify-self:start}
+.dashsec h2{font:700 24px/1 var(--f-display);margin:0 0 6px}
+.dash-intro{margin:0 0 12px;color:var(--muted);max-width:75ch}
+.dash-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.dash-tabs button[aria-selected="true"]{border-color:var(--tel);color:var(--tel)}
+.dash-body{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+@media (max-width:860px){.dash-body{grid-template-columns:minmax(0,1fr)}}
+.dash-frame{background:var(--stage);border-radius:6px;padding:14px;display:flex;justify-content:center;overflow:hidden}
+.dash-frame canvas{max-width:100%;height:auto;border-radius:3px;image-rendering:auto}
+.dash-frame canvas.px{image-rendering:pixelated}
+.dash-note{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px;font-size:14px}
+.dash-note h3{font:700 20px/1.1 var(--f-display);margin:0 0 4px}
+.dash-note p{margin:8px 0 0}
 .demo-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;width:100%;padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:6px}
 .demo-ctl[hidden]{display:none}
 .demo-msg{flex-basis:100%;font:400 12px/1.5 var(--f-mono);color:var(--muted)}
@@ -100,6 +112,21 @@ footer{color:var(--muted);font-size:12px;max-width:80ch}
       <p>Port built for every milestone (one branch each): MSPM0 bootloader 18.1 KB of 28 KB and apps about 29 KB of 48.6 KB (measured links); full end-to-end suite passes on the MSPM0 flash map in simulation. Headless flashing and every pin, clock and timing number still need a board: see docs/mspm0-bench-steps.md.</p>
     </div>
   </aside>
+</section>
+
+<section class="dashsec" aria-labelledby="dash-h">
+  <h2 id="dash-h">Lite dashboards</h2>
+  <p class="dash-intro">Four ways to see the Lite bus. Pick one: the preview shows roughly what it would look like and the 3D model switches to Lite and shows where it lives. Values are made up and animated, not measured.</p>
+  <div class="dash-tabs" role="tablist">
+    <button role="tab" data-dash="terminal" aria-selected="true">1 · Terminal</button>
+    <button role="tab" data-dash="web" aria-selected="false">2 · Live webpage</button>
+    <button role="tab" data-dash="full" aria-selected="false">3 · Full dashboard</button>
+    <button role="tab" data-dash="lcd" aria-selected="false">4 · On-board LCD</button>
+  </div>
+  <div class="dash-body">
+    <div class="dash-frame"><canvas id="dash-cv" width="640" height="360" aria-label="Preview of the selected dashboard"></canvas></div>
+    <div class="dash-note" id="dash-note"></div>
+  </div>
 </section>
 
 <section class="gates">
@@ -218,6 +245,18 @@ var qrbits=[1,1,1,0,1,0,1,1,1, 1,0,1,0,0,1,1,0,1, 1,1,1,0,1,0,1,1,1, 0,0,0,1,1,0
 qrbits.forEach(function(b,i){if(b)bx(card,2.4,2.4,0.6,0x121a1c,-10+(i%9)*2.5,10-Math.floor(i/9)*2.5,1)});
 var carParts=['ghost','obd','pi','pcbCar','backend'];
 
+/* Lite dashboard devices: the laptop reuses the gateway part; the LCD sits beside the body node. */
+var LCD=part('lcd',96,2,48,'LCD gauge (ST7735)',34);LCD.visible=false;
+bx(LCD,16,4,10,0x2b3238,0,2,4);bx(LCD,34,28,2.4,0x1f5fa8,0,18,0);
+var lcdCanvas=document.createElement('canvas');lcdCanvas.width=160;lcdCanvas.height=128;
+var lcdTex=new T.CanvasTexture(lcdCanvas);lcdTex.magFilter=T.NearestFilter;lcdTex.minFilter=T.LinearFilter;
+var lcdScr=new T.Mesh(new T.PlaneGeometry(28,22.4),new T.MeshBasicMaterial({map:lcdTex}));lcdScr.position.set(0,18,1.3);LCD.add(lcdScr);
+cyl(LCD,[-17,4,-2],[-34,6,-2],0x6b7378,0.8);
+var lapCanvas=document.createElement('canvas');lapCanvas.width=640;lapCanvas.height=360;
+var lapTex=new T.CanvasTexture(lapCanvas);
+var lapMat=new T.MeshBasicMaterial({map:lapTex}),scrMat=scr.material;
+var lapPlane=new T.Mesh(new T.PlaneGeometry(60,33.75),lapMat);lapPlane.position.set(0,19,-20.9);lapPlane.rotation.x=-0.3;lapPlane.visible=false;GW.add(lapPlane);
+
 function mkPath(pts,col,n){var p=pts.map(function(a){return new T.Vector3(a[0],a[1],a[2])}),ls=[],tot=0;
 for(var i=1;i<p.length;i++){var l=p[i].distanceTo(p[i-1]);ls.push(l);tot+=l}
 var ms=[];for(var k=0;k<n;k++){var m=new T.Mesh(new T.SphereGeometry(3.2,12,8),new T.MeshBasicMaterial({color:col}));scene.add(m);ms.push(m)}
@@ -246,6 +285,7 @@ pcbBattery:['Node board (battery)','Phase 5 · KiCad BoosterPack · not designed
 pcbBody:['Node board (body)','Phase 5 · same schematic, body options fitted','later','Same board as the battery node with the servo header and light outputs populated instead of the sensors. One design, two assemblies.'],
 pcbCar:['In-car node board','Phase 5 · the version that survives a car','later','Adds a protected 12 V input (fuse, reverse-polarity protection, TVS for load dump), a buck converter to 5 V and 3.3 V, an ignition-sense input so the node powers down when the car is off, the transceiver silent-mode line, and an OBD-II connector. This is the electrical-engineering part of the project.'],
 pi:['Raspberry Pi (in car)','Phase 4b · gateway --serial','later','Runs the same gateway as the bench laptop, talking to the in-car node over the LaunchPad USB serial link and to the backend over a phone hotspot. Powered from a 12 V car USB charger, not from OBD pin 16, which stays on when the car is off.'],
+lcd:['LCD gauge (ST7735)','Lite option 4 · to build after P5','later','The EE319K ST7735 160×128 SPI LCD on the body node as the instrument cluster: voltage needle, temperature, current, state banner. A low-priority FreeRTOS display task redraws a few times a second. The screen here is the same mock-up as the preview below.'],
 lite:['FleetBus Lite','Milestones P2–P5 · two boards and a CAN bus','hw','The smallest version that still covers RTOS and CAN: two LaunchPads run FreeRTOS tasks, exchange heartbeats and sensor frames over a 500 kbit/s CAN bus, and the body node goes into limp-home when the battery faults or goes silent. No bootloader, OTA, gateway or backend. The USB-CAN adapter is optional, for watching the bus with candump. About 2–4 weekends on the bench and 15–25 hours to learn every line.'],
 base:['Demo base board','Convention kit · docs/demo-kit.md','later','Plywood or acrylic, about 30 × 40 cm. Both nodes, the bus, the servo, the lights and the CANable fixed in place and labelled, powered from one USB hub. No mains wiring and no car battery on the table.'],
 knob:['Pack-voltage knob','Panel pot on the battery node','later','The breadboard pot moved to a big panel knob. A visitor turns it down: the battery node goes WARNING then FAULT, the body node goes limp-home, the dashboard raises an alert (1.3 s in simulation; measure the real board before quoting it).'],
@@ -271,12 +311,83 @@ var hit=ray.intersectObjects(pickables,true).filter(function(h){return shown(h.o
 document.getElementById('b-reset').onclick=function(){az=0.55;pol=1.0;place()};
 document.getElementById('b-top').onclick=function(){az=0;pol=0.25;place()};
 var showT=true,showO=true;
+var dash='terminal',hist=[];
+var DASH={
+ terminal:{t:'Terminal view',st:'Works today · no code',d:'Run <code>cantools monitor can/fleetbus.dbc</code> with the USB-CAN adapter on the bus. Every frame is decoded by name from the DBC with live values. The everyday debugging tool from P3 on. On macOS the CANable uses slcan firmware through python-can.',lap:true},
+ web:{t:'Live webpage',st:'To build · ~200 lines · an evening',d:'A small Python script (python-can + cantools) decodes the adapter and pushes values to a browser page: gauges, node states, heartbeat age. No database, no backend. Good for a laptop at a career fair.',lap:true},
+ full:{t:'Full dashboard',st:'Built · verified in simulation',d:'The existing Go backend + Postgres + React dashboard, with the gateway pointed at the adapter (<code>gateway --can slcan:/dev/tty…</code>). History, charts, alerts. Heavier: best once Lite works on the bench.',lap:true},
+ lcd:{t:'On-board LCD gauge',st:'To build · a weekend after P5',d:'An ST7735 160×128 SPI LCD (the one from the EE319K kit) on the body node turns it into the instrument cluster: voltage needle, temperature, current, state banner. No laptop. A low-priority FreeRTOS display task redraws ~5×/s while the CAN task keeps its 10 ms period.',lap:false}};
+function model(s){var mv=3700+320*Math.sin(s*0.35)+40*Math.sin(s*2.1),tc=25+5*Math.sin(s*0.12),ma=840+260*Math.sin(s*0.8);
+  return {s:s,mv:Math.round(mv),tc:Math.round(tc*10)/10,ma:Math.round(ma),soc:Math.max(0,Math.min(100,Math.round((mv-3000)/12))),
+    st:mv<3450?'WARNING':'NORMAL',hb1:Math.round((s*1000)%500),hb2:Math.round((s*1000+170)%500),up:Math.round(s)+412,servo:Math.round(Math.max(0,Math.min(180,(mv-3000)/1200*180)))}}
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
+function drawTerminal(c,m,W,H){c.fillStyle='#0b0f10';c.fillRect(0,0,W,H);c.font='12px "Martian Mono",Menlo,monospace';
+  var L=['$ cantools monitor can/fleetbus.dbc -c slcan -C /dev/tty.usbmodem1 -B 500000','','Received: '+(Math.round(m.s*24)+120)+', Discarded: 0, Errors: 0','',
+   '  Heartbeat(','    NodeId: 1, FwVersion: 1, UptimeS: '+m.up+', State: \''+m.st+'\', Slot: 0, Trial: 0',')',
+   '  Heartbeat(','    NodeId: 2, FwVersion: 1, UptimeS: '+(m.up-3)+', State: \'NORMAL\', Slot: 0, Trial: 0',')',
+   '  BatteryStatus(','    PackMilliVolt: '+m.mv+' mV, CurrentMilliAmp: '+m.ma+' mA, TempDeciC: '+Math.round(m.tc*10)+', SocPct: '+m.soc+' %',')',
+   '  BodyStatus(','    Lights: 1, ServoDeg: '+m.servo+' deg, LimpHome: 0',')'];
+  L.forEach(function(l,i){c.fillStyle=i===0?'#9fb3ba':(l.indexOf('WARNING')>=0?'#e7b04a':'#8fe39a');c.fillText(l,16,26+i*20)})}
+function gauge(c,cx,cy,r,v,lo,hi,label,unit,col){var a0=Math.PI*0.8,a1=Math.PI*2.2,f=Math.max(0,Math.min(1,(v-lo)/(hi-lo)));
+  c.lineWidth=12;c.lineCap='round';c.strokeStyle='#d6dfe1';c.beginPath();c.arc(cx,cy,r,a0,a1);c.stroke();
+  c.strokeStyle=col;c.beginPath();c.arc(cx,cy,r,a0,a0+(a1-a0)*f);c.stroke();
+  c.fillStyle='#121a1c';c.textAlign='center';c.font='700 26px "Saira Condensed",sans-serif';c.fillText(v+' '+unit,cx,cy+8);
+  c.font='12px "Public Sans",sans-serif';c.fillStyle='#56646a';c.fillText(label,cx,cy+r+6);c.textAlign='left'}
+function pill(c,x,y,text,bg,fg){c.font='600 12px "Public Sans",sans-serif';var w=c.measureText(text).width+20;c.fillStyle=bg;rr(c,x,y,w,24,12);c.fill();c.fillStyle=fg;c.fillText(text,x+10,y+16);return w}
+function drawWeb(c,m,W,H){c.fillStyle='#f4f6f6';c.fillRect(0,0,W,H);c.fillStyle='#ffffff';rr(c,12,12,W-24,H-24,8);c.fill();
+  c.fillStyle='#121a1c';c.font='700 22px "Saira Condensed",sans-serif';c.fillText('FleetBus Lite · live bus',32,48);
+  c.font='11px "Martian Mono",monospace';c.fillStyle='#56646a';c.fillText('slcan:/dev/tty.usbmodem1 · 500 kbit/s · localhost:8000',32,68);
+  gauge(c,130,170,62,(m.mv/1000).toFixed(2),3.0,4.2,'pack voltage','V','#17708f');
+  gauge(c,320,170,62,m.tc.toFixed(1),0,60,'temperature','°C','#a95f00');
+  gauge(c,510,170,62,(m.ma/1000).toFixed(2),0,2,'current','A','#2c7a47');
+  var x=32,y=280;x+=pill(c,x,y,'battery '+m.st,m.st==='NORMAL'?'#dcefe2':'#f6e7c8',m.st==='NORMAL'?'#2c7a47':'#a96d00')+8;
+  x+=pill(c,x,y,'body NORMAL','#dcefe2','#2c7a47')+8;pill(c,x,y,'heartbeat '+m.hb1+' ms ago','#e6edef','#56646a')}
+function drawFull(c,m,W,H){c.fillStyle='#0d1214';c.fillRect(0,0,W,H);c.fillStyle='#151c1f';c.fillRect(0,0,W,40);
+  c.fillStyle='#e3eaec';c.font='700 20px "Saira Condensed",sans-serif';c.fillText('FleetBus',16,27);c.font='13px "Public Sans",sans-serif';c.fillStyle='#93a3a8';
+  ['Fleet','Alerts','Updates','Car'].forEach(function(t,i){c.fillStyle=i===0?'#5cb6d5':'#93a3a8';c.fillText(t,120+i*70,26)});
+  c.fillStyle='#151c1f';rr(c,16,54,380,150,6);c.fill();c.fillStyle='#e3eaec';c.font='600 14px "Public Sans",sans-serif';c.fillText('bench car · gateway 1',30,78);
+  [[1,'battery',m.st],[2,'body','NORMAL']].forEach(function(n,i){var x=30+i*180;c.fillStyle='#1c2629';rr(c,x,92,166,96,5);c.fill();
+    c.fillStyle='#e3eaec';c.font='700 18px "Saira Condensed",sans-serif';c.fillText(n[1]+' node',x+12,118);
+    pill(c,x+12,130,n[2],n[2]==='NORMAL'?'#1f3d2b':'#4a3a14',n[2]==='NORMAL'?'#5cc083':'#e7b04a');
+    c.fillStyle='#93a3a8';c.font='11px "Martian Mono",monospace';c.fillText('v1 · slot A',x+12,178)});
+  c.fillStyle='#151c1f';rr(c,412,54,212,150,6);c.fill();c.fillStyle='#e3eaec';c.font='600 14px "Public Sans",sans-serif';c.fillText('Alerts',426,78);
+  c.fillStyle='#93a3a8';c.font='13px "Public Sans",sans-serif';c.fillText(m.st==='NORMAL'?'No active alerts':'pack voltage low',426,104);
+  c.fillStyle='#151c1f';rr(c,16,216,608,128,6);c.fill();c.fillStyle='#e3eaec';c.font='600 14px "Public Sans",sans-serif';c.fillText('pack voltage (last 60 s)',30,240);
+  c.strokeStyle='#5cb6d5';c.lineWidth=2;c.beginPath();hist.forEach(function(v,i){var x=30+i*(580/(hist.length-1||1)),y=330-(v-3300)/800*80;i?c.lineTo(x,y):c.moveTo(x,y)});c.stroke()}
+function drawLCD(c,m,blink){c.imageSmoothingEnabled=false;c.fillStyle='#000';c.fillRect(0,0,160,128);c.fillStyle='#3a7bd5';c.fillRect(0,0,160,12);
+  c.fillStyle='#fff';c.font='bold 9px monospace';c.fillText('FLEETBUS  BODY NODE',4,9);
+  var cx=56,cy=66,r=34,f=Math.max(0,Math.min(1,(m.mv-3000)/1200)),a=Math.PI*(1+f);
+  c.strokeStyle='#444';c.lineWidth=5;c.beginPath();c.arc(cx,cy,r,Math.PI,2*Math.PI);c.stroke();
+  c.strokeStyle='#e0b020';c.beginPath();c.arc(cx,cy,r,Math.PI,a);c.stroke();
+  c.strokeStyle='#ff5a4a';c.lineWidth=2;c.beginPath();c.moveTo(cx,cy);c.lineTo(cx+Math.cos(a)*(r-4),cy+Math.sin(a)*(r-4));c.stroke();
+  c.fillStyle='#fff';c.font='bold 13px monospace';c.textAlign='center';c.fillText((m.mv/1000).toFixed(2)+'V',cx,cy+14);c.textAlign='left';
+  c.font='bold 10px monospace';c.fillStyle='#9fd8ff';c.fillText('TEMP',104,30);c.fillStyle='#fff';c.fillText(m.tc.toFixed(1)+'C',104,42);
+  c.fillStyle='#9fd8ff';c.fillText('CURR',104,58);c.fillStyle='#fff';c.fillText((m.ma/1000).toFixed(2)+'A',104,70);
+  c.fillStyle='#9fd8ff';c.fillText('SOC',104,86);c.fillStyle='#fff';c.fillText(m.soc+'%',104,98);
+  var warn=m.st!=='NORMAL';c.fillStyle=warn?(blink?'#e7a020':'#000'):'#2c9a4f';c.fillRect(0,108,160,20);
+  c.fillStyle=warn&&!blink?'#e7a020':'#000';c.font='bold 12px monospace';c.textAlign='center';c.fillText(warn?'BATTERY WARNING':'NORMAL',80,122);c.textAlign='left'}
+var dashCv=document.getElementById('dash-cv'),dashNote=document.getElementById('dash-note');
+function setDash(k,keepScope){dash=k;document.querySelectorAll('.dash-tabs button').forEach(function(b){b.setAttribute('aria-selected',b.dataset.dash===k?'true':'false')});
+  var d=DASH[k];dashNote.innerHTML='<div class="eyebrow">Option</div><h3>'+d.t+'</h3><span class="chip '+(d.st.indexOf('To build')===0?'c-later':d.st.indexOf('Built')===0?'c-sw':'c-sw')+'">'+d.st+'</span><p>'+d.d+'</p>';
+  if(k==='lcd'){dashCv.width=160;dashCv.height=128;dashCv.style.width='480px';dashCv.classList.add('px')}else{dashCv.width=640;dashCv.height=360;dashCv.style.width='640px';dashCv.classList.remove('px')}
+  if(!lite&&!keepScope){document.getElementById('sc-lite').checked=true;setScope(true)}applyDash()}
+function applyDash(){var on=lite;LCD.visible=on&&dash==='lcd';var lap=on&&DASH[dash].lap;
+  if(on){GW.visible=lap;parts['backend_-195'].visible=on&&dash==='full'}
+  lapPlane.visible=lap;GW.userData.lab.textContent=(on&&dash!=='full')?'laptop + cantools / web page':'gateway'}
+document.querySelectorAll('.dash-tabs button').forEach(function(b){b.onclick=function(){setDash(b.dataset.dash)}});
+setDash('terminal',true);
+var lastDraw=0;
+function updateDash(s){if(s-lastDraw<0.15)return;lastDraw=s;var m=model(s);hist.push(m.mv);if(hist.length>60)hist.shift();
+  var blink=Math.floor(s*3)%2===0,c=dashCv.getContext('2d');
+  if(dash==='lcd')drawLCD(c,m,blink);else (dash==='terminal'?drawTerminal:dash==='web'?drawWeb:drawFull)(c,m,640,360);
+  if(LCD.visible){drawLCD(lcdCanvas.getContext('2d'),m,blink);lcdTex.needsUpdate=true}
+  if(lapPlane.visible){var lc=lapCanvas.getContext('2d');(dash==='terminal'?drawTerminal:dash==='web'?drawWeb:drawFull)(lc,m,640,360);lapTex.needsUpdate=true}}
 var lite=false,liteHide=['gateway','backend','ghost','obd','pi','pcbCar'];
 function setScope(on){lite=on;
   if(on&&demoOn){document.getElementById('tg-demo').checked=false;setDemo(false)}
   document.getElementById('tg-demo').disabled=on;document.getElementById('tg-ota').disabled=on;
   pickables.forEach(function(g){var id=g.userData.id;if(liteHide.indexOf(id)>=0)g.visible=!on&&(id!=='pcbCar'||document.getElementById('tg-pcb').checked)});
-  carw.visible=!on;show(on?'lite':'nodeA')}
+  carw.visible=!on;show(on?'lite':'nodeA');if(!on){LCD.visible=false;lapPlane.visible=false;GW.userData.lab.textContent='gateway'}else applyDash()}
 document.getElementById('sc-lite').onchange=function(){setScope(true)};
 document.getElementById('sc-full').onchange=function(){setScope(false)};
 var demoOn=false,knobDown=false,unplugged=false,timers=[],blinkBody=false,bodyLimp=false;
@@ -314,7 +425,7 @@ document.getElementById('tg-pcb').onchange=function(e){var on=e.target.checked;p
 document.getElementById('tg-tel').onchange=function(e){showT=e.target.checked};
 document.getElementById('tg-ota').onchange=function(e){showO=e.target.checked};
 var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches,v3=new T.Vector3();
-function frame(t){var s=t/1000;
+function frame(t){var s=t/1000;updateDash(s);
 knob.rotation.y+=((knobDown?-2.2:0)-knob.rotation.y)*0.12;
 if(blinkBody)ledColor('nodeB_40',(Math.floor(s*4)%2)?0xff4040:0x222222,(Math.floor(s*4)%2)?0xb01818:0x000000);
 [liteA,liteB].forEach(function(p,pi){p.ms.forEach(function(m,i){m.visible=lite&&showT;m.position.copy(at(p,reduce?(i+0.5)/p.ms.length:(s*0.16+i/p.ms.length+pi*0.5)%1))})});
