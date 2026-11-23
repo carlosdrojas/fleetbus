@@ -19,6 +19,11 @@
 #define FB_NODE_TICK_MS      10u
 #define FB_HB_PERIOD_MS      100u
 #define FB_STATUS_PERIOD_MS  100u
+/* Each node sends its heartbeat at 0x100 + node id (0x101 battery, 0x102 body, 0x103 telematics), payload layout from the
+ * DBC's Heartbeat (0x100). With one shared id, two nodes that start a heartbeat in the same bit win arbitration together,
+ * then collide on the NodeId byte: a bit error, an error frame, a synchronised retry and the same collision again. */
+#define FB_HB_ID(node)      (CAN_MSGS_HEARTBEAT_FRAME_ID + (uint32_t)(node))
+#define FB_IS_HB_ID(id)     (((id) & ~0xFu) == CAN_MSGS_HEARTBEAT_FRAME_ID)
 #define FB_PEER_TIMEOUT_MS   500u     /* TARGET: 5 missed heartbeats */
 #define FB_CONFIRM_WINDOW_MS 10000u   /* trial boot must prove health within this window */
 #define FB_TX_QUEUE          16u

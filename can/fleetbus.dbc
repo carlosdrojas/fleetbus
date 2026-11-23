@@ -62,7 +62,7 @@ BO_ 1280 VehicleObd: 8 TELEMATICS
  SG_ CoolantC : 24|8@1+ (1,0) [0|255] "C+40" Vector__XXX
  SG_ ProtoVer : 56|8@1+ (1,0) [0|255] "" Vector__XXX
 
-CM_ BO_ 256 "10 Hz from every node (TARGET). Not all nodes are BATTERY; sender column is nominal.";
+CM_ BO_ 256 "10 Hz from every node (TARGET), sent at 0x100 + NodeId (0x101 battery, 0x102 body) so two nodes never share an id. Sender column is nominal.";
 CM_ SG_ 256 State "Node state, see VAL_ table";
 CM_ SG_ 256 Slot "Running A/B slot: 0 = A, 1 = B";
 CM_ SG_ 256 Trial "1 = running image is in trial boot and not yet confirmed";

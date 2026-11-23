@@ -1,4 +1,4 @@
-/* Battery node hardware: INA219 current, thermistor on ADC1_IN1, potentiometer on ADC1_IN2 standing in for pack voltage
+/* Battery node hardware: INA219 current (only with -DFB_HAS_INA219=ON; otherwise 0 mA), thermistor on ADC1_IN1, potentiometer on ADC1_IN2 standing in for pack voltage
  * (turn it down to trigger undervoltage on the bench). */
 #include "bsp.h"
 #include "app_roles.h"
@@ -17,12 +17,18 @@ static int32_t ntc_to_dc(int ratio_milli) {          /* ratio falls as temperatu
     return ntc[0].dc;
 }
 
+#ifdef FB_HAS_INA219
 void app_hw_init(void) { bsp_adc_init(); bsp_i2c_init(); }
+static int read_current_ma(int32_t *ma) { return bsp_ina219_read_ma(ma); }
+#else
+void app_hw_init(void) { bsp_adc_init(); }
+static int read_current_ma(int32_t *ma) { *ma = 0; return 0; }   /* no current sensor on this bench: overcurrent can't fire */
+#endif
 
 void app_sensors_read(fb_sensors_t *s) {
     int t_mv = bsp_adc_read_mv(1), p_mv = bsp_adc_read_mv(2);
     int32_t ma = 0;
-    int ina_ok = bsp_ina219_read_ma(&ma) == 0;
+    int ina_ok = read_current_ma(&ma) == 0;
     s->sensor_ok = t_mv >= 0 && p_mv >= 0 && ina_ok;
     s->temp_dc = t_mv >= 0 ? ntc_to_dc(t_mv * 1000 / 3300) : 0;
     s->pack_mv = p_mv >= 0 ? 3000 + p_mv * 1200 / 3300 : 0;     /* pot 0..3.3 V -> fake pack 3.0..4.2 V */

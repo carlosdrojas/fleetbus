@@ -47,7 +47,8 @@ class LiteState:
             if self.started_ms is None:
                 self.started_ms = t_ms
             try:
-                msg = self.db.get_message_by_frame_id(can_id)
+                hb = self.db.get_message_by_name("Heartbeat").frame_id   # sent at 0x100 + node id
+                msg = self.db.get_message_by_frame_id(hb if can_id & ~0xF == hb else can_id)
             except KeyError:
                 self.unknown += 1
                 return

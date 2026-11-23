@@ -70,7 +70,7 @@ static void on_ota_data(fb_node_t *n, const uint8_t *data, uint8_t dlc) {
 }
 
 void fb_node_on_can(fb_node_t *n, uint32_t now_ms, uint32_t id, const uint8_t *data, uint8_t dlc) {
-    if (id == CAN_MSGS_HEARTBEAT_FRAME_ID) {
+    if (FB_IS_HB_ID(id)) {
         struct can_msgs_heartbeat_t h;
         if (can_msgs_heartbeat_unpack(&h, data, dlc) != 0 || h.proto_ver != FB_PROTO_VER) return;
         fb_node_id_t peer = n->id == FB_NODE_BATTERY ? FB_NODE_BODY : FB_NODE_BATTERY;
@@ -88,7 +88,7 @@ static void send_heartbeat(fb_node_t *n, uint32_t now_ms) {
     struct can_msgs_heartbeat_t h = {.node_id = (uint8_t)n->id, .fw_version = n->fw_version, .uptime_s = (now_ms - n->boot_ms) / 1000u,
                                      .state = (uint8_t)(n->ota_active ? FB_ST_UPDATING : n->state),
         .slot = (uint8_t)n->running_slot, .trial = (uint8_t)(n->trial && !n->confirmed), .proto_ver = FB_PROTO_VER};
-    uint8_t b[8]; can_msgs_heartbeat_pack(b, &h, 8); push_tx(n, CAN_MSGS_HEARTBEAT_FRAME_ID, b, 8);
+    uint8_t b[8]; can_msgs_heartbeat_pack(b, &h, 8); push_tx(n, FB_HB_ID(n->id), b, 8);
 }
 
 void fb_node_tick(fb_node_t *n, uint32_t now_ms, const fb_sensors_t *s) {
