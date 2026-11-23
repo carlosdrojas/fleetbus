@@ -6,7 +6,10 @@ cmake_minimum_required(VERSION 3.25)
 # the CPU flags and firmware/arm/<board>/. Host tests run once per board (Makefile host-test).
 set(FB_BOARD stm32g4 CACHE STRING "Target board: stm32g4 or mspm0g3507")
 set_property(CACHE FB_BOARD PROPERTY STRINGS stm32g4 mspm0g3507)
-project(fleetbus_firmware C ASM)
+project(fleetbus_firmware C CXX ASM)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_C_STANDARD 11)
 set(TP ${CMAKE_CURRENT_SOURCE_DIR}/third_party)
 if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/boards/${FB_BOARD}/fb_board.h)
@@ -15,6 +18,7 @@ endif()
 if(CMAKE_CROSSCOMPILING)
   # CMake's GNU defaults append "-O3 -DNDEBUG" after the toolchain's Release flags, so -Os never applied (found in P0).
   set(CMAKE_C_FLAGS_RELEASE "-Os -g3 -DNDEBUG")
+  set(CMAKE_CXX_FLAGS_RELEASE "-Os -g3 -DNDEBUG")
 else()
   set(CMAKE_POSITION_INDEPENDENT_CODE ON)   # host only: the simulator is a shared library loaded by Python
 endif()
@@ -23,11 +27,12 @@ add_library(monocypher STATIC ${TP}/monocypher/src/monocypher.c ${TP}/monocypher
 target_include_directories(monocypher PUBLIC ${TP}/monocypher/src ${TP}/monocypher/src/optional)
 target_compile_options(monocypher PRIVATE -w)       # third-party code: not ours to warn about
 
-file(GLOB COMMON_SRC common/*.c)
+file(GLOB COMMON_SRC CONFIGURE_DEPENDS common/*.c common/*.cpp)
 add_library(fb_common STATIC ${COMMON_SRC})
 target_include_directories(fb_common PUBLIC common boards/${FB_BOARD})
 target_link_libraries(fb_common PUBLIC monocypher)
-target_compile_options(fb_common PRIVATE -Wall -Wextra -Wshadow)
+target_compile_options(fb_common PRIVATE -Wall -Wextra -Wshadow
+  $<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions;-fno-rtti;-fno-threadsafe-statics>)
 
 if(CMAKE_CROSSCOMPILING)
   add_subdirectory(arm/${FB_BOARD})

@@ -9,7 +9,7 @@ export FLEETBUS_REQUIRE_DB ?= 1
 help:
 	@echo "setup      create .venv, install python deps"
 	@echo "host-test  firmware host build + Unity tests for both board flash maps + simulator + fb_verify"
-	@echo "fw         cross-build STM32G431 bootloader + apps (needs arm-none-eabi-gcc); prints size report"
+	@echo "fw         cross-build STM32G431 bootloader + apps (needs arm-none-eabi-gcc/g++); prints size report"
 	@echo "fw-mspm0   cross-build MSPM0G3507 (LaunchPad) images into build/fw-mspm0 (incl. FleetBus Lite images)"
 	@echo "lite-dash  FleetBus Lite live dashboard on :8000 against the simulator (docs/lite.md)"
 	@echo "go-test    backend tests with the race detector (needs: make db)"

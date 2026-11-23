@@ -17,5 +17,12 @@ typedef struct {
 
 typedef struct { uint8_t lights; uint8_t servo_deg; uint8_t limp_home; } fb_body_out_t;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 void fb_body_init(fb_body_fsm_t *b, uint32_t recover_ms);
 void fb_body_step(fb_body_fsm_t *b, uint32_t now_ms, int battery_alive, fb_state_t battery_state, fb_body_out_t *out);
+
+#ifdef __cplusplus
+}
+#endif

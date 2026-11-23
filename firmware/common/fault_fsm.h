@@ -21,7 +21,14 @@ typedef struct {
     uint8_t cnt_warn, cnt_fault, cnt_clear, cnt_in_fault;
 } fb_fault_fsm_t;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 void fb_fault_default_cfg(fb_fault_cfg_t *c);
 void fb_fault_init(fb_fault_fsm_t *f, const fb_fault_cfg_t *cfg);
 void fb_fault_step(fb_fault_fsm_t *f, int32_t pack_mv, int32_t ma, int32_t temp_dc, int sensor_ok);
 void fb_fault_reset(fb_fault_fsm_t *f);
+
+#ifdef __cplusplus
+}
+#endif

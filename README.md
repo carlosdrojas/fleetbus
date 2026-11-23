@@ -99,3 +99,8 @@ fleet is never touched.
 [`docs/verification.md`](docs/verification.md) (what is proven) · [`docs/bench-guide.md`](docs/bench-guide.md) (what to do when the boards arrive) ·
 [`docs/decisions.md`](docs/decisions.md) (ADRs) · [`protocol/spec.md`](protocol/spec.md) · [`docs/proposal.md`](docs/proposal.md) ·
 [`docs/career-fit.md`](docs/career-fit.md) · [`docs/toolchain.md`](docs/toolchain.md) · [`AGENTS.md`](AGENTS.md)
+
+## C++ firmware
+
+Battery fault and body limp-home control logic now uses C++17 in the actual firmware
+and simulator, with stable C interfaces. See [implementation and verification](docs/cpp-firmware.md).
