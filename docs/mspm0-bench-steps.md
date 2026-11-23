@@ -26,7 +26,7 @@ Nothing to flash. Checks are on the computer:
 
 Goal: prove the clock tree, GPIO, UART and FreeRTOS on the M0+, and close P0 risk R6 (headless flashing).
 
-1. **Flash path (R6).** Try `tools/flash_mspm0.sh bench bringup`. It uses OpenOCD by default; if your OpenOCD has no MSPM0 support, use `FLASHER=dslite` with a UniFlash `.ccxml`. Record which one worked and the exact command in `docs/toolchain.md`. If neither works headlessly, flash `build/fw-mspm0/arm/mspm0g3507/bringup.elf` from the UniFlash GUI once and note it.
+1. **Flash path (R6).** Try `tools/flash_mspm0.sh bench bringup`. It uses DSLite from Code Composer Studio by default (the target file is the MSPM0G3507 one CCS ships); Homebrew's OpenOCD 0.12.0 has no MSPM0 target. Record which one worked and the exact command in `docs/toolchain.md`. If neither works headlessly, flash `build/fw-mspm0/arm/mspm0g3507/bringup.elf` from the UniFlash GUI once and note it.
 2. **Console.** Expect `FleetBus bring-up on mspm0g3507` and then one `bringup ... t=<ms> n=<count> free_heap=<bytes>` line per second. Garbage characters mean the UART clock assumption (ULPCLK = 40 MHz) is wrong: see `bsp/mspm0g3507/bsp_core.c`.
 3. **LED.** LED1 (red, PA0) toggles every 250 ms. Measure the period on a scope or logic analyser: expect 500.0 ms. Off by 2.5x means the CPU is still on the 32 MHz SYSOSC (SYSPLL never took over).
 4. **Tick accuracy.** Let it run 10 minutes; compare `t=` with a stopwatch. SYSOSC-derived, so expect within about 1 % (EST; datasheet SYSOSC accuracy applies).
@@ -40,6 +40,13 @@ Write down: flasher used, LED period, 10-minute tick drift, free heap printed.
 Goal: classic CAN at 500 kbit/s between two LaunchPads and the CANable, with the bit timing measured.
 
 Wiring per node: LaunchPad PA12 (CAN_TX) to transceiver TXD, PA13 (CAN_RX) to RXD, 3.3 V and GND to the transceiver. Transceivers' CANH/CANL to a twisted pair. 120 Ω at each end of the pair only. With everything unpowered, measure CANH to CANL: expect about 60 Ω.
+
+**No transceivers? Diode wired-AND bus (bench only).** Each board: a Schottky diode (BAT54, BAT43, 1N5817) from the bus
+line to PA12 (CAN_TX), cathode (band) toward PA12. PA13 (CAN_RX) straight to the bus line. One 1 kΩ resistor from the
+bus line to 3.3 V. GND of both boards joined. Low = dominant, high = recessive: any TX driving low pulls the bus low
+through its diode, and every RX reads the bus. No termination, no CANH/CANL, so the CANable cannot join this bus; use
+the logic analyser (WaveForms, CAN decoder, 500 kbit/s, on the bus line) as the third witness in step 4. Keep wires
+short (under about 30 cm). The firmware is the same as with transceivers.
 
 1. **Loopback.** Flash `tools/flash_mspm0.sh bench can_selftest` on one board with nothing on the bus. Expect `CAN loopback: 100/100 PASS`. A FAIL here is the driver, not the wiring.
 2. **Bit timing.** Same board, transceiver connected, scope on CANH-CANL (or the TX pin). The node sends id 0x7F0 every 100 ms. Measure one bit time: expect 2.000 µs (500 kbit/s). With nobody to ACK, the frame repeats back-to-back (error frames): that is expected on a one-node bus.

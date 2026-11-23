@@ -9,7 +9,10 @@
 #                                                                    marking slot A NEW (tools/provision_meta.py)
 #   tools/flash_mspm0.sh app   battery|body|telematics A|B VERSION   sign build/fw-mspm0/.../app_<node>_<slot>.elf.bin
 #                                                                    for this board and write it at the slot base
-# Backend: FLASHER=openocd (default) or FLASHER=dslite.
+# Backend: FLASHER=dslite (default) or FLASHER=openocd.
+#   dslite:  TI DSLite from Code Composer Studio (DSLITE, default /Applications/ti/ccs2101/...) with the MSPM0G3507 +
+#            XDS110 target file CCS ships (DSLITE_CCXML). Images with a .elf beside the .bin are flashed from the ELF, so
+#            the addresses come from the linker. With two LaunchPads plugged in, unplug the one you are not flashing.
 #   openocd: needs an OpenOCD with MSPM0 support (built from current source; 0.12.0 from Homebrew may not have it).
 #            OPENOCD_CFG defaults to "-f interface/xds110.cfg -f target/ti/mspm0.cfg"; override if your tree differs.
 #   dslite:  TI UniFlash command line. Export a target configuration (.ccxml) for MSPM0G3507 + XDS110 from the
@@ -20,7 +23,10 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 FW=build/fw-mspm0/arm/mspm0g3507
-FLASHER=${FLASHER:-openocd}
+FLASHER=${FLASHER:-dslite}
+CCS=${CCS:-/Applications/ti/ccs2101/ccs}
+DSLITE=${DSLITE:-$CCS/ccs_base/DebugServer/bin/DSLite}
+DSLITE_CCXML=${DSLITE_CCXML:-$CCS/scripting/examples/debugger/mspm0g3507/mspm0g3507.ccxml}
 
 write() {   # write <file> <address>
   local f=$1 addr=$2
@@ -28,8 +34,12 @@ write() {   # write <file> <address>
   case $FLASHER in
     openocd) # shellcheck disable=SC2086
              openocd ${OPENOCD_CFG:--f interface/xds110.cfg -f target/ti/mspm0.cfg} -c "program $f $addr verify reset exit" ;;
-    dslite)  : "${DSLITE_CCXML:?export DSLITE_CCXML=/path/to/MSPM0G3507_XDS110.ccxml}"
-             dslite.sh --config="$DSLITE_CCXML" --flash --verify "$f,$addr" ;;
+    dslite)  [ -f "$DSLITE_CCXML" ] || { echo "missing $DSLITE_CCXML (set DSLITE_CCXML)" >&2; exit 1; }
+             if [ -f "${f%.bin}" ] && [ "${f%.elf.bin}" != "$f" ]; then
+               "$DSLITE" flash --config="$DSLITE_CCXML" --flash --verify "${f%.bin}"
+             else
+               "$DSLITE" flash --config="$DSLITE_CCXML" --flash --verify "$f,$addr"
+             fi ;;
     *) echo "FLASHER must be openocd or dslite" >&2; exit 2 ;;
   esac
 }
