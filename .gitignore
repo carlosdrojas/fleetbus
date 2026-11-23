@@ -8,10 +8,6 @@ firmware/build*/
 *.o
 *.a
 
-# Signing keys never live in the repo (see docs/toolchain.md)
-*.key
-keys/
-
 # Python
 .venv/
 __pycache__/
@@ -19,17 +15,7 @@ __pycache__/
 .pytest_cache/
 *.egg-info/
 
-# Go
-backend/bin/
-*.test
-*.out
-
-# Node / dashboard
-node_modules/
-dashboard/dist/
-
 # Local data
-gateway/spool/
 *.sqlite
 .env
 
@@ -41,6 +27,3 @@ gateway/spool/
 
 # Agent session state
 .claude/handoff/
-
-# Build trees
-build/

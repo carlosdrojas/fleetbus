@@ -1,10 +1,9 @@
-/* MCAN0 on the MSPM0G3507 as a classic CAN 2.0 node at 500 kbit/s, polled (same contract as bsp/stm32g4/bsp_can.c).
+/* MCAN0 on the MSPM0G3507 as a classic CAN 2.0 node at 500 kbit/s, polled (no CAN interrupts).
  * Call sequence from TI's LP-MSPM0G3507 mcan_* examples (SDK 2.11). NOT YET RUN ON A BOARD.
  *
  * Bit timing (arithmetic, confirm with a scope in P3): CANCLK = HFCLK = 40 MHz crystal, prescaler 2 -> 20 MHz tq clock,
  * 1 sync + 34 seg1 + 5 seg2 = 40 tq = 500 kbit/s, sample point 35/40 = 87.5 % (TI's nominal setting; also the SAE J2284
- * value for 500 kbit/s). DriverLib fields hold "value - 1". The STM32 build samples at 80 %; both are inside what a
- * 500 kbit/s bus tolerates, but check both nodes on one bus with a scope before blaming wiring.
+ * value for 500 kbit/s). DriverLib fields hold "value - 1".
  *
  * Message RAM (1 KB, byte offsets, 8-byte payload elements = 16 B each):
  *   0x000 no filter elements: the global filter accepts every standard id into RX FIFO0, rejects extended + remote
@@ -37,7 +36,7 @@ int bsp_can_init(void) {
     static const DL_MCAN_ClockConfig clk = { .clockSel = DL_MCAN_FCLK_HFCLK, .divider = DL_MCAN_FCLK_DIV_1 };
     static const DL_MCAN_InitParams init = {
         .fdMode = false, .brsEnable = false, .txpEnable = false, .efbi = false, .pxhddisable = false,
-        .darEnable = false,                       /* automatic retransmission on, like the STM32 build */
+        .darEnable = false,                       /* automatic retransmission on (DAR = 0) */
         .wkupReqEnable = false, .autoWkupEnable = false, .emulationEnable = true,
         .tdcEnable = false, .wdcPreload = 255, .tdcConfig = { .tdcf = 0, .tdco = 0 },
     };
@@ -111,7 +110,10 @@ int bsp_can_receive(uint32_t *id, uint8_t *data, uint8_t *dlc) {
     DL_MCAN_RxFIFOStatus st = { .num = DL_MCAN_RX_FIFO_NUM_0 };
     DL_MCAN_getRxFIFOStatus(CANFD0, &st);
     if (st.fillLvl == 0) { recover_if_bus_off(); return 0; }
-    if (st.msgLost) err_count++;
+    if (st.msgLost) {           /* RXF0S.RF0L mirrors IR.RF0L and stays set until cleared: count each overflow once */
+        err_count++;
+        CANFD0->MCANSS.MCAN.MCAN_IR = MCAN_IR_RF0L_MASK;      /* write-1-to-clear; no EOI: this driver is polled */
+    }
     DL_MCAN_RxBufElement e;
     DL_MCAN_readMsgRam(CANFD0, DL_MCAN_MEM_TYPE_FIFO, 0, DL_MCAN_RX_FIFO_NUM_0, &e);
     DL_MCAN_writeRxFIFOAck(CANFD0, DL_MCAN_RX_FIFO_NUM_0, st.getIdx);

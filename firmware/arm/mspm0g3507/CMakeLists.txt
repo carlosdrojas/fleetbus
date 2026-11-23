@@ -1,17 +1,21 @@
-# Cross build for FB_BOARD=mspm0g3507 (LP-MSPM0G3507 LaunchPad, Cortex-M0+). UNVERIFIED ON HARDWARE: everything here
-# compiles and links; nothing has run on a board. Vendor layer: TI MSPM0 SDK subset in third_party/mspm0_sdk
-# (tools/vendor_mspm0_sdk.sh), FreeRTOS ARM_CM0 port.
+# Cross build for the LP-MSPM0G3507 LaunchPad (Cortex-M0+). Every image is linked at 0x0 and flashed
+# with tools/flash_mspm0.sh. Vendor layer: TI MSPM0 SDK subset in third_party/mspm0_sdk (tools/vendor_mspm0_sdk.sh)
+# and the FreeRTOS ARM_CM0 port.
 add_link_options(--specs=nano.specs --specs=nosys.specs -Wl,--gc-sections -Wl,--print-memory-usage)
-set(FB_VERSION 1 CACHE STRING "Firmware image version stamped into signed images")
-option(FB_BENCH_FAULT_IMAGES "Also build deliberately broken images (hang / never healthy). BENCH ONLY." OFF)
+set(FB_VERSION 1 CACHE STRING "Firmware version sent in every heartbeat")
+option(FB_LCD_GREENTAB "Adafruit 1.8in TFT is a green-tab panel (BGR + 1/2 px offsets); default black tab" OFF)
+# Without the INA219 every current read NACKs, sensor_ok goes false and the battery node latches FAULT then SAFE.
+option(FB_HAS_INA219 "Battery node has an INA219 current sensor on I2C1; OFF reports 0 mA and skips I2C" OFF)
 
 set(SDK ${TP}/mspm0_sdk)
 set(BSPDIR ${CMAKE_CURRENT_SOURCE_DIR}/../../bsp)
+set(APPDIR ${CMAKE_CURRENT_SOURCE_DIR}/../../app)
+
 file(GLOB DL_SRC ${SDK}/ti/driverlib/*.c ${SDK}/ti/driverlib/m0p/*.c ${SDK}/ti/driverlib/m0p/sysctl/*.c)
 add_library(driverlib STATIC ${DL_SRC})
 target_compile_definitions(driverlib PUBLIC __MSPM0G3507__)
 target_include_directories(driverlib PUBLIC ${SDK} ${SDK}/CMSIS/Core/Include)
-target_compile_options(driverlib PRIVATE -w)
+target_compile_options(driverlib PRIVATE -w)        # vendor code: not ours to warn about
 
 set(RTOS ${TP}/freertos)
 add_library(freertos STATIC ${RTOS}/tasks.c ${RTOS}/queue.c ${RTOS}/list.c
@@ -21,124 +25,44 @@ target_link_libraries(freertos PUBLIC driverlib)
 target_compile_options(freertos PRIVATE -w)
 
 set(STARTUP ${SDK}/ti/devices/msp/m0p/startup_mspm0g350x_gcc.c)
-# bsp_boot: what the bootloader may use (clock, GPIO, watchdog, flash). bsp: the full set for applications.
-add_library(bsp_boot STATIC ${BSPDIR}/mspm0g3507/bsp_clock.c)
-target_link_libraries(bsp_boot PUBLIC driverlib fb_common)
-target_include_directories(bsp_boot PUBLIC ${BSPDIR} ${BSPDIR}/mspm0g3507)
-target_compile_options(bsp_boot PRIVATE -Wall -Wextra)
-add_library(bsp STATIC ${BSPDIR}/bsp_log.c ${BSPDIR}/mspm0g3507/bsp_core.c ${BSPDIR}/mspm0g3507/bsp_can.c ${BSPDIR}/mspm0g3507/bsp_sensors.c ${BSPDIR}/mspm0g3507/bsp_display.c)
-target_sources(bsp_boot PRIVATE ${BSPDIR}/mspm0g3507/bsp_flash.c)
-target_link_libraries(bsp PUBLIC bsp_boot freertos)
+add_library(bsp STATIC ${BSPDIR}/bsp_log.c ${BSPDIR}/mspm0g3507/bsp_clock.c ${BSPDIR}/mspm0g3507/bsp_core.c
+    ${BSPDIR}/mspm0g3507/bsp_can.c ${BSPDIR}/mspm0g3507/bsp_sensors.c ${BSPDIR}/mspm0g3507/bsp_display.c)
+target_include_directories(bsp PUBLIC ${BSPDIR} ${BSPDIR}/mspm0g3507)
+target_link_libraries(bsp PUBLIC driverlib freertos fb_common)
 target_compile_options(bsp PRIVATE -Wall -Wextra)
-option(FB_LCD_GREENTAB "Adafruit 1.8in TFT is a green-tab panel (BGR + 1/2 px offsets); default black tab" OFF)
 if(FB_LCD_GREENTAB)
   target_compile_definitions(bsp PRIVATE FB_LCD_GREENTAB=1)
 endif()
-# Without the INA219 every current read NACKs, sensor_ok goes false and the battery node latches FAULT then SAFE at boot.
-option(FB_HAS_INA219 "Battery node has an INA219 current sensor on I2C1; OFF reports 0 mA and skips I2C" OFF)
 
-function(fb_finish tgt)
-  add_custom_command(TARGET ${tgt} POST_BUILD
-    COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:${tgt}> $<TARGET_FILE:${tgt}>.bin
-    COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${tgt}>
-    COMMENT "${tgt}: .bin + size")
-endfunction()
-
-# ---- bench images, linked at 0x0 with no bootloader: P2 blink + log, P3 CAN self-test
 set(APP_ORIGIN 0x00000000)
 set(APP_LENGTH "128K")
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/app.ld.in ${CMAKE_CURRENT_BINARY_DIR}/bringup.ld @ONLY)
-function(add_bench_image name src)
-  add_executable(${name} ${src} ${STARTUP})
-  target_link_libraries(${name} bsp freertos)
-  target_link_options(${name} PRIVATE -T${CMAKE_CURRENT_BINARY_DIR}/bringup.ld -L${CMAKE_CURRENT_SOURCE_DIR} -Wl,-Map=${name}.map)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/app.ld.in ${CMAKE_CURRENT_BINARY_DIR}/app.ld @ONLY)
+
+function(fb_image name)
+  add_executable(${name} ${ARGN} ${STARTUP})
+  target_link_libraries(${name} PRIVATE bsp freertos)
+  target_link_options(${name} PRIVATE -T${CMAKE_CURRENT_BINARY_DIR}/app.ld -L${CMAKE_CURRENT_SOURCE_DIR} -Wl,-Map=${name}.map)
   set_target_properties(${name} PROPERTIES SUFFIX ".elf" LINK_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/common.ld)
-  fb_finish(${name})
-endfunction()
-add_bench_image(bringup ../../app/bringup/bringup_main.c)
-add_bench_image(can_selftest ../../app/bringup/can_selftest_main.c)   # P3: BENCH ONLY, never on the car bus
-add_bench_image(io_selftest ../../app/bringup/io_selftest_main.c)     # P4: sensors and actuators
-
-# ---- bootloader (one per node id because it only boots images built for its node); 28 KB at 0x0
-foreach(role battery body telematics)
-  if(role STREQUAL battery)
-    set(NID 1)
-  elseif(role STREQUAL body)
-    set(NID 2)
-  else()
-    set(NID 3)
-  endif()
-  add_executable(bootloader_${role} ../../bootloader/boot_main.c ${BSPDIR}/mspm0g3507/bsp_boot.c ${STARTUP})
-  target_compile_definitions(bootloader_${role} PRIVATE BOOT_NODE_ID=${NID})
-  target_link_libraries(bootloader_${role} bsp_boot)
-  target_link_options(bootloader_${role} PRIVATE -T${CMAKE_CURRENT_SOURCE_DIR}/boot.ld -L${CMAKE_CURRENT_SOURCE_DIR} -Wl,-Map=bootloader_${role}.map)
-  set_target_properties(bootloader_${role} PROPERTIES SUFFIX ".elf" LINK_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/boot.ld;${CMAKE_CURRENT_SOURCE_DIR}/common.ld")
-  fb_finish(bootloader_${role})
-endforeach()
-
-# ---- node applications: linked once per slot at slot base + 0x200; tools/sign_image.py --board mspm0g3507 prepends
-# the signed header. The bootloader sets VTOR to the app's vector table before jumping (TI startup does not).
-function(add_fb_app role slot variant)
-  if(slot EQUAL 0)
-    set(letter A)
-    set(APP_ORIGIN 0x00008200)
-  else()
-    set(letter B)
-    set(APP_ORIGIN 0x00014200)
-  endif()
-  set(APP_LENGTH "48640")   # 48 KB slot - 0x200 header
-  set(name app_${role}_${letter}${variant})
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/app.ld.in ${CMAKE_CURRENT_BINARY_DIR}/${name}.ld @ONLY)
-  string(TOUPPER ${role} ROLE_UP)
-  if(role STREQUAL telematics)
-    add_executable(${name} ../../app/telematics/telematics_main.c ../../app/telematics/car_tx.c ${STARTUP})
-  else()
-    add_executable(${name} ../../app/app_main.c ../../app/${role}/${role}_hw.c ${STARTUP})
-  endif()
-  target_include_directories(${name} PRIVATE ../../app ../../keys)
-  target_compile_definitions(${name} PRIVATE FB_ROLE_${ROLE_UP} APP_SLOT=${slot})
-  if(FB_HAS_INA219)
-    target_compile_definitions(${name} PRIVATE FB_HAS_INA219=1)
-  endif()
-  if(role STREQUAL body)
-    target_compile_definitions(${name} PRIVATE FB_HAS_DISPLAY=1)   # ST7735 instrument cluster (Lite option 4)
-  endif()
-  if(variant STREQUAL "_hang")
-    target_compile_definitions(${name} PRIVATE FB_BENCH_HANG_AT_BOOT)
-  elseif(variant STREQUAL "_unhealthy")
-    target_compile_definitions(${name} PRIVATE FB_BENCH_NEVER_HEALTHY)
-  endif()
-  target_link_libraries(${name} bsp freertos)
-  target_link_options(${name} PRIVATE -T${CMAKE_CURRENT_BINARY_DIR}/${name}.ld -L${CMAKE_CURRENT_SOURCE_DIR} -Wl,-Map=${name}.map)
-  set_target_properties(${name} PROPERTIES SUFFIX ".elf" LINK_DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/${name}.ld;${CMAKE_CURRENT_SOURCE_DIR}/common.ld")
-  fb_finish(${name})
+  add_custom_command(TARGET ${name} POST_BUILD
+    COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:${name}> $<TARGET_FILE:${name}>.bin
+    COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${name}>
+    COMMENT "${name}: .bin + size")
 endfunction()
 
-foreach(role battery body telematics)
-  foreach(slot 0 1)
-    add_fb_app(${role} ${slot} "")
-    if(FB_BENCH_FAULT_IMAGES AND NOT role STREQUAL telematics)
-      add_fb_app(${role} ${slot} "_hang")
-      add_fb_app(${role} ${slot} "_unhealthy")
-    endif()
-  endforeach()
-endforeach()
+# ---- bench images (C, bsp.h only): P2 blink + log, P3 CAN self-test, P4 sensors and actuators
+fb_image(bringup ${APPDIR}/bringup/bringup_main.c)
+fb_image(can_selftest ${APPDIR}/bringup/can_selftest_main.c)
+fb_image(io_selftest ${APPDIR}/bringup/io_selftest_main.c)
 
-# ---- FleetBus Lite (docs/lite-dashboards.md, P2-P5 on hardware): battery and body apps linked at 0x0 with no
-# bootloader, no boot metadata and no OTA; the app starts the 2 s watchdog itself. Flash: tools/flash_mspm0.sh lite <node>
+# ---- the two nodes (C++17). Flash: tools/flash_mspm0.sh node battery|body
 foreach(role battery body)
   string(TOUPPER ${role} ROLE_UP)
-  add_executable(lite_${role} ../../app/app_main.c ../../app/${role}/${role}_hw.c ${STARTUP})
-  target_include_directories(lite_${role} PRIVATE ../../app ../../keys)
-  target_compile_definitions(lite_${role} PRIVATE FB_LITE FB_LITE_VERSION=${FB_VERSION} FB_ROLE_${ROLE_UP} APP_SLOT=0)
+  fb_image(node_${role} ${APPDIR}/app_main.cpp ${APPDIR}/${role}_hw.cpp)
+  target_include_directories(node_${role} PRIVATE ${APPDIR})
+  target_compile_definitions(node_${role} PRIVATE FB_ROLE_${ROLE_UP} FB_FW_VERSION=${FB_VERSION})
+  target_compile_options(node_${role} PRIVATE -Wall -Wextra)
   if(FB_HAS_INA219)
-    target_compile_definitions(lite_${role} PRIVATE FB_HAS_INA219=1)
+    target_compile_definitions(node_${role} PRIVATE FB_HAS_INA219=1)
   endif()
-  if(role STREQUAL body)
-    target_compile_definitions(lite_${role} PRIVATE FB_HAS_DISPLAY=1)
-  endif()
-  target_link_libraries(lite_${role} bsp freertos)
-  target_link_options(lite_${role} PRIVATE -T${CMAKE_CURRENT_BINARY_DIR}/bringup.ld -L${CMAKE_CURRENT_SOURCE_DIR} -Wl,-Map=lite_${role}.map)
-  set_target_properties(lite_${role} PROPERTIES SUFFIX ".elf" LINK_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/common.ld)
-  fb_finish(lite_${role})
 endforeach()
+target_compile_definitions(node_body PRIVATE FB_HAS_DISPLAY=1)    # ST7735R instrument cluster

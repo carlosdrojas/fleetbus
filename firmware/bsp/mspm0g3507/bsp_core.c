@@ -1,4 +1,4 @@
-/* App-side board support for the MSPM0G3507: UART0 on the XDS110 backchannel (log + telematics serial link) and the
+/* App-side board support for the MSPM0G3507: UART0 on the XDS110 backchannel (the log console) and the
  * millisecond clock. NOT YET RUN ON A BOARD.
  * UART0 sits on ULPCLK, which bsp_clock_init() sets to MCLK/2 = 40 MHz (VERIFY the baud rate on a terminal in P2). */
 #include <ti/driverlib/driverlib.h>
@@ -38,10 +38,11 @@ void bsp_putc(char c) {
     DL_UART_Main_transmitData(UART0, (uint8_t)c);
 }
 
-/* Serial link (telematics node <-> gateway Pi) on the same UART0: the LaunchPad's USB port is the Pi cable. */
-void bsp_link_write(const uint8_t *b, size_t n) { for (size_t i = 0; i < n; i++) bsp_putc((char)b[i]); }
-int bsp_link_read_byte(uint8_t *b) {
-    if (DL_UART_Main_isRXFIFOEmpty(UART0)) return 0;
-    *b = DL_UART_Main_receiveData(UART0);        /* framing/overrun errors are flagged per byte; the link CRC rejects bad frames */
-    return 1;
+/* Microseconds since the scheduler started, from the FreeRTOS tick plus the SysTick down-counter (80 counts per us).
+ * The tick is read on both sides of the counter so a tick interrupt in between can't pair a new count with an old
+ * tick. Wraps every ~71 minutes; callers only take differences. For timing the node task, not for timestamps. */
+uint32_t bsp_micros(void) {
+    uint32_t t1, v, t2;
+    do { t1 = xTaskGetTickCount(); v = SysTick->VAL; t2 = xTaskGetTickCount(); } while (t1 != t2);
+    return t1 * 1000u + (SysTick->LOAD - v) / (configCPU_CLOCK_HZ / 1000000u);
 }

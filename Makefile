@@ -1,57 +1,31 @@
-# FleetBus: build, test, demo.   `make help`
+# FleetBus Lite: build, test, flash.   `make help`
 PY := .venv/bin/python
 HOST := build/host
-FW := build/fw
-FW_M0 := build/fw-mspm0
-export FLEETBUS_REQUIRE_DB ?= 1
+FW := build/fw-mspm0
 
-.PHONY: help setup host-test fw fw-mspm0 lite-dash go-test py-test hil dashboard e2e test demo demo-down loadgen db clean
+.PHONY: help setup host-test fw py-test test dash gauge-shots clean
 help:
-	@echo "setup      create .venv, install python deps"
-	@echo "host-test  firmware host build + Unity tests for both board flash maps + simulator + fb_verify"
-	@echo "fw         cross-build STM32G431 bootloader + apps (needs arm-none-eabi-gcc/g++); prints size report"
-	@echo "fw-mspm0   cross-build MSPM0G3507 (LaunchPad) images into build/fw-mspm0 (incl. FleetBus Lite images)"
-	@echo "lite-dash  FleetBus Lite live dashboard on :8000 against the simulator (docs/lite.md)"
-	@echo "go-test    backend tests with the race detector (needs: make db)"
-	@echo "py-test    gateway pytest (reliability, OTA, signing cross-check)"
-	@echo "hil        HIL tests against the simulator (HIL_CAN=slcan:/dev/tty... for a real board)"
-	@echo "dashboard  npm ci + typecheck + build"
-	@echo "e2e        full stack with 3 simulated cars (needs: make db)"
-	@echo "test       everything except e2e"
-	@echo "demo       start the stack + simulated cars, dashboard on :8080 (make demo-down to stop)"
-	@echo "loadgen    ingest throughput + loss check against the demo database"
+	@echo "setup        create .venv, install the dashboard's python deps"
+	@echo "host-test    host build of the node logic + Unity tests (no hardware)"
+	@echo "fw           cross-build the MSPM0G3507 images into $(FW) (needs arm-none-eabi-gcc/g++); prints sizes"
+	@echo "py-test      dashboard tests (decoder, simulator, HTTP)"
+	@echo "test         host-test + py-test + fw"
+	@echo "dash         live dashboard on :8000 against the simulator (real bus: tools/lite_dash.py --can slcan:/dev/...)"
+	@echo "gauge-shots  render the display's four screens to docs/img/ with the firmware's own renderer"
+	@echo "flash:       tools/flash_mspm0.sh bench bringup | tools/flash_mspm0.sh node battery|body"
 
 setup:
-	python3 -m venv .venv && .venv/bin/pip install -q -e "gateway[dev]" "psycopg[binary]"
-db:
-	docker compose -f deploy/docker-compose.yml up -d --wait db
-# Host tests run once per board flash map: build/host is the STM32 map (also used by the simulator, gateway and e2e),
-# build/host-mspm0 is the MSPM0 map (1 KB sectors, nondeterministic erased flash).
+	python3 -m venv .venv && .venv/bin/pip install -q -e "dash[dev]"
 host-test:
-	cmake -S firmware -B $(HOST) -G Ninja -DFB_BOARD=stm32g4 >/dev/null && cmake --build $(HOST) && ctest --test-dir $(HOST) --output-on-failure
-	cmake -S firmware -B $(HOST)-mspm0 -G Ninja -DFB_BOARD=mspm0g3507 >/dev/null && cmake --build $(HOST)-mspm0 && ctest --test-dir $(HOST)-mspm0 --output-on-failure
+	cmake -S firmware -B $(HOST) -G Ninja >/dev/null && cmake --build $(HOST) && ctest --test-dir $(HOST) --output-on-failure
 fw:
-	cmake -S firmware -B $(FW) -G Ninja -DFB_BOARD=stm32g4 -DCMAKE_TOOLCHAIN_FILE=$(CURDIR)/firmware/cmake/arm-none-eabi.cmake >/dev/null && cmake --build $(FW)
-lite-dash: host-test
-	$(PY) tools/lite_dash.py --sim
-fw-mspm0:
-	cmake -S firmware -B $(FW_M0) -G Ninja -DFB_BOARD=mspm0g3507 -DCMAKE_TOOLCHAIN_FILE=$(CURDIR)/firmware/cmake/arm-none-eabi.cmake >/dev/null && cmake --build $(FW_M0)
-go-test:
-	cd backend && go vet ./... && go test -race -count=1 ./...
+	cmake -S firmware -B $(FW) -G Ninja -DCMAKE_TOOLCHAIN_FILE=$(CURDIR)/firmware/cmake/arm-none-eabi.cmake >/dev/null && cmake --build $(FW)
 py-test: host-test
-	$(PY) -m pytest gateway/tests -q
-hil: host-test
-	$(PY) -m pytest hil -q
-dashboard:
-	cd dashboard && npm ci --no-audit --no-fund && npm run build
-e2e: host-test
-	$(PY) -m pytest tests/e2e -q
-test: host-test go-test py-test hil dashboard
-demo:
-	scripts/demo.sh up 3
-demo-down:
-	scripts/demo.sh down
-loadgen:
-	(cd backend && go build -o ../build/bin/ ./cmd/loadgen ./cmd/ingest) && build/bin/loadgen -target 127.0.0.1:9000 -gateways 4 -rate 5000 -duration 8s -dsn "postgres://fleetbus:fleetbus@localhost:5433/fleetbus?sslmode=disable"
+	$(PY) -m pytest dash/tests -q
+test: py-test fw
+dash: host-test
+	$(PY) tools/lite_dash.py --sim
+gauge-shots: host-test
+	$(PY) tools/gauge_shots.py
 clean:
-	rm -rf build dashboard/dist dashboard/node_modules
+	rm -rf build

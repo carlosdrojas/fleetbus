@@ -1,115 +1,76 @@
-# Stack decisions
+# Design decisions
 
-Short ADRs for FleetBus's software stack. Each one covers what was chosen, what it was compared against, the tradeoffs, and when to revisit. One-line summaries live in `AGENTS.md` → Decisions.
+Each one: what was chosen, what it was compared against, and when to revisit. Numbers are TARGETs until they appear in
+`docs/measured.md`.
 
-Decided 2026-10-12 while planning the implementation. D1–D3 were set before building; D4–D8 were made (and in two cases changed) by measuring while building.
+## D1: Two LaunchPads on classic CAN, not CAN FD or a single board
 
----
+The MSPM0G3507 has an MCAN controller (FD-capable). Classic CAN 2.0A at 500 kbit/s: it is what body and powertrain
+buses in most cars run, every tool (CANable, PulseView, WaveForms) decodes it, and 8-byte frames fit every message.
+Two boards, because the interesting failures (a node going silent, arbitration, bus-off) need a second node.
+**Revisit if** a message needs more than 8 bytes.
 
-## D1 — Python gateway, Go backend
+## D2: The DBC is the single source of truth
 
-**Context.** The gateway talks to the CAN bus through a USB-CAN adapter (CANable) and forwards frames to the backend over FBP, our custom binary UDP protocol. The backend handles UDP ingest, Postgres, the API, alerts, and the OTA rollout orchestrator.
+`can/fleetbus.dbc` defines every message. C pack/unpack is generated from it (`tools/dbc2c.py`, cantools), and the
+laptop decodes with the same file. Rejected: hand-written structs on each side (they drift; the generated code also
+range-checks signals). Cost: the generator emits double-precision helpers the firmware never calls; `--gc-sections`
+drops them (checked with `nm`).
 
-**Decision.** Gateway in **Python** (`python-can`). Backend in **Go**.
+## D3: Heartbeat id = 0x100 + node id
 
-| Option | Pros | Cons |
-|---|---|---|
-| **Python gateway + Go backend (chosen)** | `python-can` is the most mature CAN library and works with the CANable on macOS and Linux and with HIL replay. Go fits long-running network services (goroutines, static binaries, `-race`, built-in fuzzing). Two languages, and Go matches Tesla/SpaceX/Base-style backends. | FBP is implemented **twice**, so the two can drift. Two toolchains and two CI jobs. Slower to the first end-to-end demo. |
-| All Python (asyncio + FastAPI) | One FBP implementation; fastest demo. | Weaker "systems backend" signal. asyncio UDP throughput and the GIL become limits in the load test. |
-| All Go | One language. | Go CAN libraries are mostly SocketCAN-only, with poor support for macOS and the CANable's slcan mode. HIL tooling is weaker. |
+Each node's heartbeat has its own id (0x101, 0x102). With one shared 0x100, two nodes that start a heartbeat in the
+same bit time both win arbitration, because the ids are identical, then collide on the first data byte (NodeId): bit
+error, error frame, both retry at once, the same collision again. Arbitration only resolves frames with different ids.
+Found in review before any hardware ran (2026-11-23).
 
-**Mitigation.** `protocol/` holds golden test vectors (bytes ↔ decoded fields) that both the Python and Go test suites must pass, so drift fails CI.
+## D4: Peer timeout 500 ms, recovery hold 1 s
 
-**Revisit if** keeping the two FBP implementations in sync costs more than about a day per milestone.
+Heartbeats are 10 Hz. 500 ms = 5 missed in a row: rides out a few lost frames or one error-passive episode, short
+enough that the body reacts in about half a second. Leaving limp-home needs 1 s of continuous health, so a flapping
+link can't toggle the lights. Silence counts as a fault: a dead battery ECU can't report its own failure. Both are
+TARGETs: the bench measures the real detection time (`docs/measured.md`).
 
----
+## D5: FreeRTOS tasks in rate-monotonic order, watchdog on top
 
-## D2 — Firmware build: CMake + arm-none-eabi-gcc + vendored HAL/FreeRTOS
+| Task | Prio | Period | Why that priority |
+|---|---|---|---|
+| wdg | 4 | 100 ms | decides, does no work; must not be starved by a runaway lower task |
+| node | 3 | 10 ms | the CAN deadline: drains RX, runs the FSMs, transmits |
+| sense | 2 | 20 ms | battery only: ADC reads, faster than the 100 ms status rate it feeds |
+| disp | 1 | 200 ms | body only: SPI redraw can take milliseconds; it must never delay the node task |
+| log | 1 | 1 s | polled UART, ~7 ms per status line: kept out of the node task for the same reason |
 
-**Context.** Two (later three) STM32G431RB nodes run FreeRTOS, with a custom bare-metal bootloader and A/B application slots.
+Rejected: one super-loop (the display draw would delay CAN), and making the node task interrupt-driven (polling every
+10 ms with a 14-frame RX FIFO is enough at this bus load, and keeps all CAN handling in one task). The node task records
+its own worst-case execution time and start lateness (`node_us_max`, `late_us_max` on the console) so the display's
+effect is measured, not argued.
 
-**Decision.** Plain **CMake** with an arm-none-eabi toolchain file. STM32CubeG4 HAL/CMSIS, FreeRTOS-Kernel, Monocypher and Unity are vendored as git submodules.
+## D6: Tasks share data through snapshots, not queues or shared structs
 
-| Option | Pros | Cons |
-|---|---|---|
-| **CMake + vendored HAL (chosen)** | Builds headless in GitHub Actions. The same tree builds host Unity tests. Clean diffs with no generated-code churn. Per-slot linker scripts for A/B images are easy. Shows build-system skill. | More setup up front: clock config, startup file, linker scripts. Debugging goes through openocd/st-util + VS Code cortex-debug instead of a built-in GUI. |
-| STM32CubeIDE project | Fastest bring-up, one-click debugger, pin-config GUI. | Eclipse project files are awkward to build in CI. Generated code mixes with ours. A/B linker variants are clumsy. |
-| Zephyr | Built-in CAN stack, MCUboot, devicetree. | Hides exactly the RTOS and bootloader work this project exists to show. |
-| PlatformIO | Very easy setup. | Less of an industry standard; thin FreeRTOS + STM32G4 support. |
+`Latest<T>` (`app_main.cpp`): the writer overwrites, readers copy, inside a critical section of a few dozen bytes.
+Readers always want the newest sensor sample or display state, not a backlog, so a queue would be the wrong tool. No
+mutexes, so no priority inversion to reason about: the only shared-resource lock is "interrupts off for a struct copy".
 
-**Revisit if** bring-up stalls on clock or startup code. In that case generate the init code once with CubeMX and copy it into `bsp/`, still building with CMake.
+## D7: The simulator runs the real logic
 
----
+`firmware/host/fbsim.cpp` wraps the same C++ node classes the board runs; the dashboard's `--sim` mode and the tests
+drive them. Rejected: a Python model of the nodes, which would test itself. Cost: Python needs `make host-test` first.
 
-## D3 — Dashboard: single-page web app
+## D8: Watchdog fed only when every task checks in
 
-**Context.** The dashboard has to show live fleet health and also run OTA: upload a signed image, start or abort a rollout, and watch its steps. It should also work as a phone-sized "car view" over a hotspot.
+The 2 s WWDT is started in `main()` and can't be stopped. The wdg task feeds it only if the node task (and sense on the
+battery, disp on the body) made progress since its last look. A hung task resets the board within about 2 s instead of
+leaving a node that heartbeats but doesn't work.
 
-**Decision.** **Vite + React + TypeScript**, fed by the Go API over REST + Server-Sent Events.
+## D9: TI DriverLib and CMake, not Code Composer Studio projects
 
-| Option | Pros | Cons |
-|---|---|---|
-| **SPA (chosen)** | OTA controls and monitoring in one UI. Custom fleet, node and car views. Looks better in the demo video. Shows frontend skill. | More code. Charts have to be built (with a chart library). No ad-hoc queries. |
-| Grafana on Postgres | Standard monitoring look, dashboards and alerting in hours, common in industry SRE stacks. | Can't drive OTA workflows, so a second UI is needed anyway. The car view is clunky. |
+The board layer calls TI's DriverLib directly; a vendored SDK subset (`tools/vendor_mspm0_sdk.sh`) and CMake build it
+headless on macOS and in CI. CCS is used only for its `DSLite` flasher. Rejected: SysConfig-generated init code (opaque
+diffs) and Zephyr (hides the RTOS and driver work this project is meant to show).
 
-**Middle path.** The Go services expose Prometheus `/metrics`. A Grafana container can be added to `deploy/docker-compose.yml` later for ops metrics at almost no cost.
+## D10: Scope cut (2026-11-23)
 
-**Revisit if** dashboard work starts crowding out phase 4 (OTA). Then cut the SPA to the fleet grid + OTA page and use Grafana for charts.
-
----
-
-## D4 — ACK means "committed", and the gateway cursor is stored with the data
-
-**Decision.** Ingest acknowledges a packet only after the transaction containing it has committed, and writes the per-gateway
-committed sequence number (`gateway_cursors`) in that same transaction. On restart it resumes from the cursor.
-**Why.** Acking on receipt loses data on a crash; resuming from seq 1 after a restart stalls any gateway that is already at seq
-500 (found while designing the "kill ingest mid-transfer" e2e). Cost: ACK latency = batch wait + DB commit (measured ~10–50 ms).
-**Revisit if** commit latency dominates RTT; the fix is larger windows, not weaker acks.
-
-## D5 — The simulator runs the real firmware logic (ctypes), not a Python re-implementation
-
-**Decision.** `firmware/host/fbsim.c` wraps the portable node core, boot logic and a fake flash; the gateway `--sim`, HIL and e2e
-tests drive it from Python. **Why.** A re-implementation would test itself. It already caught a real bug (the new slot was not
-made preferred after an OTA). **Cost.** Tests need the host build (`make host-test`) first.
-
-## D6 — Flash layout changed to a 28 KB bootloader
-
-The 24 KB budget in the original plan measured at 24,504 B (99.7 %) with Monocypher Ed25519, so: bootloader 28 KB, metadata 4 KB,
-two 48 KB slots filling the 128 KB part exactly. The Nucleo-G474RE fallback was not needed. OTA pages are erased lazily (one per
-2 KB written): erasing the whole slot up front would stall the single-bank G4 for ~0.5 s and trip the peer's 500 ms timeout.
-
-## D7 — Rollout health gate is fail-closed and lives in the database
-
-A step is healthy only if the node is **fresh**, reports the **target version in the target slot**, has **confirmed** the image
-itself (trial bit clear), is NORMAL/WARNING, has **no fault events** since the update, and stays that way for a soak period.
-Anything else, including silence and DB errors, never counts as healthy. State is in Postgres; the engine is stateless, so a
-restarted API resumes (e2e-tested). One node at a time after the canary.
-
-## D8 — Two timeouts, deliberately
-
-The node's own confirm deadline (10 s, enforced by stopping the IWDG feed) catches a bad image *on the device*, even with no
-backend. The backend's health window (30 s default) catches what the node cannot judge about itself. Neither trusts the other.
-
-## D9 — Primary hardware is the MSPM0G3507 LaunchPad; boards are a build option
-
-Carlos's class board, the TI LP-MSPM0G3507 (Cortex-M0+, 80 MHz, MCAN), replaced the Nucleo-G431RB as the primary target on
-2026-10-12. The STM32 build stays as a second target. Everything above `bsp.h` is shared; each board has
-`firmware/boards/<board>/fb_board.h` (flash map, erase unit, image hw id) and `bsp/<board>/`, chosen with
-`-DFB_BOARD=`. Host tests and the simulator run on either flash map (`FB_BOARD=mspm0g3507`). The P0 spike
-(`docs/p0-feasibility.md`) measured the risks first: bootloader size, Ed25519 time on an M0+ without a 64-bit multiply,
-watchdog continuity, VTOR, flash rules.
-
-Consequences found and fixed while porting: the STM32 build had never compiled at `-Os` (CMake appended `-O3`), the
-node task stack was smaller than the signature check needs (both boards), STM32 never recovered from CAN bus-off,
-fresh boards had no way to get their first metadata record (now `tools/provision_meta.py`), and MSPM0 erased flash
-reads back nondeterministic data that can trigger an ECC reset (reads go through the uncorrected alias; the shared
-logic never treats 0xFF as "erased").
-
-## Smaller defaults
-
-| Choice | Over | Why |
-|---|---|---|
-| Postgres 16 in Docker | TimescaleDB, SQLite | Plain Postgres with time-partitioned telemetry is enough at this scale; TimescaleDB is a drop-in later. |
-| In-process bounded Go channel as the ingest queue | NATS, Redis Streams, Kafka | No extra infrastructure, and backpressure (drops, queue depth) is measurable. NATS is the upgrade path if ingest and the writer split into separate processes. |
-| Monocypher for Ed25519 verify | mbedTLS, wolfSSL | Small, single-file, easy to audit. The bootloader with it links at 17.6 KB (M4) and 18.1 KB (M0+) of 28 KB. |
-| CRC-32C in FBP | CRC-16 | Stronger error detection for UDP payloads up to MTU size. Cheap, table-driven in C, Python and Go. |
+The project first grew a bootloader, signed OTA, a UDP gateway, a Go/Postgres backend, a React dashboard and an in-car
+OBD-II node, all verified only in simulation. Cut to Lite before bring-up so the repo matches what runs on the bench.
+The full version is preserved on the `full-platform` branch.

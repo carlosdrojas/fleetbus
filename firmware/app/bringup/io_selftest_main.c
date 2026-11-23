@@ -7,7 +7,7 @@
 #include "task.h"
 #include "bsp.h"
 #include "fb_types.h"
-#include "body_fsm.h"     /* FB_LIGHT_* */
+
 
 static void io_task(void *arg) {
     (void)arg;

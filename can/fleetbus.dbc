@@ -4,15 +4,13 @@ NS_ :
 
 BS_:
 
-BU_: BATTERY BODY TELEMATICS GATEWAY
+BU_: BATTERY BODY
 
 BO_ 256 Heartbeat: 8 BATTERY
  SG_ NodeId : 0|8@1+ (1,0) [0|255] "" Vector__XXX
  SG_ FwVersion : 8|16@1+ (1,0) [0|65535] "" Vector__XXX
  SG_ UptimeS : 24|24@1+ (1,0) [0|16777215] "s" Vector__XXX
  SG_ State : 48|4@1+ (1,0) [0|15] "" Vector__XXX
- SG_ Slot : 52|1@1+ (1,0) [0|1] "" Vector__XXX
- SG_ Trial : 53|1@1+ (1,0) [0|1] "" Vector__XXX
  SG_ ProtoVer : 56|8@1+ (1,0) [0|255] "" Vector__XXX
 
 BO_ 512 BatteryStatus: 8 BATTERY
@@ -34,40 +32,9 @@ BO_ 768 FaultEvent: 8 BATTERY
  SG_ NodeId : 24|8@1+ (1,0) [0|255] "" Vector__XXX
  SG_ ProtoVer : 56|8@1+ (1,0) [0|255] "" Vector__XXX
 
-BO_ 1024 OtaCtrl: 8 GATEWAY
- SG_ Cmd : 0|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ TotalBlocks : 8|16@1+ (1,0) [0|65535] "" Vector__XXX
- SG_ Slot : 24|8@1+ (1,0) [0|1] "" Vector__XXX
- SG_ TargetNode : 32|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ ProtoVer : 56|8@1+ (1,0) [0|255] "" Vector__XXX
-
-BO_ 1025 OtaData: 8 GATEWAY
- SG_ Block : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
- SG_ D0 : 16|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ D1 : 24|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ D2 : 32|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ D3 : 40|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ D4 : 48|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ D5 : 56|8@1+ (1,0) [0|255] "" Vector__XXX
-
-BO_ 1026 OtaAck: 8 BATTERY
- SG_ NextBlock : 0|16@1+ (1,0) [0|65535] "" Vector__XXX
- SG_ Status : 16|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ NodeId : 24|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ ProtoVer : 56|8@1+ (1,0) [0|255] "" Vector__XXX
-
-BO_ 1280 VehicleObd: 8 TELEMATICS
- SG_ SpeedKph : 0|8@1+ (1,0) [0|255] "km/h" Vector__XXX
- SG_ RpmQuarter : 8|16@1+ (1,0) [0|65535] "rpm/4" Vector__XXX
- SG_ CoolantC : 24|8@1+ (1,0) [0|255] "C+40" Vector__XXX
- SG_ ProtoVer : 56|8@1+ (1,0) [0|255] "" Vector__XXX
-
-CM_ BO_ 256 "10 Hz from every node (TARGET), sent at 0x100 + NodeId (0x101 battery, 0x102 body) so two nodes never share an id. Sender column is nominal.";
+CM_ BO_ 256 "10 Hz from every node, sent at 0x100 + NodeId (0x101 battery, 0x102 body) so two nodes never share an id. Sender column is nominal.";
 CM_ SG_ 256 State "Node state, see VAL_ table";
-CM_ SG_ 256 Slot "Running A/B slot: 0 = A, 1 = B";
-CM_ SG_ 256 Trial "1 = running image is in trial boot and not yet confirmed";
+CM_ BO_ 768 "On entering FAULT or SAFE, then once a second while latched";
 CM_ SG_ 513 LimpHome "1 = body node is in limp-home";
 
-VAL_ 256 State 0 "BOOT" 1 "NORMAL" 2 "WARNING" 3 "FAULT" 4 "SAFE" 5 "LIMP_HOME" 6 "UPDATING" ;
-VAL_ 1024 Cmd 1 "BEGIN" 2 "ABORT" 3 "FINISH" ;
-VAL_ 1026 Status 0 "OK" 1 "BAD_BLOCK" 2 "VERIFY_FAILED" 3 "DONE" ;
+VAL_ 256 State 0 "BOOT" 1 "NORMAL" 2 "WARNING" 3 "FAULT" 4 "SAFE" 5 "LIMP_HOME" ;

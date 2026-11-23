@@ -1,4 +1,4 @@
-/* MSPM0G3507 clocks, GPIO, delay, reset and watchdog. Shared by the bootloader and the apps.
+/* MSPM0G3507 clocks, GPIO, delay, reset and watchdog.
  * Clock tree (from TI's LP-MSPM0G3507 sysctl_mclk_syspll and mcan examples, SDK 2.11; NOT YET RUN ON A BOARD):
  *   SYSOSC 32 MHz -> SYSPLL -> MCLK/CPUCLK 80 MHz (2 flash wait states), ULPCLK 40 MHz
  *   HFXT 40 MHz crystal (PA5/PA6) -> HFCLK -> MCAN functional clock (CAN needs a crystal, not the ±1 % SYSOSC)
@@ -37,10 +37,9 @@ static int pll_locked_right(void) {
     return ratio > 1246u && ratio < 1254u;
 }
 
-/* Back to the reset clock: MCLK on SYSOSC, SYSPLL and HFXT off. Used before reconfiguring and before the bootloader
- * jumps, so the app always starts from the same clock state as after a reset (disabling the SYSPLL while it is the
- * MCLK source would stop the CPU clock). */
-void bsp_clock_to_reset_state(void) {
+/* Back to the reset clock: MCLK on SYSOSC, SYSPLL and HFXT off, before reconfiguring (disabling the SYSPLL while it
+ * is the MCLK source would stop the CPU clock). Makes a debugger "restart" without a reset safe too. */
+static void bsp_clock_to_reset_state(void) {
     if (DL_SYSCTL_getMCLKSource() == DL_SYSCTL_MCLK_SOURCE_HSCLK) DL_SYSCTL_setMCLKSource(HSCLK, SYSOSC);
     DL_SYSCTL_disableSYSPLL();
     DL_SYSCTL_disableHFXT();
@@ -80,7 +79,9 @@ void bsp_gpio_init(void) {
     DL_GPIO_enableOutput(PIN_LIGHTS_PORT, PIN_HEAD | PIN_TURN);
 }
 
-void bsp_board_init(void) { bsp_gpio_init(); bsp_clock_init(); }   /* GPIO first: HFXT pins are muxed in clock init */
+/* GPIO first: HFXT pins are muxed in clock init. LED1 is lit only while the clocks come up, so a board that hangs in
+ * bsp_clock_init (PLL never locks right, HFXT never starts) shows a solid red LED and prints nothing. */
+void bsp_board_init(void) { bsp_gpio_init(); bsp_led(1); bsp_clock_init(); bsp_led(0); }
 
 void bsp_led(int on) { if (on) DL_GPIO_setPins(PIN_LED_PORT, PIN_LED); else DL_GPIO_clearPins(PIN_LED_PORT, PIN_LED); }
 
@@ -88,8 +89,7 @@ void bsp_delay_ms(uint32_t ms) { while (ms--) delay_cycles(CPU_HZ / 1000u); }
 
 void bsp_system_reset(void) { DL_SYSCTL_resetDevice(DL_SYSCTL_RESET_SYSRST); for (;;) {} }
 
-/* WWDT0: once enabled it is write-protected and only a SYSRST stops it (TRM SLAU846 ch. 40, P0 R4), so the app
- * inherits it from the bootloader. 32768 Hz / 2 / 2^15 = 2.00 s. Closed window 0 %: feeding is allowed any time
+/* WWDT0: once enabled it is write-protected and only a SYSRST stops it (TRM SLAU846 ch. 40). 32768 Hz / 2 / 2^15 = 2.00 s. Closed window 0 %: feeding is allowed any time
  * before expiry (a nonzero closed window would turn an early feed into a reset). Never call DL_WWDT_reset() or
  * DL_WWDT_disablePower() in the app. */
 void bsp_wdt_start_2s(void) {
@@ -98,5 +98,5 @@ void bsp_wdt_start_2s(void) {
     DL_WWDT_initWatchdogMode(WWDT0, DL_WWDT_CLOCK_DIVIDE_2, DL_WWDT_TIMER_PERIOD_15_BITS, DL_WWDT_RUN_IN_SLEEP,
                              DL_WWDT_WINDOW_PERIOD_0, DL_WWDT_WINDOW_PERIOD_0);
 }
-/* Started by the bootloader. An app started without it (P5 bench, GDB jump) has an unpowered WWDT: skip the feed. */
+/* Images that never start the watchdog (bring-up, self-tests) have an unpowered WWDT: skip the feed. */
 void bsp_wdt_feed(void) { if (DL_WWDT_isPowerEnabled(WWDT0)) DL_WWDT_restart(WWDT0); }

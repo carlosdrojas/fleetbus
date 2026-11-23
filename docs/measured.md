@@ -1,37 +1,51 @@
 # Measured on hardware
 
-Numbers measured on real boards go here, one row per measurement, with the date, the board and the method. Until a row
-has a value, the matching claim elsewhere stays labelled TARGET, ESTIMATED or UNVERIFIED. Procedure for each row:
-`docs/mspm0-bench-steps.md` (LP-MSPM0G3507, primary) and `docs/bench-guide.md` (car day-one test, STM32 notes).
+Numbers measured on the real boards go here first, one row per measurement, with the date, the board and the method.
+Until a row has a value, the matching claim anywhere else stays labelled TARGET, ESTIMATE or "in simulation".
+Procedure for each row: `docs/mspm0-bench-steps.md`.
 
 **Nothing has been measured on hardware yet.**
 
-| Milestone | Quantity | Expected (source) | Measured | Date, board, method |
+| Step | Quantity | Expected (source) | Measured | Date, board, method |
 |---|---|---|---|---|
-| P2 | Flash path that works headless (R6) | OpenOCD or UniFlash `dslite` (unproven) | | |
-| P2 | LED1 period | 500.0 ms (bring-up image) | | |
-| P2 | Tick drift over 10 min | within ~1 % (EST, SYSOSC) | | |
-| P2 | GDB attach from the CLI (R6) | works | | |
+| P2 | Flash with DSLite from the command line | works (unproven) | | |
+| P2 | LED1 period, bring-up image | 500.0 ms (250 ms toggle) | | |
+| P2 | Tick drift over 10 min | within ~1 % (ESTIMATE, SYSOSC spec) | | |
 | P3 | CAN loopback self-test | 100/100 | | |
-| P3 | CAN bit time | 2.000 µs (500 kbit/s, arithmetic) | | |
-| P3 | Two-node error count after 10 min | 0 | | |
+| P3 | CAN bit time on the bus | 2.000 µs (500 kbit/s, arithmetic) | | |
+| P3 | Diode-bus rise time, 10–90 % | well under 2 µs (1 kΩ pull-up, short wires) | | |
+| P3 | Two-node `can_err` after 10 min | 0 | | |
 | P4 | ADC error at 3 points vs multimeter | | | |
-| P4 | INA219 vs multimeter at a known load | | | |
-| P4 | Servo pulse widths (0 / 90 / 180°) | 1.00 / 1.50 / 2.00 ms, 20 ms period | | |
-| P5 | Heartbeat period on the bus | per `can/fleetbus.dbc` | | |
-| P5 | Node task stack free (minimum) | > 512 B of 4 KB | | |
-| L1 | Body limp-home after the battery's CAN is pulled | ≈ 500 ms heartbeat timeout + one 10 ms tick | | |
-| L1 | Battery WARNING / FAULT thresholds on the pot | 3.30 V / 3.00 V (firmware defaults) | | |
-| L2 | Web dashboard vs bench: decode errors over 10 min | 0 | | |
-| L3 | LCD frame draw time (`disp_ms`) | unknown (SPI ~8 MHz EST) | | |
-| L3 | Heartbeat spacing while the LCD draws | 100 ms ± one tick | | |
-| L3 | Adafruit 1.8" panel tab that works (colours and edges correct) | black tab (default) or `FB_LCD_GREENTAB` | | |
-| P6 | Bootloader reset-to-app time | < 1 s (EST: 0.43–0.65 s per verify at 80 MHz, P0) | | |
-| P6 | Power-cut torture test | 200/200 boots | | |
-| P7 | OTA transfer time (~29 KB image, 500 kbit/s) | ~5 s (EST from simulation of a 38 KB image ≈ 6 s) | | |
-| P7 | Reboot to confirm | ≈ 10 s health window | | |
-| P7 | Rollback time, never-healthy image | ≈ 3 × (boot + 10 s deadline + 2 s watchdog) (EST) | | |
-| P7 | Rollback time, hanging image | ≈ 3 × (boot + 2 s watchdog) (EST) | | |
-| P8 | Bus-off recovery time (CAN_H–CAN_L short removed) | 128 × 11 recessive bits ≈ 2.8 ms at 500 kbit/s + driver poll | | |
-| Car | Sentra passive listen: any frames? | unknown (day-one test) | | |
-| Car | Engine-off voltage threshold | 13.0 V (TARGET) | | |
+| P4 | Servo pulse widths 0 / 90 / 180° | 1.00 / 1.50 / 2.00 ms at 20 ms | | |
+| P5 | Heartbeat period, 0x101 and 0x102 | 100 ms | | |
+| P5 | Battery WARNING / FAULT "pack" voltage on the pot | 3.30 V / 3.00 V (firmware defaults) | | |
+| P5 | Node task worst-case execution (`node_us_max`) | a few hundred µs (ESTIMATE) | | |
+| P5 | Node task worst start lateness (`late_us_max`) | < 1000 µs | | |
+| P5 | Minimum free stack per task after 10 min (`stk`) | > ~200 B each | | |
+| L3 | Display frame time (`disp_us`), typical / worst / first full frame | unknown | | |
+| L3 | Body `node_us_max` / `late_us_max` with the display vs battery without | same within tick resolution (TARGET) | | |
+| L3 | 0x102 heartbeat spacing while the display redraws | 100 ms ± 1 ms (TARGET) | | |
+| L3 | Panel tab that gives correct colours and edges | black tab (default) or `FB_LCD_GREENTAB` | | |
+| F1 | Battery dies → body limp-home (last 0x101 frame → body PA0) | 500–520 ms (timeout + polling) | | |
+| F2 | Battery back → body leaves limp-home (first 0x101 → PA0) | 1000–1020 ms (1 s hold) | | |
+| F3 | FAULT heartbeat on the bus → body acts (message-to-action latency) | < ~10 ms (10 ms poll) | | |
+| F4 | Bus stuck dominant ~1 s: bus-off, then recovery after release | recovery ≈ 2.8 ms + one poll (128 × 11 bits) | | |
+| F5 | Bus open (one node alone): TEC behaviour | error-passive, not bus-off | | |
+| F6 | Bus load | 40 frames/s ≈ 0.9 % of 500 kbit/s (arithmetic) | | |
+
+## Bugs found on hardware
+
+For each: symptom, how it was found, root cause, fix, commit. This becomes the failure story.
+
+_None yet._
+
+## Bugs found before hardware
+
+Found by review or host tests while preparing for the bench. Good context, but not hardware stories.
+
+| Bug | Found by | Fix |
+|---|---|---|
+| Release builds were `-O3`, not `-Os`: CMake appends its own `-O3 -DNDEBUG` after the toolchain's flags | reading the build line | override `CMAKE_*_FLAGS_RELEASE` (`firmware/CMakeLists.txt`) |
+| Both nodes sent heartbeats on 0x100: a simultaneous start collides on the data byte, retries in lockstep | design review | per-node ids 0x101 / 0x102 (`docs/decisions.md` D3) |
+| No INA219 on this bench: every current read NACKs → `sensor_ok` false → battery latches FAULT, then SAFE, at boot | checking the parts list against the code | `FB_HAS_INA219` build option, off by default |
+| MCAN RX-FIFO "message lost" flag is sticky: after one overflow every later frame would count as an error | reading `bsp_can.c` against the M_CAN register description | clear `IR.RF0L` when it's seen (write-1-to-clear) |

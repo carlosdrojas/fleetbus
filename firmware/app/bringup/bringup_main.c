@@ -1,4 +1,4 @@
-/* Board bring-up (P2): the first thing to flash on a new board, with no bootloader. Two FreeRTOS tasks:
+/* Board bring-up (P2): the first thing to flash on a new board. Two FreeRTOS tasks:
  *   blink: LED toggles every 250 ms (proves the clock, GPIO and the scheduler)
  *   log:   once a second prints uptime and a counter on the log UART (proves UART baud rate and SysTick rate)
  * Measure on the bench: LED period with a scope (expect 500 ms), uptime vs a stopwatch over 60 s (tick accuracy).

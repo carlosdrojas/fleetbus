@@ -1,6 +1,6 @@
 #pragma once
 /* FreeRTOS for the MSPM0G3507 (Cortex-M0+, ARM_CM0 port). Tick from SysTick at the 80 MHz CPU clock.
- * Heap and stack sizes are carried over from the STM32 build and must be re-measured on the board (P5). */
+ * Heap and stack sizes are estimates: the node firmware prints free stack and heap every second (P5). */
 #define configUSE_PREEMPTION                     1
 #define configCPU_CLOCK_HZ                       80000000u   /* MCLK from SYSPLL, set by bsp_clock_init() */
 #define configTICK_RATE_HZ                       1000

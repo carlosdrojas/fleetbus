@@ -1,4 +1,4 @@
-/* Sensors and actuators on the LP-MSPM0G3507 (same contract as bsp/stm32g4/bsp_sensors.c). Call sequences from TI's
+/* Sensors and actuators on the LP-MSPM0G3507. Call sequences from TI's
  * LP-MSPM0G3507 adc12_single_conversion, i2c_controller_rw_multibyte_fifo_poll and timx_timer_mode_pwm_edge_sleep
  * examples (SDK 2.11). Pins in bsp_pins.h. NOT YET RUN ON A BOARD.
  * Clock assumptions from bsp_clock.c: ULPCLK 40 MHz (ADC0, I2C1 on PD0), MCLK 80 MHz (TIMA1 on PD1). VERIFY in P4. */
@@ -6,7 +6,7 @@
 #include "bsp.h"
 #include "bsp_pins.h"
 #include "fb_types.h"
-#include "body_fsm.h"     /* FB_LIGHT_* */
+
 
 #define ULPCLK_HZ 40000000u
 #define INA219_ADDR 0x40u
