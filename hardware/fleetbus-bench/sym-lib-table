@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "ECE319K")(type "KiCad")(uri "${KIPRJMOD}/libraries/ECE319K.kicad_sym")(options "")(descr "ECE 319K lab library: LP-MSPM0G3507 LaunchPad"))
+  (lib (name "ECE445L")(type "KiCad")(uri "${KIPRJMOD}/libraries/ECE445L.kicad_sym")(options "")(descr "ECE 445L lab library: Adafruit ST7735R"))
+)

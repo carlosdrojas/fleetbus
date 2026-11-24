@@ -20,3 +20,7 @@ firmware/build*/
 
 # Agent session state
 .claude/handoff/
+
+# KiCad local state
+*.kicad_prl
+*-backups/
