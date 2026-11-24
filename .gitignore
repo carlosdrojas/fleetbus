@@ -24,3 +24,4 @@ firmware/build*/
 # KiCad local state
 *.kicad_prl
 *-backups/
+*.lck

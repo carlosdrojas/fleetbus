@@ -1755,7 +1755,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Footprint" "ECE445L:adafruit_st7735r2"
+		(property "Footprint" ""
 			(at -5.08 22.86 0)
 			(show_name no)
 			(do_not_autoplace no)
