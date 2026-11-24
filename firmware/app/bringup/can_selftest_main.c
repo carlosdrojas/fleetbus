@@ -2,7 +2,7 @@
  *   1. Internal loopback: sends 100 frames with id 0x7F0 and a counter, checks each comes back unchanged. Prints PASS/FAIL.
  *   2. Bus mode: leaves loopback, sends one 0x7F0 counter frame every 100 ms, prints every frame received.
  *      With two LaunchPads (both running this) on one terminated bus, each must print the other's counter;
- *      with the CANable, `candump can0` must show 0x7F0 at 10 Hz from each node.
+ *      on the Analog Discovery CAN decoder, it must show 0x7F0 at 10 Hz from each node.
  * A third task prints error-state transitions for the P8 fault-injection bench.
  * Board-neutral (bsp.h only). NOT YET RUN ON A BOARD. */
 #include <string.h>
@@ -29,7 +29,7 @@ static int loopback_test(void) {
 
 /* Fault-injection monitor (P8): samples the controller every 5 ms and prints each transition between error-active,
  * error-passive (TEC or REC >= 128) and bus-off, with the time spent in the previous state. Short CANH to CANL, pull
- * a terminator, or run the CANable at the wrong bitrate, and read the recovery time off the console. */
+ * a terminator, or set the decoder to the wrong bitrate, and read the recovery time off the console. */
 static void fault_task(void *arg) {
     (void)arg;
     const char *names[] = { "error-active", "error-passive", "BUS-OFF" };

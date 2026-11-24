@@ -1,7 +1,7 @@
 #pragma once
 // Body-node instrument cluster for a 160x128 RGB565 display (Adafruit 1.8" ST7735R on the board).
 // Hardware-free: it draws only through Canvas::fill, so the same code drives the panel over SPI (app_main.cpp) and
-// a framebuffer in the host tests (tests/test_gauge.cpp) and docs renderer (host/gauge_shot.cpp).
+// a framebuffer in the host tests (tests/test_gauge.cpp).
 //
 // Layout: title bar; a 180-degree pack-voltage gauge (2.8-4.2 V, red/amber/green zones at the fault and warning
 // thresholds) with a needle and the value; temperature, current and state of charge on the right; a state banner.

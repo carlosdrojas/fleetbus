@@ -1,7 +1,7 @@
 #pragma once
 /* Board support interface (C). Implementation for the LP-MSPM0G3507 LaunchPad in bsp/mspm0g3507/ on TI DriverLib;
  * pin map in bsp/mspm0g3507/bsp_pins.h. The C++ node logic never includes this: only app/ and the bring-up images do.
- * Status per function: docs/verification.md (nothing is "verified" until it has run on the board). */
+ * Status per function: docs/measured.md (nothing is "verified" until it has run on the board). */
 #include <stddef.h>
 #include <stdint.h>
 

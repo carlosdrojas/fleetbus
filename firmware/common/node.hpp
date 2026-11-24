@@ -1,6 +1,6 @@
 #pragma once
-// Portable node logic: no hardware, no RTOS. The FreeRTOS node task (app/app_main.cpp) and the host simulator
-// (host/fbsim.cpp) drive exactly this code with the same three calls:
+// Portable node logic: no hardware, no RTOS. The FreeRTOS node task (app/app_main.cpp) and the host tests
+// (tests/sim_bus.hpp) drive exactly this code with the same three calls:
 //   on_can(now, frame)   every received CAN frame
 //   tick(now, ...)       every kTickMs
 //   pop_tx(frame)        drain what the node wants to send

@@ -1,12 +1,12 @@
 #pragma once
-/* Values shared by the C board layer (bsp/), the C++ node logic (common/) and the DBC. Plain C so both can include it. */
+/* Values shared by the C board layer (bsp/), the C++ node logic (common/) and the wire format (can_msgs.hpp). Plain C so both can include it. */
 #include <stdint.h>
 
 #define FB_PROTO_VER 1u
 
 typedef enum { FB_NODE_BATTERY = 1, FB_NODE_BODY = 2 } fb_node_id_t;
 
-/* Matches VAL_ 256 State in can/fleetbus.dbc */
+/* Sent as Heartbeat.state: values are part of the protocol, never renumber */
 typedef enum {
     FB_ST_BOOT = 0, FB_ST_NORMAL = 1, FB_ST_WARNING = 2, FB_ST_FAULT = 3, FB_ST_SAFE = 4, FB_ST_LIMP_HOME = 5
 } fb_state_t;

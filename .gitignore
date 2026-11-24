@@ -8,13 +8,6 @@ firmware/build*/
 *.o
 *.a
 
-# Python
-.venv/
-__pycache__/
-*.pyc
-.pytest_cache/
-*.egg-info/
-
 # Local data
 *.sqlite
 .env

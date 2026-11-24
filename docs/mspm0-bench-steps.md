@@ -8,7 +8,7 @@ Common setup, once:
 
 ```bash
 cd ~/Documents/Dev/fleetbus
-make setup fw                 # images land in build/fw-mspm0/arm/mspm0g3507/
+make fw                       # images land in build/fw-mspm0/arm/mspm0g3507/
 ls /dev/cu.usbmodem*          # each LaunchPad shows two ports; the console is usually the one ending in 1
 ```
 
@@ -143,7 +143,7 @@ t=12000 NORMAL peer=1 rx=… can_err=0 tx_drop=0 tx_fail=0 node_us_max=… late_
 1. **Alone.** Battery alone: NORMAL, `peer=0`, `tx_fail` climbing (expected). Body alone: LIMP_HOME, red LED on, servo
    centred. Then wire both: within ~1 s the body goes NORMAL, LED2 green (head light).
 2. **Bus.** WaveForms CAN decoder on the bus: 0x101 and 0x102 every 100 ms, 0x200 and 0x201 every 100 ms. Decode
-   offline with the DBC: export the decoder's CSV, or later with the CANable and `tools/lite_dash.py`.
+   offline: export the decoder's CSV and compare the bytes with the table in `firmware/common/can_msgs.hpp`.
 3. **Warning and fault.** Turn the pot slowly down: battery WARNING below 3.30 V "pack" (`mv=` on its console), FAULT
    below 3.00 V, then SAFE about 1 s later. Body goes LIMP_HOME (red LED, servo to 90°) as soon as it sees FAULT.
    Turning the pot back up does **not** clear FAULT/SAFE: they latch until the battery resets (by design).

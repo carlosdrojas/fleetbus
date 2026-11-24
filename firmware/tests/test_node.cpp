@@ -2,7 +2,7 @@
 // The "[measured in sim]" lines are simulator timings, not hardware numbers.
 #include <cstdio>
 #include "unity.h"
-#include "can_msgs.h"
+#include "can_msgs.hpp"
 #include "sim_bus.hpp"
 #include "static_queue.hpp"
 
@@ -31,8 +31,8 @@ static void test_heartbeat_ids_and_rates() {
     for (const auto& f : bus->log) {
         if (f.id == heartbeat_id(FB_NODE_BATTERY)) hb_bat++;
         if (f.id == heartbeat_id(FB_NODE_BODY)) hb_body++;
-        if (f.id == CAN_MSGS_BATTERY_STATUS_FRAME_ID) batt++;
-        if (f.id == CAN_MSGS_BODY_STATUS_FRAME_ID) body++;
+        if (f.id == msg::kBatteryStatusId) batt++;
+        if (f.id == msg::kBodyStatusId) body++;
     }
     TEST_ASSERT_EQUAL_UINT32(0x101, heartbeat_id(FB_NODE_BATTERY)); TEST_ASSERT_EQUAL_UINT32(0x102, heartbeat_id(FB_NODE_BODY));
     TEST_ASSERT_EQUAL(10, hb_bat); TEST_ASSERT_EQUAL(10, hb_body);   // 10 Hz each
@@ -65,7 +65,7 @@ static void test_fault_event_sent_on_entry_then_every_second() {
     bus->sample.pack_mv = 2900;
     bus->run(3000);
     int events = 0;
-    for (const auto& f : bus->log) if (f.id == CAN_MSGS_FAULT_EVENT_FRAME_ID) events++;
+    for (const auto& f : bus->log) if (f.id == msg::kFaultEventId) events++;
     TEST_ASSERT_TRUE(events >= 3 && events <= 4);
     TEST_ASSERT_EQUAL(FB_FAULT_UNDERVOLT, bus->battery.fault().code());
 }
@@ -93,8 +93,8 @@ static void test_tx_queue_drops_and_counts_when_full() {
 static void test_frames_with_unknown_protocol_version_are_ignored() {
     BodyNode b{1}; b.start(0);
     CanFrame f; f.id = heartbeat_id(FB_NODE_BATTERY); f.dlc = 8;
-    can_msgs_heartbeat_t h{}; h.node_id = FB_NODE_BATTERY; h.state = FB_ST_NORMAL; h.proto_ver = 2;
-    can_msgs_heartbeat_pack(f.data.data(), &h, 8);
+    msg::Heartbeat h; h.node_id = FB_NODE_BATTERY; h.state = FB_ST_NORMAL; h.proto_ver = 2;
+    h.pack(f.data.data());
     b.on_can(5, f); b.tick(10);
     TEST_ASSERT_FALSE(b.peer_alive(10));
     TEST_ASSERT_TRUE(b.outputs().limp_home);

@@ -46,6 +46,6 @@ Found by review or host tests while preparing for the bench. Good context, but n
 | Bug | Found by | Fix |
 |---|---|---|
 | Release builds were `-O3`, not `-Os`: CMake appends its own `-O3 -DNDEBUG` after the toolchain's flags | reading the build line | override `CMAKE_*_FLAGS_RELEASE` (`firmware/CMakeLists.txt`) |
-| Both nodes sent heartbeats on 0x100: a simultaneous start collides on the data byte, retries in lockstep | design review | per-node ids 0x101 / 0x102 (`docs/decisions.md` D3) |
+| Both nodes sent heartbeats on 0x100: a simultaneous start collides on the data byte, retries in lockstep | design review | per-node ids 0x101 / 0x102 (`firmware/common/can_msgs.hpp`) |
 | No INA219 on this bench: every current read NACKs → `sensor_ok` false → battery latches FAULT, then SAFE, at boot | checking the parts list against the code | `FB_HAS_INA219` build option, off by default |
 | MCAN RX-FIFO "message lost" flag is sticky: after one overflow every later frame would count as an error | reading `bsp_can.c` against the M_CAN register description | clear `IR.RF0L` when it's seen (write-1-to-clear) |

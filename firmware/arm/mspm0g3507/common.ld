@@ -1,6 +1,6 @@
 /* Section layout for every MSPM0G3507 image (included after the MEMORY block in app.ld.in). Symbol names match TI's
  * startup_mspm0g350x_gcc.c. libgcc stays linked: the Cortex-M0+ has no divide instruction and needs the __aeabi_*
- * helpers. .init_array is kept for C++ static constructors (the firmware has none of its own; see docs/cpp-firmware.md). */
+ * helpers. .init_array is kept for C++ static constructors (the firmware has none of its own; see README.md). */
 ENTRY(Reset_Handler)
 __StackTop = ORIGIN(SRAM) + LENGTH(SRAM);
 
