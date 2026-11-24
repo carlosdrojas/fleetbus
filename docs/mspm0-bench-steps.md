@@ -64,6 +64,9 @@ No transceivers, so the bench bus is a wired-AND on 3.3 V logic. Bench only: it'
 ```
 
 Parts: two Schottky diodes (BAT54, BAT43, 1N5817; a 1N4148 works but the low level is higher), one 1 kΩ resistor.
+Take the pull-up's 3V3 from the **body board** (B, J1.1) and never join the two boards' 3V3 pins. The fault tests silence the
+battery board by holding its reset; if you unplug it instead, its unpowered TX pin sits near 0 V and pulls the bus low
+through its diode, jamming the bus for the body too.
 Keep wires short (under ~30 cm). Before powering: check PA12 and PA13 on the LaunchPad silkscreen. The pin map
 (`firmware/bsp/mspm0g3507/bsp_pins.h`) is from TI's examples and not verified yet.
 
