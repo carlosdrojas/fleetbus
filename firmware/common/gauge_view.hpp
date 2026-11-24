@@ -15,7 +15,7 @@ namespace fleetbus {
 constexpr int kLcdW = 160;
 constexpr int kLcdH = 128;
 
-constexpr uint16_t rgb565(unsigned r, unsigned g, unsigned b) noexcept {
+constexpr uint16_t rgb565(unsigned r, unsigned g, unsigned b) {
     return static_cast<uint16_t>(((r & 0xF8u) << 8) | ((g & 0xFCu) << 3) | (b >> 3));
 }
 
@@ -39,20 +39,20 @@ struct GaugeInputs {
 
 class GaugeView {
 public:
-    explicit GaugeView(Canvas& canvas) noexcept : canvas_(canvas) {}
-    void draw(const GaugeInputs& in) noexcept;
-    void invalidate() noexcept { drawn_ = false; needle_deg_ = -1; banner_ = -1; volt_[0] = temp_[0] = curr_[0] = soc_[0] = 0; }
+    explicit GaugeView(Canvas& canvas) : canvas_(canvas) {}
+    void draw(const GaugeInputs& in);
+    void invalidate() { drawn_ = false; needle_deg_ = -1; banner_ = -1; volt_[0] = temp_[0] = curr_[0] = soc_[0] = 0; }
 
     // Needle angle for a pack voltage: 0 deg at 2.8 V (left), 180 deg at 4.2 V (right), clamped.
-    [[nodiscard]] static int volt_to_deg(int32_t pack_mv) noexcept;
+    static int volt_to_deg(int32_t pack_mv);
 
 private:
     using Text = std::array<char, 8>;
-    void fill(int x, int y, int w, int h, uint16_t c) noexcept;
-    void text(int x, int y, const char* s, int scale, uint16_t fg) noexcept;
-    void field(Text& last, const Text& now, int x, int y, int box_w, int scale) noexcept;
-    void needle(int deg, uint16_t c) noexcept;
-    void draw_static() noexcept;
+    void fill(int x, int y, int w, int h, uint16_t c);
+    void text(int x, int y, const char* s, int scale, uint16_t fg);
+    void field(Text& last, const Text& now, int x, int y, int box_w, int scale);
+    void needle(int deg, uint16_t c);
+    void draw_static();
 
     Canvas& canvas_;
     bool drawn_ = false;

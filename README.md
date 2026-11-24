@@ -9,10 +9,10 @@ reports a fault or its heartbeat goes silent, and shows an instrument cluster on
  ┌──────────────────────────────┐                   ┌──────────────────────────────────┐
  │ pot ─► ADC  (pack voltage)    │                   │ GPIO ─► head / turn / fault lights│
  │ NTC ─► ADC  (temperature)     │   CAN 500 kbit/s  │ PWM  ─► servo                     │
- │ INA219 ─► I2C (current, opt.) │◄═════════════════►│ SPI  ─► ST7735R 160x128 cluster    │
+ │ (no current sensor: 0 mA)     │◄═════════════════►│ SPI  ─► ST7735R 160x128 cluster    │
  │ fault FSM: NORMAL→WARNING→    │  0x101 heartbeat  │ limp-home FSM                     │
  │            FAULT→SAFE         │  0x200 BatteryStat│                                   │
- │ FreeRTOS: wdg/node/sense/log  │  0x201 BodyStatus │ FreeRTOS: wdg/node/disp/log       │
+ │ FreeRTOS: node/log            │  0x201 BodyStatus │ FreeRTOS: node/disp/log           │
  └──────────────────────────────┘  0x102 heartbeat  └──────────────────────────────────┘
                                     0x300 FaultEvent
 ```
@@ -25,8 +25,8 @@ reports a fault or its heartbeat goes silent, and shows an instrument cluster on
 | Path | What | Language |
 |---|---|---|
 | `firmware/common/` | node logic: CAN messages (`can_msgs.hpp`), battery fault FSM, limp-home FSM, heartbeat monitor, the two node roles, display renderer | C++17 |
-| `firmware/app/` | FreeRTOS tasks (`app_main.cpp`), per-role hardware glue (`battery_hw.cpp`, `body_hw.cpp`), bench images (`bringup/`) | C++17, C |
-| `firmware/bsp/` | board support on TI DriverLib: clocks, UART, MCAN, ADC, I2C, PWM, SPI display | C |
+| `firmware/app/` | one main per board (`battery_main.cpp`, `body_main.cpp`) with its FreeRTOS tasks, shared pieces (`app_common.*`), bench images (`bringup/`) | C++17, C |
+| `firmware/bsp/` | board support on TI DriverLib: clocks, UART, MCAN, ADC, PWM, SPI display | C |
 | `firmware/tests/` | Unity tests on the host, including both nodes on a virtual bus | C++17 |
 | `firmware/third_party/` | FreeRTOS kernel, Unity (submodules), TI MSPM0 SDK subset (vendored) | C |
 | `tools/` | `flash_mspm0.sh` (DSLite), `vendor_mspm0_sdk.sh` | sh |
@@ -68,18 +68,19 @@ and an Analog Discovery's CAN decoder watches it.
 - **Silence is a fault.** A dead battery ECU can't report its own failure, so the body goes limp-home after 500 ms (5
   missed heartbeats) and needs 1 s of healthy heartbeats before it trusts the battery again. Both are targets until the
   bench measures them.
-- **FreeRTOS tasks in rate-monotonic order:** wdg (prio 4), node (3, every 10 ms: CAN RX, FSMs, TX), sense (2, 20 ms,
-  battery), disp (1, 200 ms, body), log (1, 1 s). The display redraw and the ~7 ms console line can't delay CAN. The
-  node task prints its own worst execution time and start lateness, so that's measured, not argued.
-- **Tasks share data through snapshots** (`Latest<T>` in `app_main.cpp`): the writer overwrites, readers copy the whole
-  struct in a short critical section. Readers want the newest value, not a backlog, so no queues and no mutexes.
-- **Watchdog fed only when every task checks in.** A hung task resets the board within about 2 s, instead of leaving a
-  node that heartbeats but doesn't work.
+- **Few FreeRTOS tasks, fast work on top.** Each board has a node task (prio 2, every 10 ms: read inputs, CAN in,
+  state machine, outputs, CAN out) and a log task (prio 1, 1 s). The body adds a display task (prio 1, 200 ms). The
+  SPI redraw and the ~7 ms console line run below the node task, so they can't delay CAN. The node task prints its
+  own worst run time and start lateness, so that's measured, not assumed.
+- **Tasks share data through snapshots** (`Latest<T>` in `app_common.hpp`): the writer overwrites, readers copy the
+  whole struct with interrupts off for a moment. Readers want the newest value, not a backlog, so no queues and no
+  mutexes.
+- **The node task feeds the 2 s watchdog** at the end of every cycle. If it hangs, the board resets. A hung display
+  task wouldn't, which is acceptable here: the CAN side keeps working.
 - **C++17 for the code that's tested, C for the board layer.** Compiled with `-fno-exceptions -fno-rtti
   -fno-threadsafe-statics`; no heap after start-up (`StaticQueue<T, N>`, `std::array`); `constexpr` constructors so
-  nothing runs before `main()`; the role is a type picked at compile time (`using Node = BatteryNode`), so the battery
-  image has no body code and there's no vtable; RAII `CriticalSection` so no path leaves interrupts off. The M0+ has no
-  LDREX/STREX, so watchdog check-ins are single-writer relaxed atomics (plain `ldr`/`str`).
+  nothing runs before `main()`; `BatteryNode` and `BodyNode` share `NodeBase` with no virtual functions, and each
+  board's main uses only its own; RAII `CriticalSection` so no path leaves interrupts off.
 - **TI DriverLib and CMake, not CCS projects.** Builds headless on macOS and in CI; CCS is used only for its DSLite
   flasher.
 

@@ -96,20 +96,22 @@ Wire what you have (any subset is fine):
 | What | Wire | Note |
 |---|---|---|
 | Pot (pack voltage) | ends to 3V3 and GND, wiper to **PA24** (ADC ch2 in the log) | 3.0–4.2 V "pack" across its travel |
-| Temperature | 10 kΩ NTC + 10 kΩ divider to **PA25** (ADC ch1) | **No NTC (a DHT won't work):** two 10 kΩ resistors as a divider from 3V3 to GND, midpoint to PA25. Reads about 25 °C. Leaving PA25 floating can read as overtemperature and trip a fault. |
+| Temperature | 10 kΩ from 3V3 to **PA25**, the kit's thermistor from PA25 to GND (ADC ch1) | Not the DHT11 (that's a digital sensor). Never leave PA25 floating: it can read as overtemperature and trip a fault. |
 | Servo | signal **PB4**, power 5 V, GND joined | a micro servo can run from the LaunchPad's 5V pin for light loads; add ~100 µF across its supply |
 | Lights | on-board LED2 (PB27 green = head, PB22 blue = turn), LED1 red (PA0) = fault | nothing to wire |
-| INA219 | not fitted | firmware built without it reports 0 mA |
+| Current | no sensor | the firmware reports 0 mA |
 
 ```bash
 tools/flash_mspm0.sh bench io_selftest
 ```
 
-Every 500 ms: `adc ch1=<mV> mV ch2=<mV> mV ina219=NO-ACK 0 mA servo=<deg> deg lights=<mask>`. `NO-ACK` is expected (no
-INA219).
+Every 500 ms: `adc ch1=<mV> mV ch2=<mV> mV servo=<deg> deg lights=<mask>`.
 
 1. **ADC.** Turn the pot end to end: ch2 about 0 → 3300 mV. Measure PA24 with a multimeter at three points; note the error.
-2. **Temperature input.** ch1 about 1650 mV with the 10k/10k divider.
+2. **Temperature input.** ch1 about 1650 mV at room temperature (thermistor ≈ 10 kΩ at 25 °C). Pinch the
+   thermistor: ch1 should **fall** within seconds (warmer = lower resistance = lower voltage). If it rises, the
+   thermistor and the 10 kΩ are swapped: the lookup curve in `firmware/app/ntc_lut.inc` assumes the thermistor on the
+   GND side.
 3. **Servo.** Logic analyser on PB4: period 20.0 ms, high time 1.00 / 1.25 / 1.50 / 1.75 / 2.00 ms as it steps.
 4. **Lights.** LED2 cycles off, green, blue, (LED1 red), green+blue.
 
@@ -138,7 +140,7 @@ t=12000 NORMAL peer=1 rx=… can_err=0 tx_drop=0 tx_fail=0 node_us_max=… late_
 | `tx_fail` | frames the CAN TX FIFO refused | 0 with both boards up; **climbs if a board is alone** (nobody ACKs) |
 | `node_us_max` | worst node-task execution time since boot | a few hundred µs (ESTIMATE) |
 | `late_us_max` | worst start lateness of the 10 ms node task | under 1000 µs (tick resolution) |
-| `stk` | free stack per task in bytes (wdg, node, sense or —, disp or —, log) | none under ~200 |
+| `stk` | free stack per task in bytes (battery: node, log; body: node, disp, log) | none under ~200 |
 
 1. **Alone.** Battery alone: NORMAL, `peer=0`, `tx_fail` climbing (expected). Body alone: LIMP_HOME, red LED on, servo
    centred. Then wire both: within ~1 s the body goes NORMAL, LED2 green (head light).

@@ -26,8 +26,8 @@ constexpr uint32_t kPeerTimeoutMs = 500;
 constexpr uint32_t kRecoverHoldMs = 1000;   // body: battery must look healthy this long before leaving limp-home
 
 constexpr uint32_t kHeartbeatBaseId = 0x100;
-constexpr uint32_t heartbeat_id(fb_node_id_t node) noexcept { return kHeartbeatBaseId + static_cast<uint32_t>(node); }
-constexpr bool is_heartbeat_id(uint32_t id) noexcept { return (id & ~0xFu) == kHeartbeatBaseId; }
+constexpr uint32_t heartbeat_id(fb_node_id_t node) { return kHeartbeatBaseId + static_cast<uint32_t>(node); }
+constexpr bool is_heartbeat_id(uint32_t id) { return (id & ~0xFu) == kHeartbeatBaseId; }
 static_assert(heartbeat_id(FB_NODE_BATTERY) != heartbeat_id(FB_NODE_BODY), "nodes must never share an id");
 
 struct CanFrame {
@@ -41,22 +41,22 @@ class NodeBase {
 public:
     static constexpr std::size_t kTxQueue = 16;
 
-    [[nodiscard]] bool pop_tx(CanFrame& out) noexcept { return txq_.pop(out); }
-    [[nodiscard]] fb_node_id_t id() const noexcept { return id_; }
-    [[nodiscard]] fb_state_t state() const noexcept { return state_; }
-    [[nodiscard]] bool peer_alive(uint32_t now_ms) const noexcept { return peer_.alive(now_ms); }
-    [[nodiscard]] fb_state_t peer_state() const noexcept { return peer_state_; }
-    [[nodiscard]] uint32_t tx_dropped() const noexcept { return txq_.dropped(); }
+    [[nodiscard]] bool pop_tx(CanFrame& out) { return txq_.pop(out); }
+    fb_node_id_t id() const { return id_; }
+    fb_state_t state() const { return state_; }
+    bool peer_alive(uint32_t now_ms) const { return peer_.alive(now_ms); }
+    fb_state_t peer_state() const { return peer_state_; }
+    uint32_t tx_dropped() const { return txq_.dropped(); }
 
 protected:
-    constexpr NodeBase(fb_node_id_t id, fb_node_id_t peer, uint16_t fw_version) noexcept
+    constexpr NodeBase(fb_node_id_t id, fb_node_id_t peer, uint16_t fw_version)
         : id_(id), peer_id_(peer), fw_version_(fw_version) {}
 
-    void start(uint32_t now_ms) noexcept;
-    bool on_heartbeat(uint32_t now_ms, const CanFrame& f) noexcept;   // true if the frame was a heartbeat
-    void heartbeat_if_due(uint32_t now_ms) noexcept;
-    void send(uint32_t id, const uint8_t* data, uint8_t dlc) noexcept;
-    static bool due(uint32_t now_ms, uint32_t last_ms, uint32_t period_ms, bool first) noexcept {
+    void start(uint32_t now_ms);
+    bool on_heartbeat(uint32_t now_ms, const CanFrame& f);   // true if the frame was a heartbeat
+    void heartbeat_if_due(uint32_t now_ms);
+    void send(uint32_t id, const uint8_t* data, uint8_t dlc);
+    static bool due(uint32_t now_ms, uint32_t last_ms, uint32_t period_ms, bool first) {
         return first || static_cast<uint32_t>(now_ms - last_ms) >= period_ms;
     }
 
@@ -75,14 +75,14 @@ private:
 // Battery monitor ECU: runs the fault FSM on each sample, publishes BatteryStatus at 10 Hz and FaultEvent on a fault.
 class BatteryNode : public NodeBase {
 public:
-    explicit constexpr BatteryNode(uint16_t fw_version) noexcept : NodeBase(FB_NODE_BATTERY, FB_NODE_BODY, fw_version) {}
+    explicit constexpr BatteryNode(uint16_t fw_version) : NodeBase(FB_NODE_BATTERY, FB_NODE_BODY, fw_version) {}
 
-    void start(uint32_t now_ms) noexcept { NodeBase::start(now_ms); }
-    void on_can(uint32_t now_ms, const CanFrame& f) noexcept { on_heartbeat(now_ms, f); }
-    void tick(uint32_t now_ms, const BatterySample& s) noexcept;
+    void start(uint32_t now_ms) { NodeBase::start(now_ms); }
+    void on_can(uint32_t now_ms, const CanFrame& f) { on_heartbeat(now_ms, f); }
+    void tick(uint32_t now_ms, const BatterySample& s);
 
-    [[nodiscard]] const BatteryFaultFsm& fault() const noexcept { return fault_; }
-    [[nodiscard]] static uint8_t soc_pct(int32_t pack_mv) noexcept;   // linear 3.0-4.2 V placeholder curve
+    const BatteryFaultFsm& fault() const { return fault_; }
+    static uint8_t soc_pct(int32_t pack_mv);   // linear 3.0-4.2 V placeholder curve
 
 private:
     BatteryFaultFsm fault_;
@@ -101,16 +101,16 @@ struct PeerBattery {
 // Body controller ECU: lights and servo, limp-home when the battery faults or goes silent, the instrument cluster.
 class BodyNode : public NodeBase {
 public:
-    explicit constexpr BodyNode(uint16_t fw_version) noexcept : NodeBase(FB_NODE_BODY, FB_NODE_BATTERY, fw_version) {}
+    explicit constexpr BodyNode(uint16_t fw_version) : NodeBase(FB_NODE_BODY, FB_NODE_BATTERY, fw_version) {}
 
-    void start(uint32_t now_ms) noexcept { NodeBase::start(now_ms); }
-    void on_can(uint32_t now_ms, const CanFrame& f) noexcept;
-    void tick(uint32_t now_ms) noexcept;
+    void start(uint32_t now_ms) { NodeBase::start(now_ms); }
+    void on_can(uint32_t now_ms, const CanFrame& f);
+    void tick(uint32_t now_ms);
 
-    [[nodiscard]] const BodyOutputs& outputs() const noexcept { return out_; }
-    [[nodiscard]] const PeerBattery& peer_battery() const noexcept { return batt_; }
-    [[nodiscard]] GaugeInputs gauge_inputs(uint32_t now_ms) const noexcept;
-    void command(uint8_t lights, uint8_t servo_deg) noexcept { fsm_.command(lights, servo_deg); }
+    const BodyOutputs& outputs() const { return out_; }
+    const PeerBattery& peer_battery() const { return batt_; }
+    GaugeInputs gauge_inputs(uint32_t now_ms) const;
+    void command(uint8_t lights, uint8_t servo_deg) { fsm_.command(lights, servo_deg); }
 
 private:
     LimpHomeFsm fsm_{kRecoverHoldMs};

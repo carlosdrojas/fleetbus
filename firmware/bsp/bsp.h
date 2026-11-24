@@ -23,8 +23,8 @@ uint32_t bsp_millis(void);                 /* FreeRTOS tick (1 ms); 0 before the
 uint32_t bsp_micros(void);                 /* tick + SysTick counter; differences only (wraps ~71 min) */
 void bsp_system_reset(void) __attribute__((noreturn));
 
-/* Watchdog (WWDT0): 2 s, cannot be stopped once started (only a reset clears it). The app starts it in main() and
- * the watchdog task feeds it only while every task is checking in. */
+/* Watchdog (WWDT0): 2 s, cannot be stopped once started (only a reset clears it). The node images start it in main()
+ * and feed it at the end of every 10 ms node-task cycle. */
 void bsp_wdt_start_2s(void);
 void bsp_wdt_feed(void);
 
@@ -39,8 +39,6 @@ void bsp_can_counters(uint32_t *tec, uint32_t *rec, int *bus_off);
 
 int  bsp_adc_init(void);
 int  bsp_adc_read_mv(int channel_1_or_2);  /* -1 on timeout */
-int  bsp_i2c_init(void);
-int  bsp_ina219_read_ma(int32_t *ma);      /* 0 ok, -1 not responding */
 void bsp_servo_init(void);
 void bsp_servo_set_deg(uint8_t deg);       /* 0..180 -> 1.0..2.0 ms pulse at 50 Hz */
 void bsp_lights_set(uint8_t mask);         /* FB_LIGHT_* (fb_types.h) */

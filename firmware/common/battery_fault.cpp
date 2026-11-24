@@ -3,10 +3,10 @@
 namespace fleetbus {
 namespace {
 // Saturating increment: a counter held at its limit for hours must not wrap back to 0 and "un-debounce".
-constexpr uint8_t bump(uint8_t n) noexcept { return n == UINT8_MAX ? n : static_cast<uint8_t>(n + 1); }
+constexpr uint8_t bump(uint8_t n) { return n == UINT8_MAX ? n : static_cast<uint8_t>(n + 1); }
 }  // namespace
 
-fb_fault_code_t BatteryFaultFsm::classify(const BatterySample& s) const noexcept {
+fb_fault_code_t BatteryFaultFsm::classify(const BatterySample& s) const {
     if (!s.sensor_ok) return FB_FAULT_SENSOR;              // can't trust any reading: fail safe
     if (s.temp_dc >= cfg_.fault_temp_dc) return FB_FAULT_OVERTEMP;
     if (s.pack_mv <= cfg_.fault_mv_low) return FB_FAULT_UNDERVOLT;
@@ -16,7 +16,7 @@ fb_fault_code_t BatteryFaultFsm::classify(const BatterySample& s) const noexcept
     return FB_FAULT_NONE;
 }
 
-void BatteryFaultFsm::step(const BatterySample& s) noexcept {
+void BatteryFaultFsm::step(const BatterySample& s) {
     if (state_ == FB_ST_SAFE) return;                      // terminal until reset()
 
     const fb_fault_code_t fcode = classify(s);
@@ -49,7 +49,7 @@ void BatteryFaultFsm::step(const BatterySample& s) noexcept {
     }
 }
 
-void BatteryFaultFsm::reset() noexcept {
+void BatteryFaultFsm::reset() {
     state_ = FB_ST_NORMAL; code_ = FB_FAULT_NONE;
     cnt_warn_ = cnt_fault_ = cnt_clear_ = cnt_in_fault_ = 0;
 }

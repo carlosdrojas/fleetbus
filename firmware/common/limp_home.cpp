@@ -2,7 +2,7 @@
 
 namespace fleetbus {
 
-BodyOutputs LimpHomeFsm::step(uint32_t now_ms, bool battery_alive, fb_state_t battery_state) noexcept {
+BodyOutputs LimpHomeFsm::step(uint32_t now_ms, bool battery_alive, fb_state_t battery_state) {
     const bool bad = !battery_alive || battery_state == FB_ST_FAULT || battery_state == FB_ST_SAFE;
     if (bad) {
         state_ = FB_ST_LIMP_HOME;

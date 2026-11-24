@@ -15,6 +15,7 @@ layout and design notes in `README.md`.
 - Ask before any `git push`. Local commits are fine.
 
 ## Status
+- 2026-11-24: one main per board, 2-3 tasks each, node task feeds the watchdog; I2C/INA219 removed (no sensor).
 - 2026-11-24: dashboard, host simulator, DBC and code generator cut; hand-written `can_msgs.hpp`. 40 Unity tests
   pass; five MSPM0 images link. Next: P2 bring-up (`docs/mspm0-bench-steps.md`).
 - 2026-11-23: scope cut to Lite; node logic and app converted to C++17.

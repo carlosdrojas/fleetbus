@@ -7,16 +7,16 @@ namespace fleetbus {
 
 class HeartbeatMonitor {
 public:
-    explicit constexpr HeartbeatMonitor(uint32_t timeout_ms) noexcept : timeout_ms_(timeout_ms) {}
+    explicit constexpr HeartbeatMonitor(uint32_t timeout_ms) : timeout_ms_(timeout_ms) {}
 
-    void feed(uint32_t now_ms) noexcept { last_ms_ = now_ms; seen_ = true; }
-    void forget() noexcept { seen_ = false; }
+    void feed(uint32_t now_ms) { last_ms_ = now_ms; seen_ = true; }
+    void forget() { seen_ = false; }
 
-    [[nodiscard]] bool alive(uint32_t now_ms) const noexcept {
+    bool alive(uint32_t now_ms) const {
         return seen_ && static_cast<uint32_t>(now_ms - last_ms_) <= timeout_ms_;
     }
-    [[nodiscard]] bool ever_seen() const noexcept { return seen_; }
-    [[nodiscard]] uint32_t age_ms(uint32_t now_ms) const noexcept { return now_ms - last_ms_; }
+    bool ever_seen() const { return seen_; }
+    uint32_t age_ms(uint32_t now_ms) const { return now_ms - last_ms_; }
 
 private:
     uint32_t timeout_ms_;

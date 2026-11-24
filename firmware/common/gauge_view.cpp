@@ -93,7 +93,7 @@ Banner banner_for(const GaugeInputs& in) {
 }  // namespace
 
 // Clip to the screen, then forward. Every drawing path goes through here, so nothing can write outside the panel.
-void GaugeView::fill(int x, int y, int w, int h, uint16_t c) noexcept {
+void GaugeView::fill(int x, int y, int w, int h, uint16_t c) {
     if (x < 0) { w += x; x = 0; }
     if (y < 0) { h += y; y = 0; }
     if (x + w > kLcdW) w = kLcdW - x;
@@ -102,7 +102,7 @@ void GaugeView::fill(int x, int y, int w, int h, uint16_t c) noexcept {
 }
 
 // Only the lit pixels are drawn; callers clear the box first. Advance 6*scale per character.
-void GaugeView::text(int x, int y, const char* s, int scale, uint16_t fg) noexcept {
+void GaugeView::text(int x, int y, const char* s, int scale, uint16_t fg) {
     for (int i = 0; s[i]; i++) {
         const char* p = std::strchr(GLYPH_CHARS, s[i]);
         if (!p) continue;
@@ -113,20 +113,20 @@ void GaugeView::text(int x, int y, const char* s, int scale, uint16_t fg) noexce
     }
 }
 
-void GaugeView::field(Text& last, const Text& now, int x, int y, int box_w, int scale) noexcept {
+void GaugeView::field(Text& last, const Text& now, int x, int y, int box_w, int scale) {
     if (std::strcmp(last.data(), now.data()) == 0) return;        // unchanged: no SPI traffic
     fill(x, y, box_w, 7 * scale, C_BG);
     text(x, y, now.data(), scale, C_WHITE);
     last = now;
 }
 
-int GaugeView::volt_to_deg(int32_t mv) noexcept {
+int GaugeView::volt_to_deg(int32_t mv) {
     if (mv <= SCALE_LO_MV) return 0;
     if (mv >= SCALE_HI_MV) return 180;
     return static_cast<int>((mv - SCALE_LO_MV) * 180 / (SCALE_HI_MV - SCALE_LO_MV));
 }
 
-void GaugeView::needle(int deg, uint16_t c) noexcept {   // Bresenham, 2 px thick
+void GaugeView::needle(int deg, uint16_t c) {   // Bresenham, 2 px thick
     int x0 = CX, y0 = CY;
     const int x1 = pt_x(deg, R_NEEDLE), y1 = pt_y(deg, R_NEEDLE);
     const int dx = x1 > x0 ? x1 - x0 : x0 - x1, sx = x0 < x1 ? 1 : -1;
@@ -141,7 +141,7 @@ void GaugeView::needle(int deg, uint16_t c) noexcept {   // Bresenham, 2 px thic
     }
 }
 
-void GaugeView::draw_static() noexcept {
+void GaugeView::draw_static() {
     fill(0, 0, kLcdW, kLcdH, C_BG);
     fill(0, 0, kLcdW, 12, C_TITLE);
     text(3, 3, "FLEETBUS  BODY NODE", 1, C_WHITE);
@@ -155,7 +155,7 @@ void GaugeView::draw_static() noexcept {
     text(TXT_X, 78, "SOC", 1, C_LABEL);
 }
 
-void GaugeView::draw(const GaugeInputs& in) noexcept {
+void GaugeView::draw(const GaugeInputs& in) {
     if (!drawn_) { draw_static(); drawn_ = true; }
 
     const int deg = in.have ? volt_to_deg(in.pack_mv) : -1;

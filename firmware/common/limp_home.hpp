@@ -18,12 +18,12 @@ class LimpHomeFsm {
 public:
     static constexpr uint8_t kLimpServoDeg = 90;          // centred: the safe position
 
-    explicit constexpr LimpHomeFsm(uint32_t recover_ms) noexcept : recover_ms_(recover_ms) {}
+    explicit constexpr LimpHomeFsm(uint32_t recover_ms) : recover_ms_(recover_ms) {}
 
-    BodyOutputs step(uint32_t now_ms, bool battery_alive, fb_state_t battery_state) noexcept;
-    void command(uint8_t lights, uint8_t servo_deg) noexcept { cmd_lights_ = lights; cmd_servo_deg_ = servo_deg; }
+    BodyOutputs step(uint32_t now_ms, bool battery_alive, fb_state_t battery_state);
+    void command(uint8_t lights, uint8_t servo_deg) { cmd_lights_ = lights; cmd_servo_deg_ = servo_deg; }
 
-    [[nodiscard]] fb_state_t state() const noexcept { return state_; }
+    fb_state_t state() const { return state_; }
 
 private:
     uint32_t recover_ms_;

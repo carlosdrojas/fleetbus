@@ -7,7 +7,6 @@
  *   HFXT 40 MHz crystal ................... PA5 / PA6           PINCM10 / PINCM11   (CAN clock source)
  *   UART0 TX / RX (XDS110 backchannel) .... PA10 / PA11         PINCM21 / PINCM22   (jumpers J101 must be fitted)
  *   MCAN0 CAN_TX / CAN_RX ................. PA12 / PA13         PINCM34 / PINCM35   -> transceiver TXD / RXD
- *   I2C1 SCL / SDA (INA219) ............... PB2 / PB3           PINCM15 / PINCM16   (needs pull-ups: breakout has them)
  *   ADC0 ch2 thermistor divider ........... PA25 (A0_2)
  *   ADC0 ch3 pot standing in for pack V ... PA24 (A0_3)
  *   Servo PWM (TIMA1 CCP0) ................ PB4                 PINCM17
@@ -36,10 +35,6 @@
 #define PIN_CAN_RX_IOMUX  IOMUX_PINCM35
 #define PIN_CAN_RX_FUNC   IOMUX_PINCM35_PF_CANFD0_CANRX
 
-#define PIN_I2C_SCL_IOMUX IOMUX_PINCM15
-#define PIN_I2C_SCL_FUNC  IOMUX_PINCM15_PF_I2C1_SCL
-#define PIN_I2C_SDA_IOMUX IOMUX_PINCM16
-#define PIN_I2C_SDA_FUNC  IOMUX_PINCM16_PF_I2C1_SDA
 
 #define ADC_CH_THERM      DL_ADC12_INPUT_CHAN_2
 #define ADC_CH_PACK       DL_ADC12_INPUT_CHAN_3

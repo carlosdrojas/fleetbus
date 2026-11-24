@@ -7,12 +7,12 @@ namespace fleetbus {
 static_assert(msg::kHeartbeatBase == kHeartbeatBaseId, "heartbeat id moved");
 
 // ---------------------------------------------------------------------------------------------- NodeBase
-void NodeBase::start(uint32_t now_ms) noexcept {
+void NodeBase::start(uint32_t now_ms) {
     boot_ms_ = now_ms;
     state_ = FB_ST_NORMAL;
 }
 
-void NodeBase::send(uint32_t id, const uint8_t* data, uint8_t dlc) noexcept {
+void NodeBase::send(uint32_t id, const uint8_t* data, uint8_t dlc) {
     CanFrame f;
     f.id = id;
     f.dlc = dlc;
@@ -20,7 +20,7 @@ void NodeBase::send(uint32_t id, const uint8_t* data, uint8_t dlc) noexcept {
     (void)txq_.push(f);          // full queue: dropped and counted (tx_dropped), never blocks the 10 ms task
 }
 
-bool NodeBase::on_heartbeat(uint32_t now_ms, const CanFrame& f) noexcept {
+bool NodeBase::on_heartbeat(uint32_t now_ms, const CanFrame& f) {
     if (!is_heartbeat_id(f.id)) return false;
     msg::Heartbeat h;
     if (!h.unpack(f.data.data(), f.dlc) || h.proto_ver != FB_PROTO_VER) return true;
@@ -31,7 +31,7 @@ bool NodeBase::on_heartbeat(uint32_t now_ms, const CanFrame& f) noexcept {
     return true;
 }
 
-void NodeBase::heartbeat_if_due(uint32_t now_ms) noexcept {
+void NodeBase::heartbeat_if_due(uint32_t now_ms) {
     if (!due(now_ms, last_hb_ms_, kHeartbeatPeriodMs, !hb_sent_)) return;
     msg::Heartbeat h;
     h.node_id = static_cast<uint8_t>(id_);
@@ -47,13 +47,13 @@ void NodeBase::heartbeat_if_due(uint32_t now_ms) noexcept {
 }
 
 // ---------------------------------------------------------------------------------------------- BatteryNode
-uint8_t BatteryNode::soc_pct(int32_t mv) noexcept {
+uint8_t BatteryNode::soc_pct(int32_t mv) {
     if (mv >= 4200) return 100;
     if (mv <= 3000) return 0;
     return static_cast<uint8_t>((mv - 3000) * 100 / 1200);
 }
 
-void BatteryNode::tick(uint32_t now_ms, const BatterySample& s) noexcept {
+void BatteryNode::tick(uint32_t now_ms, const BatterySample& s) {
     if (due(now_ms, last_status_ms_, kStatusPeriodMs, !status_sent_)) {
         const bool was_latched = fault_.latched();
         fault_.step(s);                                     // the FSM runs at the status rate: debounce = 3 x 100 ms
@@ -86,7 +86,7 @@ void BatteryNode::tick(uint32_t now_ms, const BatterySample& s) noexcept {
 }
 
 // ---------------------------------------------------------------------------------------------- BodyNode
-void BodyNode::on_can(uint32_t now_ms, const CanFrame& f) noexcept {
+void BodyNode::on_can(uint32_t now_ms, const CanFrame& f) {
     if (on_heartbeat(now_ms, f)) return;
     if (f.id == msg::kBatteryStatusId) {
         msg::BatteryStatus b;
@@ -100,7 +100,7 @@ void BodyNode::on_can(uint32_t now_ms, const CanFrame& f) noexcept {
     }
 }
 
-void BodyNode::tick(uint32_t now_ms) noexcept {
+void BodyNode::tick(uint32_t now_ms) {
     out_ = fsm_.step(now_ms, peer_alive(now_ms), peer_state());   // every 10 ms: limp-home latency is one tick
     state_ = fsm_.state();
     if (due(now_ms, last_status_ms_, kStatusPeriodMs, !status_sent_)) {
@@ -118,7 +118,7 @@ void BodyNode::tick(uint32_t now_ms) noexcept {
     heartbeat_if_due(now_ms);
 }
 
-GaugeInputs BodyNode::gauge_inputs(uint32_t now_ms) const noexcept {
+GaugeInputs BodyNode::gauge_inputs(uint32_t now_ms) const {
     GaugeInputs g;
     g.have = batt_.valid;
     g.pack_mv = batt_.pack_mv; g.ma = batt_.ma; g.temp_dc = batt_.temp_dc; g.soc_pct = batt_.soc_pct;

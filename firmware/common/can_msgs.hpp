@@ -23,8 +23,8 @@ constexpr uint32_t kFaultEventId = 0x300;
 constexpr uint8_t kHeartbeatDlc = 8, kBatteryStatusDlc = 8, kBodyStatusDlc = 4, kFaultEventDlc = 8;
 
 // Little-endian field helpers. CAN doesn't define a byte order; this protocol picks little-endian, like most DBCs.
-inline void put16(uint8_t* b, uint16_t v) noexcept { b[0] = static_cast<uint8_t>(v); b[1] = static_cast<uint8_t>(v >> 8); }
-inline uint16_t get16(const uint8_t* b) noexcept { return static_cast<uint16_t>(b[0] | (b[1] << 8)); }
+inline void put16(uint8_t* b, uint16_t v) { b[0] = static_cast<uint8_t>(v); b[1] = static_cast<uint8_t>(v >> 8); }
+inline uint16_t get16(const uint8_t* b) { return static_cast<uint16_t>(b[0] | (b[1] << 8)); }
 
 struct Heartbeat {
     uint8_t node_id = 0;
@@ -33,7 +33,7 @@ struct Heartbeat {
     uint8_t state = 0;            // fb_state_t
     uint8_t proto_ver = 0;
 
-    void pack(uint8_t* b) const noexcept {
+    void pack(uint8_t* b) const {
         b[0] = node_id;
         put16(b + 1, fw_version);
         b[3] = static_cast<uint8_t>(uptime_s); b[4] = static_cast<uint8_t>(uptime_s >> 8);
@@ -41,7 +41,7 @@ struct Heartbeat {
         b[6] = state;
         b[7] = proto_ver;
     }
-    [[nodiscard]] bool unpack(const uint8_t* b, uint8_t dlc) noexcept {
+    [[nodiscard]] bool unpack(const uint8_t* b, uint8_t dlc) {
         if (dlc < kHeartbeatDlc) return false;
         node_id = b[0];
         fw_version = get16(b + 1);
@@ -59,14 +59,14 @@ struct BatteryStatus {
     uint8_t soc_pct = 0;
     uint8_t proto_ver = 0;
 
-    void pack(uint8_t* b) const noexcept {
+    void pack(uint8_t* b) const {
         put16(b, pack_mv);
         put16(b + 2, static_cast<uint16_t>(ma));   // two's complement bits, sent as-is
         put16(b + 4, static_cast<uint16_t>(temp_dc));
         b[6] = soc_pct;
         b[7] = proto_ver;
     }
-    [[nodiscard]] bool unpack(const uint8_t* b, uint8_t dlc) noexcept {
+    [[nodiscard]] bool unpack(const uint8_t* b, uint8_t dlc) {
         if (dlc < kBatteryStatusDlc) return false;
         pack_mv = get16(b);
         ma = static_cast<int16_t>(get16(b + 2));
@@ -83,8 +83,8 @@ struct BodyStatus {
     uint8_t limp_home = 0;
     uint8_t proto_ver = 0;
 
-    void pack(uint8_t* b) const noexcept { b[0] = lights; b[1] = servo_deg; b[2] = limp_home; b[3] = proto_ver; }
-    [[nodiscard]] bool unpack(const uint8_t* b, uint8_t dlc) noexcept {
+    void pack(uint8_t* b) const { b[0] = lights; b[1] = servo_deg; b[2] = limp_home; b[3] = proto_ver; }
+    [[nodiscard]] bool unpack(const uint8_t* b, uint8_t dlc) {
         if (dlc < kBodyStatusDlc) return false;
         lights = b[0]; servo_deg = b[1]; limp_home = b[2]; proto_ver = b[3];
         return true;
@@ -97,13 +97,13 @@ struct FaultEvent {
     uint8_t node_id = 0;
     uint8_t proto_ver = 0;
 
-    void pack(uint8_t* b) const noexcept {
+    void pack(uint8_t* b) const {
         put16(b, code);
         b[2] = severity; b[3] = node_id;
         b[4] = b[5] = b[6] = 0;
         b[7] = proto_ver;
     }
-    [[nodiscard]] bool unpack(const uint8_t* b, uint8_t dlc) noexcept {
+    [[nodiscard]] bool unpack(const uint8_t* b, uint8_t dlc) {
         if (dlc < kFaultEventDlc) return false;
         code = get16(b); severity = b[2]; node_id = b[3]; proto_ver = b[7];
         return true;

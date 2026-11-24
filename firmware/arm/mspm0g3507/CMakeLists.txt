@@ -4,8 +4,6 @@
 add_link_options(--specs=nano.specs --specs=nosys.specs -Wl,--gc-sections -Wl,--print-memory-usage)
 set(FB_VERSION 1 CACHE STRING "Firmware version sent in every heartbeat")
 option(FB_LCD_GREENTAB "Adafruit 1.8in TFT is a green-tab panel (BGR + 1/2 px offsets); default black tab" OFF)
-# Without the INA219 every current read NACKs, sensor_ok goes false and the battery node latches FAULT then SAFE.
-option(FB_HAS_INA219 "Battery node has an INA219 current sensor on I2C1; OFF reports 0 mA and skips I2C" OFF)
 
 set(SDK ${TP}/mspm0_sdk)
 set(BSPDIR ${CMAKE_CURRENT_SOURCE_DIR}/../../bsp)
@@ -54,15 +52,10 @@ fb_image(bringup ${APPDIR}/bringup/bringup_main.c)
 fb_image(can_selftest ${APPDIR}/bringup/can_selftest_main.c)
 fb_image(io_selftest ${APPDIR}/bringup/io_selftest_main.c)
 
-# ---- the two nodes (C++17). Flash: tools/flash_mspm0.sh node battery|body
+# ---- the two nodes (C++17), one main each. Flash: tools/flash_mspm0.sh node battery|body
 foreach(role battery body)
-  string(TOUPPER ${role} ROLE_UP)
-  fb_image(node_${role} ${APPDIR}/app_main.cpp ${APPDIR}/${role}_hw.cpp)
+  fb_image(node_${role} ${APPDIR}/${role}_main.cpp ${APPDIR}/app_common.cpp)
   target_include_directories(node_${role} PRIVATE ${APPDIR})
-  target_compile_definitions(node_${role} PRIVATE FB_ROLE_${ROLE_UP} FB_FW_VERSION=${FB_VERSION})
+  target_compile_definitions(node_${role} PRIVATE FB_FW_VERSION=${FB_VERSION})
   target_compile_options(node_${role} PRIVATE -Wall -Wextra)
-  if(FB_HAS_INA219)
-    target_compile_definitions(node_${role} PRIVATE FB_HAS_INA219=1)
-  endif()
 endforeach()
-target_compile_definitions(node_body PRIVATE FB_HAS_DISPLAY=1)    # ST7735R instrument cluster

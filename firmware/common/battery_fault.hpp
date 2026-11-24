@@ -27,19 +27,19 @@ public:
         uint8_t safe_after = 10;                           // samples in FAULT before SAFE
     };
 
-    constexpr BatteryFaultFsm() noexcept : BatteryFaultFsm(Config{}) {}
-    explicit constexpr BatteryFaultFsm(const Config& cfg) noexcept : cfg_(cfg) {}
+    constexpr BatteryFaultFsm() : BatteryFaultFsm(Config{}) {}
+    explicit constexpr BatteryFaultFsm(const Config& cfg) : cfg_(cfg) {}
 
-    void step(const BatterySample& s) noexcept;
-    void reset() noexcept;
+    void step(const BatterySample& s);
+    void reset();
 
-    [[nodiscard]] fb_state_t state() const noexcept { return state_; }
-    [[nodiscard]] fb_fault_code_t code() const noexcept { return code_; }
-    [[nodiscard]] bool latched() const noexcept { return state_ == FB_ST_FAULT || state_ == FB_ST_SAFE; }
-    [[nodiscard]] const Config& config() const noexcept { return cfg_; }
+    fb_state_t state() const { return state_; }
+    fb_fault_code_t code() const { return code_; }
+    bool latched() const { return state_ == FB_ST_FAULT || state_ == FB_ST_SAFE; }
+    const Config& config() const { return cfg_; }
 
 private:
-    [[nodiscard]] fb_fault_code_t classify(const BatterySample& s) const noexcept;
+    fb_fault_code_t classify(const BatterySample& s) const;
 
     Config cfg_;
     fb_state_t state_ = FB_ST_NORMAL;
