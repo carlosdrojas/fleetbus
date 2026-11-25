@@ -4,7 +4,7 @@ Numbers measured on the real boards go here first, one row per measurement, with
 Until a row has a value, the matching claim anywhere else stays labelled TARGET, ESTIMATE or "in simulation".
 Procedure for each row: `docs/mspm0-bench-steps.md`.
 
-P2 bring-up passed on both boards on 2026-11-24.
+P2 bring-up passed on both boards on 2026-11-24. P3 loopback and two-node CAN traffic at 500 kbit/s ran on 2026-11-25.
 
 | Step | Quantity | Expected (source) | Measured | Date, board, method |
 |---|---|---|---|---|
@@ -12,9 +12,10 @@ P2 bring-up passed on both boards on 2026-11-24.
 | P2 | Bring-up console, both boards | banner + one line per second | one line per second, `t` steps 1000 ms, `free_heap=9944` steady (A to n=268, B to n=255) | 2026-11-24, A and B, console read at 115200 |
 | P2 | LED1 period, bring-up image | 500.0 ms (250 ms toggle) | | |
 | P2 | Tick drift over 10 min | within ~1 % (ESTIMATE, SYSOSC spec) | | |
-| P3 | CAN loopback self-test | 100/100 | | |
+| P3 | CAN loopback self-test | 100/100 | 100/100 PASS, errors=0 | 2026-11-25, A, `can_selftest` console (B's loopback line not captured) |
 | P3 | CAN bit time on the bus | 2.000 µs (500 kbit/s, arithmetic) | | |
 | P3 | Diode-bus rise time, 10–90 % | well under 2 µs (1 kΩ pull-up, short wires) | | |
+| P3 | Two-node traffic, both directions (short run) | each board prints the other's 0x7F0 counter at 10 Hz | works: A and B each printed 122 `rx id=7f0` lines in 12 s, counters consecutive; A `can_err=0` to t=30 s; B `can_err=18`, all from before A was running, flat to t=50 s | 2026-11-25, A and B on the diode bus, 500 kbit/s build, both consoles read at 115200 |
 | P3 | Two-node `can_err` after 10 min | 0 | | |
 | P4 | ADC error at 3 points vs multimeter | | | |
 | P4 | Servo pulse widths 0 / 90 / 180° | 1.00 / 1.50 / 2.00 ms at 20 ms | | |
@@ -31,7 +32,7 @@ P2 bring-up passed on both boards on 2026-11-24.
 | F2 | Battery back → body leaves limp-home (first 0x101 → PA0) | 1000–1020 ms (1 s hold) | | |
 | F3 | FAULT heartbeat on the bus → body acts (message-to-action latency) | < ~10 ms (10 ms poll) | | |
 | F4 | Bus stuck dominant ~1 s: bus-off, then recovery after release | recovery ≈ 2.8 ms + one poll (128 × 11 bits) | | |
-| F5 | Bus open (one node alone): TEC behaviour | error-passive, not bus-off | | |
+| F5 | Bus open (one node alone): TEC behaviour | error-passive, not bus-off | error-active → error-passive after 110 ms (tec=128 rec=0), no bus-off seen (short run, not the full F5 procedure) | 2026-11-25, A sending while B ran a broken image, `can_selftest` fault_task line |
 | F6 | Bus load | 40 frames/s ≈ 0.9 % of 500 kbit/s (arithmetic) | | |
 
 ## Bugs found on hardware
@@ -41,6 +42,24 @@ For each: symptom, how it was found, root cause, fix, commit. This becomes the f
 1. **Flash verify failed at 0x1600 (2026-11-24, both boards).** DSLite: "Length of block is 4, but it should be divisible
    by 8 since Flash Programmer writes in 64-bits". The `.data` load image was 4 bytes; the MSPM0 flash programs 64-bit
    words. Host tests can't see it. Fix: pad every flash load block to 8 bytes in `common.ld` (commit f39ff57).
+
+2. **HardFault in TI's PLL setup, only in some images (2026-11-25, A).** Symptom: red LED solid, console blank, even
+   after a power cycle; bring-up still worked, the CAN self-test did not, and it had worked one build earlier. Found by
+   attaching the debugger (CCS scripting): IPSR = 3 (HardFault), stacked PC in `DL_SYSCTL_configSYSPLL` +0x5a, a
+   `str` whose offset register held 0x68774665, which is the instruction pair at the next address, not the literal
+   `0x1128` it loads two instructions after the function rewrites `CPUSS->CTL` (icache off). Images where that function
+   starts on an 8-byte flash line faulted (can_selftest, io_selftest); the others (bring-up, both nodes) did not, and
+   the predicted io_selftest failure reproduced at the same offset. Adding diagnostic prints is what moved it onto a
+   line. Fix: set `CPUSS->CTL` to the value the function writes before calling it, then restore (`bsp_clock.c`); both
+   aligned images then ran. The mechanism inside the CPU subsystem is my reading of the registers, not from TI errata.
+3. **CAN init -1: message RAM init never finished (2026-11-24/25, both boards).** Diagnostic print showed
+   `PWREN=1` but `MCANSS_CLKEN=0` and every MCAN wrapper and core register reading 0. TI's own loopback example ran on
+   the same board, and writing CLKEN=1 from the debugger with our image halted worked at once (PID and CREL read back),
+   so the hardware and the 80 MHz MCLK were fine. Our write came ~0.2 µs after `DL_MCAN_enablePower` (16 cycles at
+   80 MHz) and was dropped. Fix: write until it reads back (`bsp_can.c`); it takes 42–43 tries on board A.
+4. **CAN init -4: `DL_MCAN_setBitTime` rejected the config (2026-11-25).** The unused data-phase segment was set to the
+   nominal 33, but DTSEG1 is 5 bits (max 31) and the driver range-checks it even with FD off. Host tests use a fake
+   driver, so they never ran the check. Fix: legal data-phase values from TI's example. Then loopback 100/100 PASS.
 
 ## Bugs found before hardware
 

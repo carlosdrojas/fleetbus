@@ -53,7 +53,16 @@ void bsp_clock_init(void) {
     DL_GPIO_initPeripheralAnalogFunction(PIN_HFXIN_IOMUX);
     DL_GPIO_initPeripheralAnalogFunction(PIN_HFXOUT_IOMUX);
     DL_SYSCTL_setHFCLKSourceHFXTParams(DL_SYSCTL_HFXT_RANGE_32_48_MHZ, 10, true);   /* 40 MHz crystal */
+    /* Bench bug 2 (2026-11-25): DL_SYSCTL_configSYSPLL rewrites CPUSS->CTL (icache off) and two instructions later
+     * loads a literal from flash. When that function starts on an 8-byte flash line, the load returned the
+     * neighbouring instruction word instead of the literal and the next store HardFaulted (PC +0x5a). Put CTL in
+     * the state the function sets before calling it, so its own write changes nothing; it restores ctl itself. */
+    const uint32_t ctl = DL_CORE_getInstructionConfig();
+    DL_CORE_configInstruction(DL_CORE_CACHE_DISABLED, DL_CORE_PREFETCH_ENABLED, DL_CORE_LITERAL_CACHE_ENABLED);
+    __ISB();
     DL_SYSCTL_configSYSPLL(&k_pll);
+    CPUSS->CTL = ctl;
+    __ISB();
     while (!pll_locked_right()) {
         DL_SYSCTL_disableSYSPLL();
         DL_SYSCTL_enableSYSPLL();

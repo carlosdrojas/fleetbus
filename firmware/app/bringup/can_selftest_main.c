@@ -72,6 +72,7 @@ void vApplicationStackOverflowHook(TaskHandle_t t, char *name) { (void)t; bsp_lo
 int main(void) {
     bsp_board_init();
     bsp_log_init();
+    bsp_log("\r\nFleetBus CAN self-test: clocks up\r\n");
     int r = bsp_can_init();
     bsp_log("\r\nFleetBus CAN self-test on %s: init %d\r\n", FB_BOARD_NAME, r);
     xTaskCreate(can_task, "can", 384, 0, 2, 0);

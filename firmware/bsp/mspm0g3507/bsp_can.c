@@ -1,5 +1,5 @@
 /* MCAN0 on the MSPM0G3507 as a classic CAN 2.0 node at 500 kbit/s, polled (no CAN interrupts).
- * Call sequence from TI's LP-MSPM0G3507 mcan_* examples (SDK 2.11). NOT YET RUN ON A BOARD.
+ * Call sequence from TI's LP-MSPM0G3507 mcan_* examples (SDK 2.11). Loopback + two-node traffic ran on both boards 2026-11-25.
  *
  * Bit timing (arithmetic, confirm with a scope in P3): CANCLK = HFCLK = 40 MHz crystal, prescaler 2 -> 20 MHz tq clock,
  * 1 sync + 34 seg1 + 5 seg2 = 40 tq = 500 kbit/s, sample point 35/40 = 87.5 % (TI's nominal setting; also the SAE J2284
@@ -67,16 +67,40 @@ int bsp_can_init(void) {
     };
     static const DL_MCAN_BitTimingParams bit = {
         .nomRatePrescalar = FB_CAN_PRESCALER - 1, .nomTimeSeg1 = 33, .nomTimeSeg2 = 4, .nomSynchJumpWidth = 4,
-        .dataRatePrescalar = 1, .dataTimeSeg1 = 33, .dataTimeSeg2 = 4, .dataSynchJumpWidth = 4,   /* unused: FD off */
+        /* Data phase unused (FD off), but DL_MCAN_setBitTime still range-checks it: DTSEG1 is 5 bits (max 31), so the
+         * old copy of the nominal 33 made the call fail (bench bug 4, init -4). Legal values from TI's example. */
+        .dataRatePrescalar = 1, .dataTimeSeg1 = 16, .dataTimeSeg2 = 1, .dataSynchJumpWidth = 1,
     };
     DL_MCAN_reset(CANFD0);
     DL_MCAN_enablePower(CANFD0);
     delay_cycles(16);
     DL_GPIO_initPeripheralOutputFunction(PIN_CAN_TX_IOMUX, PIN_CAN_TX_FUNC);
     DL_GPIO_initPeripheralInputFunction(PIN_CAN_RX_IOMUX, PIN_CAN_RX_FUNC);
-    DL_MCAN_enableModuleClock(CANFD0);
+    /* Bench bug 3 (2026-11-25): written this soon after enablePower at 80 MHz, the MCANSS_CLKEN write was dropped
+     * (read back 0, the whole wrapper read 0, message RAM init never finished -> init -1). The same write from the
+     * debugger later took at once. Write until it reads back. */
+    uint32_t ck = 0;
+    do { DL_MCAN_enableModuleClock(CANFD0); } while (CANFD0->MCANSS.TI_WRAPPER.MSP.MCANSS_CLKEN == 0 && ++ck < 100000u);
+    bsp_log("can: CLKEN took %lu tries\r\n", (unsigned long)ck + 1);
     DL_MCAN_setClockConfig(CANFD0, (DL_MCAN_ClockConfig *)&clk);
-    for (uint32_t t = 0; !DL_MCAN_isMemInitDone(CANFD0); t++) if (t > 1000000u) return -1;
+    uint32_t t = 0;
+    while (!DL_MCAN_isMemInitDone(CANFD0) && t < 200000u) t++;
+    if (!DL_MCAN_isMemInitDone(CANFD0)) {
+        /* Bench diagnostic (P3, 2026-11-24: message RAM init never finished; cause was bug 3 below). */
+        bsp_log("can diag: CLKSTATUS=%lx GENCLKCFG=%lx HSCLKEN=%lx HFCLKCLKCFG=%lx\r\n",
+                (unsigned long)SYSCTL->SOCLOCK.CLKSTATUS, (unsigned long)SYSCTL->SOCLOCK.GENCLKCFG,
+                (unsigned long)SYSCTL->SOCLOCK.HSCLKEN, (unsigned long)SYSCTL->SOCLOCK.HFCLKCLKCFG);
+        bsp_log("can diag: PWREN=%lx STAT=%lx SS_PID=%lx SS_STAT=%lx CLKEN=%lx CLKDIV=%lx CLKSTS=%lx CREL=%lx\r\n",
+                (unsigned long)CANFD0->MCANSS.PWREN, (unsigned long)CANFD0->MCANSS.STAT,
+                (unsigned long)CANFD0->MCANSS.TI_WRAPPER.PROCESSORS.MCANSS_REGS.MCANSS_PID,
+                (unsigned long)CANFD0->MCANSS.TI_WRAPPER.PROCESSORS.MCANSS_REGS.MCANSS_STAT,
+                (unsigned long)CANFD0->MCANSS.TI_WRAPPER.MSP.MCANSS_CLKEN,
+                (unsigned long)CANFD0->MCANSS.TI_WRAPPER.MSP.MCANSS_CLKDIV,
+                (unsigned long)CANFD0->MCANSS.TI_WRAPPER.MSP.MCANSS_CLKSTS,
+                (unsigned long)CANFD0->MCANSS.MCAN.MCAN_CREL);
+        return -1;
+    }
+    if (t > 1000u) bsp_log("can: message RAM init took %lu polls\r\n", (unsigned long)t);
     enter_init();
     if (DL_MCAN_init(CANFD0, (DL_MCAN_InitParams *)&init) != 0) return -2;
     if (DL_MCAN_config(CANFD0, (DL_MCAN_ConfigParams *)&cfg) != 0) return -3;
