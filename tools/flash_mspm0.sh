@@ -32,7 +32,7 @@ flash() {   # flash <name>
                  "$DSLITE_CCXML" > "$ccxml"
                grep -q "$XDS_SERIAL" "$ccxml" || { echo "could not pin XDS_SERIAL in $ccxml" >&2; exit 1; }
              fi
-             "$DSLITE" flash --config="$ccxml" --flash --verify "$elf" ;;
+             "$DSLITE" flash --config="$ccxml" --flash --verify --run "$elf" ;;   # --run: start the image (else the CPU stays halted)
     openocd) # shellcheck disable=SC2086
              openocd ${OPENOCD_CFG:--f interface/xds110.cfg -f target/ti/mspm0.cfg} -c "program $elf verify reset exit" ;;
     *) echo "FLASHER must be dslite or openocd" >&2; exit 2 ;;
