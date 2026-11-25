@@ -4,11 +4,18 @@ Numbers measured on the real boards go here first, one row per measurement, with
 Until a row has a value, the matching claim anywhere else stays labelled TARGET, ESTIMATE or "in simulation".
 Procedure for each row: `docs/mspm0-bench-steps.md`.
 
-**Nothing has been measured on hardware yet.**
+P2 bring-up passed on both boards on 2026-11-24.
+
+## Bugs found on hardware
+
+1. **Flash verify failed at 0x1600 (2026-11-24, both boards).** DSLite: "Length of block is 4, but it should be divisible
+   by 8 since Flash Programmer writes in 64-bits". The `.data` load image was 4 bytes; the MSPM0 flash programs 64-bit
+   words. Host tests can't see it. Fix: pad every flash load block to 8 bytes in `common.ld` (commit f39ff57).
 
 | Step | Quantity | Expected (source) | Measured | Date, board, method |
 |---|---|---|---|---|
-| P2 | Flash with DSLite from the command line | works (unproven) | | |
+| P2 | Flash with DSLite from the command line | works (unproven) | works, after the 8-byte flash-block linker fix (first try failed verify at 0x1600) | 2026-11-24, A (XDS MG350001) and B (MG35000B), `XDS_SERIAL=… tools/flash_mspm0.sh bench bringup` |
+| P2 | Bring-up console, both boards | banner + one line per second | one line per second, `t` steps 1000 ms, `free_heap=9944` steady (A to n=268, B to n=255) | 2026-11-24, A and B, console read at 115200 |
 | P2 | LED1 period, bring-up image | 500.0 ms (250 ms toggle) | | |
 | P2 | Tick drift over 10 min | within ~1 % (ESTIMATE, SYSOSC spec) | | |
 | P3 | CAN loopback self-test | 100/100 | | |
