@@ -6,12 +6,6 @@ Procedure for each row: `docs/mspm0-bench-steps.md`.
 
 P2 bring-up passed on both boards on 2026-11-24.
 
-## Bugs found on hardware
-
-1. **Flash verify failed at 0x1600 (2026-11-24, both boards).** DSLite: "Length of block is 4, but it should be divisible
-   by 8 since Flash Programmer writes in 64-bits". The `.data` load image was 4 bytes; the MSPM0 flash programs 64-bit
-   words. Host tests can't see it. Fix: pad every flash load block to 8 bytes in `common.ld` (commit f39ff57).
-
 | Step | Quantity | Expected (source) | Measured | Date, board, method |
 |---|---|---|---|---|
 | P2 | Flash with DSLite from the command line | works (unproven) | works, after the 8-byte flash-block linker fix (first try failed verify at 0x1600) | 2026-11-24, A (XDS MG350001) and B (MG35000B), `XDS_SERIAL=… tools/flash_mspm0.sh bench bringup` |
@@ -44,7 +38,9 @@ P2 bring-up passed on both boards on 2026-11-24.
 
 For each: symptom, how it was found, root cause, fix, commit. This becomes the failure story.
 
-_None yet._
+1. **Flash verify failed at 0x1600 (2026-11-24, both boards).** DSLite: "Length of block is 4, but it should be divisible
+   by 8 since Flash Programmer writes in 64-bits". The `.data` load image was 4 bytes; the MSPM0 flash programs 64-bit
+   words. Host tests can't see it. Fix: pad every flash load block to 8 bytes in `common.ld` (commit f39ff57).
 
 ## Bugs found before hardware
 
