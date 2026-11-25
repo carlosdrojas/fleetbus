@@ -4,12 +4,22 @@
  * Bit timing (arithmetic, confirm with a scope in P3): CANCLK = HFCLK = 40 MHz crystal, prescaler 2 -> 20 MHz tq clock,
  * 1 sync + 34 seg1 + 5 seg2 = 40 tq = 500 kbit/s, sample point 35/40 = 87.5 % (TI's nominal setting; also the SAE J2284
  * value for 500 kbit/s). DriverLib fields hold "value - 1".
+ * FB_CAN_KBPS (CMake cache, default 500) picks 500/250/125 kbit/s by changing only the prescaler (2/4/8); the 40 tq
+ * bit and 87.5 % sample point stay the same. Lower rates are for slow bus diodes (1N4007) on the bench.
  *
  * Message RAM (1 KB, byte offsets, 8-byte payload elements = 16 B each):
  *   0x000 no filter elements: the global filter accepts every standard id into RX FIFO0, rejects extended + remote
  *   0x000 RX FIFO0, 14 elements (the TRM maximum per FIFO) -> 0x0E0
  *   0x0E0 TX FIFO, 8 elements                             -> 0x160 */
 #include <ti/driverlib/driverlib.h>
+
+#ifndef FB_CAN_KBPS
+#define FB_CAN_KBPS 500
+#endif
+#if FB_CAN_KBPS != 500 && FB_CAN_KBPS != 250 && FB_CAN_KBPS != 125
+#error "FB_CAN_KBPS must be 500, 250 or 125"
+#endif
+#define FB_CAN_PRESCALER (1000 / FB_CAN_KBPS)   /* 40 MHz / (prescaler * 40 tq) */
 #include "bsp.h"
 #include "bsp_pins.h"
 
@@ -56,7 +66,7 @@ int bsp_can_init(void) {
         .rxFIFO0ElemSize = DL_MCAN_ELEM_SIZE_8BYTES, .rxFIFO1ElemSize = DL_MCAN_ELEM_SIZE_8BYTES,
     };
     static const DL_MCAN_BitTimingParams bit = {
-        .nomRatePrescalar = 1, .nomTimeSeg1 = 33, .nomTimeSeg2 = 4, .nomSynchJumpWidth = 4,
+        .nomRatePrescalar = FB_CAN_PRESCALER - 1, .nomTimeSeg1 = 33, .nomTimeSeg2 = 4, .nomSynchJumpWidth = 4,
         .dataRatePrescalar = 1, .dataTimeSeg1 = 33, .dataTimeSeg2 = 4, .dataSynchJumpWidth = 4,   /* unused: FD off */
     };
     DL_MCAN_reset(CANFD0);

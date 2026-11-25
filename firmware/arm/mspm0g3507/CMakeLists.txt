@@ -3,6 +3,8 @@
 # and the FreeRTOS ARM_CM0 port.
 add_link_options(--specs=nano.specs --specs=nosys.specs -Wl,--gc-sections -Wl,--print-memory-usage)
 set(FB_VERSION 1 CACHE STRING "Firmware version sent in every heartbeat")
+set(FB_CAN_KBPS 500 CACHE STRING "CAN bit rate in kbit/s: 500, 250 or 125 (lower it if slow bus diodes cause errors)")
+set_property(CACHE FB_CAN_KBPS PROPERTY STRINGS 500 250 125)
 option(FB_LCD_GREENTAB "Adafruit 1.8in TFT is a green-tab panel (BGR + 1/2 px offsets); default black tab" OFF)
 
 set(SDK ${TP}/mspm0_sdk)
@@ -28,6 +30,7 @@ add_library(bsp STATIC ${BSPDIR}/bsp_log.c ${BSPDIR}/mspm0g3507/bsp_clock.c ${BS
 target_include_directories(bsp PUBLIC ${BSPDIR} ${BSPDIR}/mspm0g3507)
 target_link_libraries(bsp PUBLIC driverlib freertos fb_common)
 target_compile_options(bsp PRIVATE -Wall -Wextra)
+target_compile_definitions(bsp PRIVATE FB_CAN_KBPS=${FB_CAN_KBPS})
 if(FB_LCD_GREENTAB)
   target_compile_definitions(bsp PRIVATE FB_LCD_GREENTAB=1)
 endif()

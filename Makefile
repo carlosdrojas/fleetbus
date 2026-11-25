@@ -1,6 +1,7 @@
 # FleetBus Lite: build, test, flash.   `make help`
 HOST := build/host
 FW := build/fw-mspm0
+CAN_KBPS ?= 500
 
 .PHONY: help host-test fw test clean
 help:
@@ -12,7 +13,7 @@ help:
 host-test:
 	cmake -S firmware -B $(HOST) -G Ninja >/dev/null && cmake --build $(HOST) && ctest --test-dir $(HOST) --output-on-failure
 fw:
-	cmake -S firmware -B $(FW) -G Ninja -DCMAKE_TOOLCHAIN_FILE=$(CURDIR)/firmware/cmake/arm-none-eabi.cmake >/dev/null && cmake --build $(FW)
+	cmake -S firmware -B $(FW) -G Ninja -DCMAKE_TOOLCHAIN_FILE=$(CURDIR)/firmware/cmake/arm-none-eabi.cmake -DFB_CAN_KBPS=$(CAN_KBPS) >/dev/null && cmake --build $(FW)
 test: host-test fw
 clean:
 	rm -rf build

@@ -64,6 +64,10 @@ No transceivers, so the bench bus is a wired-AND on 3.3 V logic. Bench only: it'
 ```
 
 Parts: two Schottky diodes (BAT54, BAT43, 1N5817; a 1N4148 works but the low level is higher), one 1 kΩ resistor.
+Only 1N4007 rectifiers on hand (starter kits ship these): try them at 500 kbit/s first. They switch slowly and drop
+about 0.7 V, so check the scope for a low level well under 1 V and watch `can_err`. If errors appear, rebuild at a
+lower rate with `make fw CAN_KBPS=125` (or 250), flash both boards, and set the WaveForms decoder to the same rate.
+Record which diodes and which rate you ran in `measured.md`.
 Take the pull-up's 3V3 from the **body board** (B, J1.1) and never join the two boards' 3V3 pins. The fault tests silence the
 battery board by holding its reset; if you unplug it instead, its unpowered TX pin sits near 0 V and pulls the bus low
 through its diode, jamming the bus for the body too.
