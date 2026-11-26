@@ -26,8 +26,11 @@ P2 bring-up passed on both boards on 2026-11-24. P3 loopback and two-node CAN tr
 | P4 | MCLK error (SYSPLL referenced to SYSOSC) | ±~1 % (internal RC oscillator) | +1.2 % on board B: servo period 158.12 ms vs 160.00 ms (prescale-79 image) and 19.768 ms vs 20.000 ms after the fix → MCLK ≈ 80.95 MHz. CAN is unaffected (crystal): 499.97 kbit/s. FreeRTOS tick, UART and timers inherit it | 2026-11-25, B, AD2 period measurement |
 | P4 | Servo period and widths after moving the SYSPLL reference to the 40 MHz crystal | 20.000 ms; 1.000 / 1.500 / 1.750 ms | 20.0004–20.0009 ms; 0.999 / 1.499 / 1.750 ms | 2026-11-25, B `io_selftest`, AD2 ch1 at 200 kS/s |
 | P5 | Heartbeat period, 0x101 and 0x102 | 100 ms | | |
+| P5 | Two-node bring-up of the node images | body NORMAL ~1 s after hearing the battery | battery NORMAL `peer=1`, body NORMAL `peer=1`, each `rx` +20/s, battery `can_err=0 tx_fail=0`; body alone first: LIMP_HOME, red LED, servo centred (by eye) | 2026-11-25, A `node_battery` and B `node_body` on the Mac, both consoles |
+| P5 | Fault FSM on the pot | WARNING ≤ 3.30 V, FAULT ≤ 3.00 V, SAFE after 10 more fault samples, latched | WARNING, then FAULT at the pot's bottom end (`mv` 3000–3001), body LIMP_HOME in the same 1 s print; SAFE ~3 s after FAULT (the pot sits on the 3.000 V threshold, so only some samples count toward `safe_after`, as `battery_fault.cpp` is written); SAFE stayed latched with the pot back at 3597–4187 mV; WARNING cleared on the way up (3392 → NORMAL at 3686) | 2026-11-25, both consoles, timestamped |
+| P5 | Battery reset held ~5 s, then released | body LIMP_HOME ~0.5 s after silence; NORMAL ~1 s after the first heartbeat | body `peer=0` LIMP_HOME throughout; battery rebooted to NORMAL (latch cleared); body `peer=1` 0.45 s later but still LIMP_HOME, NORMAL on the next print (≤ 1.45 s after the banner). Exact times: F1/F2 with the analyser | 2026-11-25, both consoles, 1 s print resolution |
 | P5 | Battery WARNING / FAULT "pack" voltage on the pot | 3.30 V / 3.00 V (firmware defaults) | | |
-| P5 | Node task worst-case execution (`node_us_max`) | a few hundred µs (ESTIMATE) | | |
+| P5 | Node task worst-case execution (`node_us_max`) | a few hundred µs (ESTIMATE) | battery 626 µs, body 174 µs (short run; 10-min values pending) | 2026-11-25, consoles |
 | P5 | Node task worst start lateness (`late_us_max`) | < 1000 µs | | |
 | P5 | Minimum free stack per task after 10 min (`stk`) | > ~200 B each | | |
 | L3 | Display frame time (`disp_us`), typical / worst / first full frame | unknown | | |
