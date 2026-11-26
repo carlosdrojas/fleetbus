@@ -24,6 +24,7 @@ P2 bring-up passed on both boards on 2026-11-24. P3 loopback and two-node CAN tr
 | P4 | Thermistor input (PA25) | ~1650 mV at room temperature, falls when warmed | 1725 mV at room temperature (AD2 1725–1729), fell to ~1380 mV when held for 20 s, recovered after; board reads 6–19 mV below the AD2 | 2026-11-25, same sweep, ADC ch1 vs AD2 ch2 |
 | P4 | Servo pulse widths 0 / 90 / 180° | 1.00 / 1.50 / 2.00 ms at 20 ms | after the bug-6 fix: 0.988 / 1.234 / 1.481 / – / 1.975 ms for 0 / 45 / 90 / 135 / 180°, period 19.768 ms (all 1.2 % short: MCLK fast, see SYSOSC row). Before the fix: 7.90–15.80 ms every 158.1 ms | 2026-11-25, B `io_selftest`, PB4 on AD2 ch1 at 1 MS/s (widths) and 200 kS/s (period) |
 | P4 | MCLK error (SYSPLL referenced to SYSOSC) | ±~1 % (internal RC oscillator) | +1.2 % on board B: servo period 158.12 ms vs 160.00 ms (prescale-79 image) and 19.768 ms vs 20.000 ms after the fix → MCLK ≈ 80.95 MHz. CAN is unaffected (crystal): 499.97 kbit/s. FreeRTOS tick, UART and timers inherit it | 2026-11-25, B, AD2 period measurement |
+| P4 | Servo period and widths after moving the SYSPLL reference to the 40 MHz crystal | 20.000 ms; 1.000 / 1.500 / 1.750 ms | 20.0004–20.0009 ms; 0.999 / 1.499 / 1.750 ms | 2026-11-25, B `io_selftest`, AD2 ch1 at 200 kS/s |
 | P5 | Heartbeat period, 0x101 and 0x102 | 100 ms | | |
 | P5 | Battery WARNING / FAULT "pack" voltage on the pot | 3.30 V / 3.00 V (firmware defaults) | | |
 | P5 | Node task worst-case execution (`node_us_max`) | a few hundred µs (ESTIMATE) | | |

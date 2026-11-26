@@ -1,7 +1,9 @@
 /* MSPM0G3507 clocks, GPIO, delay, reset and watchdog.
  * Clock tree (from TI's LP-MSPM0G3507 sysctl_mclk_syspll and mcan examples, SDK 2.11; NOT YET RUN ON A BOARD):
- *   SYSOSC 32 MHz -> SYSPLL -> MCLK/CPUCLK 80 MHz (2 flash wait states), ULPCLK 40 MHz
- *   HFXT 40 MHz crystal (PA5/PA6) -> HFCLK -> MCAN functional clock (CAN needs a crystal, not the ±1 % SYSOSC)
+ *   HFXT 40 MHz crystal (PA5/PA6) -> HFCLK -> SYSPLL -> MCLK/CPUCLK 80 MHz (2 flash wait states), ULPCLK 40 MHz
+ *   HFCLK also clocks MCAN directly. PLL settings from TI's LP-MSPM0G3507 secondary_bsl_can example (SDK 2.11).
+ *   Until 2026-11-25 the PLL ran from SYSOSC (internal RC); board B's MCLK measured +1.2 % (80.95 MHz) that way, so
+ *   the FreeRTOS tick, UART and timers were all 1.2 % fast. CAN was always exact (crystal).
  *   LFOSC 32 kHz -> WWDT0 */
 #include <ti/driverlib/driverlib.h>
 #include "bsp.h"
@@ -10,18 +12,20 @@
 #define POWER_STARTUP_DELAY 16u
 #define CPU_HZ 80000000u
 
-/* SYSPLL: 32 MHz SYSOSC / 2 * 10 = 160 MHz VCO; CLK2X -> MCLK 80 MHz; CLK1 40 MHz (only used for the lock check). */
+/* SYSPLL: 40 MHz HFXT / 1 * 4 = 160 MHz VCO; CLK2X -> MCLK 80 MHz; CLK1 40 MHz (only used for the lock check). */
 static const DL_SYSCTL_SYSPLLConfig k_pll = {
-    .inputFreq = DL_SYSCTL_SYSPLL_INPUT_FREQ_16_32_MHZ,
+    .inputFreq = DL_SYSCTL_SYSPLL_INPUT_FREQ_32_48_MHZ,
     .rDivClk2x = 3, .rDivClk1 = 1, .rDivClk0 = 0,
     .enableCLK2x = DL_SYSCTL_SYSPLL_CLK2X_ENABLE, .enableCLK1 = DL_SYSCTL_SYSPLL_CLK1_ENABLE,
     .enableCLK0 = DL_SYSCTL_SYSPLL_CLK0_DISABLE,
-    .sysPLLMCLK = DL_SYSCTL_SYSPLL_MCLK_CLK2X, .sysPLLRef = DL_SYSCTL_SYSPLL_REF_SYSOSC,
-    .qDiv = 9, .pDiv = DL_SYSCTL_SYSPLL_PDIV_2,
+    .sysPLLMCLK = DL_SYSCTL_SYSPLL_MCLK_CLK2X, .sysPLLRef = DL_SYSCTL_SYSPLL_REF_HFCLK,
+    .qDiv = 3, .pDiv = DL_SYSCTL_SYSPLL_PDIV_1,
 };
 
-/* Errata SYSPLL_ERR_01: the PLL can report "good" while locked to the wrong frequency. Measure SYSPLLCLK1 and SYSOSC
- * against LFCLK with the frequency clock counter; the ratio must be 40/32 = 1.250 within 0.3 % (TI's workaround). */
+/* Errata SYSPLL_ERR_01: the PLL can report "good" while locked to the wrong frequency. Measure SYSPLLCLK1 and its own
+ * reference (HFCLK, the crystal) against LFCLK with the frequency clock counter; both are 40 MHz, so the ratio must be
+ * 1.000 within 0.3 % (TI's workaround, reference changed from SYSOSC). Comparing against SYSOSC no longer works: it is
+ * an RC oscillator ~1 % off, and would never match a crystal-locked PLL. */
 static uint32_t fcc_count(DL_SYSCTL_FCC_CLOCK_SOURCE src) {
     DL_SYSCTL_configFCC(DL_SYSCTL_FCC_TRIG_TYPE_RISE_RISE, DL_SYSCTL_FCC_TRIG_SOURCE_LFCLK, src);
     DL_SYSCTL_startFCC();
@@ -31,10 +35,10 @@ static uint32_t fcc_count(DL_SYSCTL_FCC_CLOCK_SOURCE src) {
 static int pll_locked_right(void) {
     DL_SYSCTL_setFCCPeriods(DL_SYSCTL_FCC_TRIG_CNT_01);
     uint32_t pll = fcc_count(DL_SYSCTL_FCC_CLOCK_SOURCE_SYSPLLCLK1);
-    uint32_t osc = fcc_count(DL_SYSCTL_FCC_CLOCK_SOURCE_SYSOSC);
-    if (osc == 0) return 0;
-    uint32_t ratio = pll * 1000u / osc;              /* expected 1250 */
-    return ratio > 1246u && ratio < 1254u;
+    uint32_t ref = fcc_count(DL_SYSCTL_FCC_CLOCK_SOURCE_HFCLK);
+    if (ref == 0) return 0;
+    uint32_t ratio = pll * 1000u / ref;              /* expected 1000 */
+    return ratio > 997u && ratio < 1003u;
 }
 
 /* Back to the reset clock: MCLK on SYSOSC, SYSPLL and HFXT off, before reconfiguring (disabling the SYSPLL while it
@@ -52,7 +56,7 @@ void bsp_clock_init(void) {
     DL_SYSCTL_setSYSOSCFreq(DL_SYSCTL_SYSOSC_FREQ_BASE);
     DL_GPIO_initPeripheralAnalogFunction(PIN_HFXIN_IOMUX);
     DL_GPIO_initPeripheralAnalogFunction(PIN_HFXOUT_IOMUX);
-    DL_SYSCTL_setHFCLKSourceHFXTParams(DL_SYSCTL_HFXT_RANGE_32_48_MHZ, 10, true);   /* 40 MHz crystal */
+    DL_SYSCTL_setHFCLKSourceHFXTParams(DL_SYSCTL_HFXT_RANGE_32_48_MHZ, 100, true);  /* 40 MHz crystal; waits for HFCLKGOOD; startup 100 as in TI's example */
     /* Bench bug 2 (2026-11-25): DL_SYSCTL_configSYSPLL rewrites CPUSS->CTL (icache off) and two instructions later
      * loads a literal from flash. When that function starts on an 8-byte flash line, the load returned the
      * neighbouring instruction word instead of the literal and the next store HardFaulted (PC +0x5a). Put CTL in
