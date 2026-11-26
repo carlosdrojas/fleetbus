@@ -40,10 +40,12 @@ int bsp_adc_read_mv(int ch) {
     return raw * 3300 / 4095;                         /* assumes VDDA = 3.3 V (LaunchPad LDO) */
 }
 
-/* ---- Servo on TIMA1 CCP0 (PB4): 80 MHz / 8 / (79 + 1) = 1 MHz tick, 20000-tick period = 50 Hz.
+/* ---- Servo on TIMA1 CCP0 (PB4): 80 MHz / 8 / (9 + 1) = 1 MHz tick, 20000-tick period = 50 Hz.
+ * Bench bug 6 (2026-11-25): prescale was 79, i.e. 80 MHz / 8 / 80 = 125 kHz, so pulses and period were 8x long
+ * (AD2: 7.90-15.80 ms pulses every 158 ms). MCLK comes from the SYSPLL on SYSOSC, measured ~1.2 % fast on board B.
  * Edge-aligned PWM counts down: high time = period - compare (TI example: compare 500 of 2000 gives 75 % duty). */
 void bsp_servo_init(void) {
-    static const DL_TimerA_ClockConfig clk = { .clockSel = DL_TIMER_CLOCK_BUSCLK, .divideRatio = DL_TIMER_CLOCK_DIVIDE_8, .prescale = 79u };
+    static const DL_TimerA_ClockConfig clk = { .clockSel = DL_TIMER_CLOCK_BUSCLK, .divideRatio = DL_TIMER_CLOCK_DIVIDE_8, .prescale = 9u };
     static const DL_TimerA_PWMConfig pwm = { .pwmMode = DL_TIMER_PWM_MODE_EDGE_ALIGN, .period = SERVO_PERIOD_US,
                                              .isTimerWithFourCC = true, .startTimer = DL_TIMER_STOP };
     DL_TimerA_reset(TIMA1);

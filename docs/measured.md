@@ -22,7 +22,8 @@ P2 bring-up passed on both boards on 2026-11-24. P3 loopback and two-node CAN tr
 | P3 | Two-node `can_err` after 10 min | 0 | 0 new errors in 620 s (B `can_err` 36358 → 36358), 6296 frames received from A, 0 tx fails | 2026-11-25, B console; A on a USB charger, B on the Mac; diodes 1N4007 (Elegoo Mega 2560 kit), 500 kbit/s |
 | P4 | ADC error at 3 points vs multimeter | | board reads low by 17 / 15 / 9 mV at 1591 / 2469 / 3300 mV (and 18 mV at 1109 mV); full travel 0–3291 mV | 2026-11-25, A `io_selftest` ADC ch2 (PA24, pot wiper) vs AD2 scope ch1 averaged 10 ms (no multimeter; the AD2 is not a calibrated reference), 70 s sweep logged in `docs/captures/2026-11-25-p4-adc-sweep-*` |
 | P4 | Thermistor input (PA25) | ~1650 mV at room temperature, falls when warmed | 1725 mV at room temperature (AD2 1725–1729), fell to ~1380 mV when held for 20 s, recovered after; board reads 6–19 mV below the AD2 | 2026-11-25, same sweep, ADC ch1 vs AD2 ch2 |
-| P4 | Servo pulse widths 0 / 90 / 180° | 1.00 / 1.50 / 2.00 ms at 20 ms | | |
+| P4 | Servo pulse widths 0 / 90 / 180° | 1.00 / 1.50 / 2.00 ms at 20 ms | after the bug-6 fix: 0.988 / 1.234 / 1.481 / – / 1.975 ms for 0 / 45 / 90 / 135 / 180°, period 19.768 ms (all 1.2 % short: MCLK fast, see SYSOSC row). Before the fix: 7.90–15.80 ms every 158.1 ms | 2026-11-25, B `io_selftest`, PB4 on AD2 ch1 at 1 MS/s (widths) and 200 kS/s (period) |
+| P4 | MCLK error (SYSPLL referenced to SYSOSC) | ±~1 % (internal RC oscillator) | +1.2 % on board B: servo period 158.12 ms vs 160.00 ms (prescale-79 image) and 19.768 ms vs 20.000 ms after the fix → MCLK ≈ 80.95 MHz. CAN is unaffected (crystal): 499.97 kbit/s. FreeRTOS tick, UART and timers inherit it | 2026-11-25, B, AD2 period measurement |
 | P5 | Heartbeat period, 0x101 and 0x102 | 100 ms | | |
 | P5 | Battery WARNING / FAULT "pack" voltage on the pot | 3.30 V / 3.00 V (firmware defaults) | | |
 | P5 | Node task worst-case execution (`node_us_max`) | a few hundred µs (ESTIMATE) | | |
@@ -71,6 +72,10 @@ For each: symptom, how it was found, root cause, fix, commit. This becomes the f
    rails are split in the middle; A's GND was on the left half of the − rail and B's on the right. While both boards
    were on the Mac's USB their grounds were joined through the cables, which hid it. Fix: a jumper across the − rail
    gap. B then received A's frames at once and the 10-minute soak had zero errors.
+6. **Servo pulses 8x too long (2026-11-25, B).** AD2 on PB4: 7.90 / 9.87 / 11.85 / 13.83 / 15.80 ms pulses every
+   158 ms instead of 1.00–2.00 ms every 20 ms; the SG90 barely moved. The comment said "80 MHz / 8 / (79 + 1) = 1 MHz"
+   but that is 125 kHz. Host tests never run the timer. Fix: prescale 9 (`bsp_sensors.c`). The leftover 7.90x
+   instead of 8.00x was the second finding: MCLK runs ~1.2 % fast because the SYSPLL is referenced to SYSOSC.
 
 ## Bugs found before hardware
 
