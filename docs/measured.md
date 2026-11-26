@@ -43,7 +43,7 @@ P2 bring-up passed on both boards on 2026-11-24. P3 loopback and two-node CAN tr
 | F3 | FAULT heartbeat on the bus → body acts (message-to-action latency) | < ~10 ms (10 ms poll) | 8.85 ms from the end of the first frame of A's burst, 8.37 ms from the end of the last (one event; frames not decoded at this rate: a 3-frame burst, 210 / 180 / 204 µs, where A's normal burst is 2 frames, consistent with heartbeat + status + the FaultEvent sent at fault onset) | 2026-11-25, AD2 single capture 500 kS/s, trigger on PB13 rise, 15.7 ms pre-trigger; ch1 A's TX; pot turned down by hand |
 | F4 | Bus stuck dominant ~1 s: bus-off, then recovery after release | recovery ≈ 2.8 ms + one poll (128 × 11 bits) | | |
 | F5 | Bus open (one node alone): TEC behaviour | error-passive, not bus-off | error-active → error-passive after 110 ms (tec=128 rec=0), no bus-off seen (short run, not the full F5 procedure) | 2026-11-25, A sending while B ran a broken image, `can_selftest` fault_task line |
-| F6 | Bus load | 40 frames/s ≈ 0.9 % of 500 kbit/s (arithmetic) | | |
+| F6 | Bus load | 40 frames/s ≈ 0.9 % of 500 kbit/s (arithmetic) | 40 frames/s: per 100 ms, battery 2 frames (108–110, 110–111 bits SOF→ACK) 6.4 ms before body 2 frames (73, 110–111 bits); + 11 tail bits each = 448 bit-times = 896 µs per 100 ms = 0.90 % | 2026-11-25, AD2 on the bus: 10 s record at 500 kS/s for the 100 ms pattern, then 12 triggered 4 MS/s captures for bit counts (500 kS/s samples once per bit and misses single dominant bits, so it can't count frames) |
 
 ## Bugs found on hardware
 
