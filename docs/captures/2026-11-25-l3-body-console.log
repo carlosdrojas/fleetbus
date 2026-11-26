@@ -1,0 +1,32 @@
+x=279 late_us_max=4 disp_us=3379 stk=1112,1052,780, heap=7288
+t=1639001 NORMAL peer=1 rx=22193 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=241 stk=1112,1052,780, heap=7288
+t=1640001 NORMAL peer=1 rx=22213 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=241 stk=1112,1052,780, heap=7288
+t=1641001 NORMAL peer=1 rx=22233 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=241 stk=1112,1052,780, heap=7288
+t=1642001 NORMAL peer=1 rx=22253 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=241 stk=1112,1052,780, heap=7288
+t=1643001 NORMAL peert=1862001 NORMAL peer=1 rx=26677 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=240 stk=1112,1052,780, heap=7288
+t=1863001 NORMAL peer=1 rx=26697 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=240 stk=1112,1052,780, heap=7288
+t=1864001 NORMAL peer=1 rx=26717 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=11817 stk=1112,1052,780, heap=7288
+t=1865001 NORMAL peer=1 rx=26737 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=3025 stk=1112,1052,780, heap=7288
+t=1866001 NORMAL peer=1 rx=26757 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=11653 stk=1112,1052,780, heap=7288
+t=1867001 NORMAL peer=1 rx=26777 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=12017 stk=1112,1052,780, heap=7288
+t=1868001 NORMAL peer=1 rx=26797 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=3261 stk=1112,1052,780, heap=7288
+t=1869001 NORMAL peer=1 rx=26817 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=11676 stk=1112,1052,780, heap=7288
+t=1870001 NORMAL peer=1 rx=26837 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=11668 stk=1112,1052,780, heap=7288
+t=1871001 NORMAL peer=1 rx=26857 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=11941 stk=1112,1052,780, heap=7288
+t=1872001 NORMAL peer=1 rx=26877 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=11751 stk=1112,1052,780, heap=7288
+t=1873001 NORMAL peer=1 rx=26897 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=12219 stk=1112,1052,780, heap=7288
+t=1874001 NORMAL peer=1 rx=26917 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=11809 stk=1112,1052,780, heap=7288
+t=1875001 NORMAL peer=1 rx=26937 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=12070 stk=1112,1052,780, heap=7288
+t=1876001 NORMAL peer=1 rx=26957 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=11718 stk=1112,1052,780, heap=7288
+t=1877001 NORMAL peer=1 rx=26977 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=11986 stk=1112,1052,780, heap=7288
+t=1878001 NORMAL peer=1 rx=26997 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=3409 stk=1112,1052,780, heap=7288
+t=1879001 NORMAL peer=1 rx=27017 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=240 stk=1112,1052,780, heap=7288
+t=1880001 NORMAL peer=1 rx=27037 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=12173 stk=1112,1052,780, heap=7288
+t=1881001 NORMAL peer=1 rx=27057 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=12025 stk=1112,1052,780, heap=7288
+t=1882001 NORMAL peer=1 rx=27077 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=11230 stk=1112,1052,780, heap=7288
+t=1883001 NORMAL peer=1 rx=27097 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=11758 stk=1112,1052,780, heap=7288
+t=1884001 NORMAL peer=1 rx=27117 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=11951 stk=1112,1052,780, heap=7288
+t=1885001 NORMAL peer=1 rx=27137 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=11619 stk=1112,1052,780, heap=7288
+t=1886001 NORMAL peer=1 rx=27157 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=240 stk=1112,1052,780, heap=7288
+t=1887001 NORMAL peer=1 rx=27177 can_err=17346 tx_drop=0 tx_fail=10608 node_us_max=279 late_us_max=4 disp_us=26381 stk=1112,1052,780, heap=7288
+
