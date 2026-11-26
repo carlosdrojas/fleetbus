@@ -13,10 +13,13 @@ P2 bring-up passed on both boards on 2026-11-24. P3 loopback and two-node CAN tr
 | P2 | LED1 period, bring-up image | 500.0 ms (250 ms toggle) | | |
 | P2 | Tick drift over 10 min | within ~1 % (ESTIMATE, SYSOSC spec) | | |
 | P3 | CAN loopback self-test | 100/100 | 100/100 PASS, errors=0 | 2026-11-25, A, `can_selftest` console (B's loopback line not captured) |
-| P3 | CAN bit time on the bus | 2.000 µs (500 kbit/s, arithmetic) | | |
-| P3 | Diode-bus rise time, 10–90 % | well under 2 µs (1 kΩ pull-up, short wires) | | |
+| P3 | CAN bit time on the bus | 2.000 µs (500 kbit/s, arithmetic) | 2000.1 ns (499.97 kbit/s), least-squares fit over ~70 bits of one frame, 3 frames agree to 0.1 ns, edge residual ≤ 8 ns | 2026-11-25, A's TX (PA12) on AD2 scope ch1 at 25 MS/s; script fit of all edges; capture `docs/captures/2026-11-25-p3-a-tx-frame-25MSps.csv` |
+| P3 | Diode-bus rise time, 10–90 % | well under 2 µs (1 kΩ pull-up, short wires) | ~10 ns, not the RC: the 1N4007s conduct backwards while recovering, so the releasing TX pin drives the edge. Then ringing and an overshoot, see below | 2026-11-25, bus on AD2 ch1 and ch2 at 100 MS/s |
+| P3 | Bus dominant (low) level | well under 1 V | 0.71–0.73 V (one 1N4007 drop) | 2026-11-25, both scope channels on the bus, 100 MS/s |
+| P3 | Bus recessive (idle) level | 3V3 rail | 3.28–3.30 V after edges settle; rail at R1 = 3.277 V | 2026-11-25, AD2 ch2 |
+| P3 | Bus overshoot after each release | none expected | **OPEN:** ~3.77 V for 2–8 µs, peaks 4.0–4.3 V, above VDD + 0.3 V. Both channels agree (mean diff 7 mV). Present with only B on the bus. Source not found (not A, not the AD2 inputs, DIO0 not connected) | 2026-11-25, AD2 ch1 + ch2 on the same bus point |
 | P3 | Two-node traffic, both directions (short run) | each board prints the other's 0x7F0 counter at 10 Hz | works: A and B each printed 122 `rx id=7f0` lines in 12 s, counters consecutive; A `can_err=0` to t=30 s; B `can_err=18`, all from before A was running, flat to t=50 s | 2026-11-25, A and B on the diode bus, 500 kbit/s build, both consoles read at 115200 |
-| P3 | Two-node `can_err` after 10 min | 0 | | |
+| P3 | Two-node `can_err` after 10 min | 0 | 0 new errors in 620 s (B `can_err` 36358 → 36358), 6296 frames received from A, 0 tx fails | 2026-11-25, B console; A on a USB charger, B on the Mac; diodes 1N4007 (Elegoo Mega 2560 kit), 500 kbit/s |
 | P4 | ADC error at 3 points vs multimeter | | | |
 | P4 | Servo pulse widths 0 / 90 / 180° | 1.00 / 1.50 / 2.00 ms at 20 ms | | |
 | P5 | Heartbeat period, 0x101 and 0x102 | 100 ms | | |
@@ -60,6 +63,13 @@ For each: symptom, how it was found, root cause, fix, commit. This becomes the f
 4. **CAN init -4: `DL_MCAN_setBitTime` rejected the config (2026-11-25).** The unused data-phase segment was set to the
    nominal 33, but DTSEG1 is 5 bits (max 31) and the driver range-checks it even with FD off. Host tests use a fake
    driver, so they never ran the check. Fix: legal data-phase values from TI's example. Then loopback 100/100 PASS.
+5. **Board A silent on the bus after moving it to a USB charger (2026-11-25).** Symptom: B received nothing and
+   failed every send; A's LED blinked, so A was running. AD2: A's TX pin switched cleanly and its frames decoded, but
+   each was cut short by A's own error flag (it drove a bit low, read the bus still high), and the bus never went low
+   while A's TX did. Replacing D1 twice and moving it to new holes changed nothing. Root cause: the breadboard's power
+   rails are split in the middle; A's GND was on the left half of the − rail and B's on the right. While both boards
+   were on the Mac's USB their grounds were joined through the cables, which hid it. Fix: a jumper across the − rail
+   gap. B then received A's frames at once and the 10-minute soak had zero errors.
 
 ## Bugs found before hardware
 
