@@ -73,4 +73,5 @@ void bsp_lights_set(uint8_t m) {
     if (m & FB_LIGHT_HEAD) DL_GPIO_setPins(PIN_LIGHTS_PORT, PIN_HEAD); else DL_GPIO_clearPins(PIN_LIGHTS_PORT, PIN_HEAD);
     if (m & FB_LIGHT_TURN) DL_GPIO_setPins(PIN_LIGHTS_PORT, PIN_TURN); else DL_GPIO_clearPins(PIN_LIGHTS_PORT, PIN_TURN);
     bsp_led((m & FB_LIGHT_FAULT) != 0);
+    if (m & FB_LIGHT_FAULT) DL_GPIO_setPins(PIN_PROBE_PORT, PIN_PROBE); else DL_GPIO_clearPins(PIN_PROBE_PORT, PIN_PROBE);   /* J4.35 test point */
 }

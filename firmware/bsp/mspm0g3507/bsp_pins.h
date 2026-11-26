@@ -47,6 +47,11 @@
 #define PIN_HEAD_IOMUX    IOMUX_PINCM58
 #define PIN_TURN          DL_GPIO_PIN_22
 #define PIN_TURN_IOMUX    IOMUX_PINCM50
+/* Test point (BoosterPack J4.35): mirrors the fault light (LED1, PA0) so a logic analyser can time limp-home.
+ * PA0 and the LED2 pins are only on the unpopulated edge connectors. Active high. Added 2026-11-25 for F1-F3. */
+#define PIN_PROBE_PORT    GPIOB
+#define PIN_PROBE         DL_GPIO_PIN_13
+#define PIN_PROBE_IOMUX   IOMUX_PINCM30
 
 #define PIN_LCD_SCK_IOMUX  IOMUX_PINCM26
 #define PIN_LCD_SCK_FUNC   IOMUX_PINCM26_PF_SPI1_SCLK

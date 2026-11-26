@@ -90,6 +90,9 @@ void bsp_gpio_init(void) {
     DL_GPIO_initDigitalOutput(PIN_TURN_IOMUX);
     DL_GPIO_clearPins(PIN_LIGHTS_PORT, PIN_HEAD | PIN_TURN);
     DL_GPIO_enableOutput(PIN_LIGHTS_PORT, PIN_HEAD | PIN_TURN);
+    DL_GPIO_initDigitalOutput(PIN_PROBE_IOMUX);
+    DL_GPIO_clearPins(PIN_PROBE_PORT, PIN_PROBE);
+    DL_GPIO_enableOutput(PIN_PROBE_PORT, PIN_PROBE);
 }
 
 /* GPIO first: HFXT pins are muxed in clock init. LED1 is lit only while the clocks come up, so a board that hangs in
