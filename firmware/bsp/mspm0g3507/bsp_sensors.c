@@ -1,7 +1,7 @@
 /* Sensors and actuators on the LP-MSPM0G3507. Call sequences from TI's
  * LP-MSPM0G3507 adc12_single_conversion and timx_timer_mode_pwm_edge_sleep
- * examples (SDK 2.11). Pins in bsp_pins.h. NOT YET RUN ON A BOARD.
- * Clock assumptions from bsp_clock.c: ULPCLK 40 MHz (ADC0 on PD0), MCLK 80 MHz (TIMA1 on PD1). VERIFY in P4. */
+ * examples (SDK 2.11). Pins in bsp_pins.h. Verified in P4 (docs/measured.md).
+ * Clocks from bsp_clock.c: ULPCLK 40 MHz (ADC0 on PD0), MCLK 80 MHz (TIMA1 on PD1), both from the 40 MHz crystal. */
 #include <ti/driverlib/driverlib.h>
 #include "bsp.h"
 #include "bsp_pins.h"
@@ -42,7 +42,7 @@ int bsp_adc_read_mv(int ch) {
 
 /* ---- Servo on TIMA1 CCP0 (PB4): 80 MHz / 8 / (9 + 1) = 1 MHz tick, 20000-tick period = 50 Hz.
  * Bench bug 6 (2026-11-25): prescale was 79, i.e. 80 MHz / 8 / 80 = 125 kHz, so pulses and period were 8x long
- * (AD2: 7.90-15.80 ms pulses every 158 ms). MCLK comes from the SYSPLL on SYSOSC, measured ~1.2 % fast on board B.
+ * (AD2: 7.90-15.80 ms pulses every 158 ms). MCLK then came from the SYSPLL on SYSOSC and measured ~1.2 % fast; the PLL now runs from the crystal.
  * Edge-aligned PWM counts down: high time = period - compare (TI example: compare 500 of 2000 gives 75 % duty). */
 void bsp_servo_init(void) {
     static const DL_TimerA_ClockConfig clk = { .clockSel = DL_TIMER_CLOCK_BUSCLK, .divideRatio = DL_TIMER_CLOCK_DIVIDE_8, .prescale = 9u };

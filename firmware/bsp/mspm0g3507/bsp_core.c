@@ -1,5 +1,5 @@
 /* App-side board support for the MSPM0G3507: UART0 on the XDS110 backchannel (the log console) and the
- * millisecond clock. NOT YET RUN ON A BOARD.
+ * millisecond clock. Console verified at 115200 on both boards.
  * UART0 sits on ULPCLK, which bsp_clock_init() sets to MCLK/2 = 40 MHz (VERIFY the baud rate on a terminal in P2). */
 #include <ti/driverlib/driverlib.h>
 #include "FreeRTOS.h"

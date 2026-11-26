@@ -2,7 +2,7 @@
  *   blink: LED toggles every 250 ms (proves the clock, GPIO and the scheduler)
  *   log:   once a second prints uptime and a counter on the log UART (proves UART baud rate and SysTick rate)
  * Measure on the bench: LED period with a scope (expect 500 ms), uptime vs a stopwatch over 60 s (tick accuracy).
- * Board-neutral: uses only bsp.h. Linked at the start of flash. NOT YET RUN ON A BOARD. */
+ * Board-neutral: uses only bsp.h. Linked at the start of flash. Ran on both boards 2026-11-24/25. */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "bsp.h"

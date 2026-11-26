@@ -64,6 +64,11 @@ No transceivers, so the bench bus is a wired-AND on 3.3 V logic. Bench only: it'
 ```
 
 Parts: two Schottky diodes (BAT54, BAT43, 1N5817; a 1N4148 works but the low level is higher), one 1 kΩ resistor.
+**As built (2026-11-25):** 1N4007s at 500 kbit/s (low level 0.71 V, 10-minute soak with 0 errors), plus a 1 kΩ in
+series with each RX pin: with 1N4007s the bus briefly overshoots to ~3.8–4.3 V after each release (docs/measured.md),
+and the resistor keeps that current out of the RX pins. Breadboard power rails are often **split in the middle**:
+join both halves of the − rail, or a board on a separate supply loses its ground (bug 5). Run the battery board from
+the Mac or a wall supply, not a power bank: power banks switch off at light loads (bug 7).
 Only 1N4007 rectifiers on hand (starter kits ship these): try them at 500 kbit/s first. They switch slowly and drop
 about 0.7 V, so check the scope for a low level well under 1 V and watch `can_err`. If errors appear, rebuild at a
 lower rate with `make fw CAN_KBPS=125` (or 250), flash both boards, and set the WaveForms decoder to the same rate.
@@ -198,21 +203,23 @@ voltage gauge, TEMP / CURR / SOC, and a banner (NORMAL green, LIMP HOME amber, B
 
 Both node images running, analyser on the bus.
 
-1. **Battery dies.** Hold the battery's reset (as P5.4) and measure on the analyser: DIO0 bus (CAN decoder), DIO1 the
-   body's **PA0** (red LED; active-low, so it falls when the LED turns on). Time from the end of the last 0x101 frame
-   to the PA0 edge. Expect about 500–520 ms: the 500 ms timeout, plus up to 10 ms before the body polls the last
+1. **Battery dies.** Hold the battery's reset (as P5.4) and measure on the analyser: the bus (or the battery's TX), and the
+   body's **J4.35 test point (PB13)**, which goes high with the fault light (PA0 itself is only on the unpopulated edge
+   connector). Time from the end of the last 0x101 frame to the PB13 edge. Measured 519.6 ms. Expect about 500–520 ms: the 500 ms timeout, plus up to 10 ms before the body polls the last
    frame out of its RX FIFO, plus up to one 10 ms tick before it notices the timeout.
-2. **Battery recovers.** Release reset: time from the first 0x101 frame to PA0 rising. Expect about 1000–1020 ms: the
+2. **Battery recovers.** Release reset: time from the first 0x101 frame to PB13 falling (measured 1010.3 ms). Expect about 1000–1020 ms: the
    1 s recovery hold plus up to two 10 ms ticks (the battery's boot time is before its first frame, so it isn't in this).
 3. **Fault to action.** Turn the pot to FAULT: time from the first 0x101 frame whose State is 3 (byte 6, low nibble) to
-   PA0 falling. That's the message-to-action latency. Expect under ~10 ms (the body polls every 10 ms).
-4. **Bus stuck dominant.** Jumper the bus line to GND for about 1 s, then remove. Both nodes' `can_err` jumps (bus-off
-   detected); after removing it, `can_err` stops climbing, `peer=1` again, body back to NORMAL after its 1 s hold.
+   PB13 rising. That's the message-to-action latency (measured ~8.4–8.9 ms). Expect under ~10 ms (the body polls every 10 ms).
+4. **Bus stuck dominant.** Jumper the bus line to GND for about 1 s, then remove. **Measured: no bus-off.** A bus that
+   never goes idle lets no node start a frame, so TEC doesn't climb; `can_err` rises only by TX-FIFO refusals. Traffic
+   resumed 8 µs after release with the queued frames, then the normal pattern; body back to NORMAL after its 1 s hold.
    For exact state transitions flash `can_selftest` on both boards instead: it prints
    `can error-active -> error-passive -> BUS-OFF ... after N ms (tec=.. rec=..)` and the recovery. Bus-off recovery
    needs 128 × 11 recessive bits ≈ 2.8 ms at 500 kbit/s (arithmetic) plus up to one poll.
 5. **Bus open.** Pull the body's TX diode: the battery is alone (`tx_fail` climbs, TEC rises to error-passive, not
-   bus-off: an unacknowledged transmitter stops counting at 128). Put it back: both recover.
+   bus-off: an unacknowledged transmitter stops counting at 128). Put it back: both recover. Measured: the battery goes error-passive and retransmits forever, as predicted; the body
+   (whose TX now reads back recessive) goes bus-off over and over, stops receiving, and enters limp-home.
 6. **Bus load.** WaveForms: count frames over 10 s. Expect 40 frames/s (two heartbeats + two status messages at 10 Hz);
    at ~115 bits per frame that's ≈ 0.9 % of 500 kbit/s (arithmetic).
 

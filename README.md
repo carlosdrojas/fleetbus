@@ -17,8 +17,18 @@ reports a fault or its heartbeat goes silent, and shows an instrument cluster on
                                     0x300 FaultEvent
 ```
 
-**Status (2026-11-24): software complete, nothing has run on a board yet.** Hardware numbers go in
-[`docs/measured.md`](docs/measured.md) first; anything else here is from the host build and says so.
+**Status (2026-11-25): runs on both boards.** Every hardware number, with how it was measured, is in
+[`docs/measured.md`](docs/measured.md), along with the seven bugs the bench found. Highlights:
+
+| What | Measured |
+|---|---|
+| Battery silent → body limp-home | 519.6 ms |
+| Battery back → body leaves limp-home | 1010.3 ms (1 s hold) |
+| FAULT frames → body acts | ~8.4–8.9 ms |
+| CAN bit time | 2000.1 ns (499.97 kbit/s) |
+| Body heartbeat spacing while the display redraws | 100.000–100.004 ms |
+| Bus load | 40 frames/s, 0.90 % |
+| 10-minute two-node soak | 0 errors; every task ≥ 784 B stack free |
 
 ## What's in the repo
 
@@ -42,8 +52,7 @@ make fw           # cross-build the five MSPM0 images, prints sizes
 ```
 
 Host build, 2026-11-24: the node images link at 12.1 KB (battery) and 15.6 KB (body) of 128 KB flash, 13.7 KB of 32 KB
-SRAM (12 KB of it the FreeRTOS heap). On the virtual bus the body enters limp-home 220 ms after an overtemperature and
-420 ms after the battery goes silent. Those are simulated timings, not hardware.
+SRAM (12 KB of it the FreeRTOS heap).
 
 ## On the bench
 
@@ -56,8 +65,9 @@ tools/flash_mspm0.sh node battery         # P5: node firmware (and `node body` o
 screen /dev/cu.usbmodem<XXXX>1 115200     # console
 ```
 
-No CAN transceivers: the two boards share a diode wired-AND bus (TX through a Schottky, RX on the line, 1 kΩ pull-up),
-and an Analog Discovery's CAN decoder watches it.
+No CAN transceivers: the two boards share a diode wired-AND bus (each TX through a 1N4007, each RX through 1 kΩ, a 1 kΩ
+pull-up to 3.3 V). An Analog Discovery 2, driven from Python scripts, did the timing; the body's J4.35 (PB13) test
+point mirrors its fault light for that.
 
 ## Design notes
 
@@ -66,12 +76,12 @@ and an Analog Discovery's CAN decoder watches it.
 - **Heartbeat id = 0x100 + node id.** With one shared id, two nodes that start a heartbeat in the same bit time both win
   arbitration (the ids are identical), then collide on the node-id byte, retry together and collide again.
 - **Silence is a fault.** A dead battery ECU can't report its own failure, so the body goes limp-home after 500 ms (5
-  missed heartbeats) and needs 1 s of healthy heartbeats before it trusts the battery again. Both are targets until the
-  bench measures them.
+  missed heartbeats) and needs 1 s of healthy heartbeats before it trusts the battery again. Measured: 519.6 ms and
+  1010.3 ms.
 - **Few FreeRTOS tasks, fast work on top.** Each board has a node task (prio 2, every 10 ms: read inputs, CAN in,
   state machine, outputs, CAN out) and a log task (prio 1, 1 s). The body adds a display task (prio 1, 200 ms). The
   SPI redraw and the ~7 ms console line run below the node task, so they can't delay CAN. The node task prints its
-  own worst run time and start lateness, so that's measured, not assumed.
+  own worst run time and start lateness: 279 µs and 4 µs on the body with the display redrawing.
 - **Tasks share data through snapshots** (`Latest<T>` in `app_common.hpp`): the writer overwrites, readers copy the
   whole struct with interrupts off for a moment. Readers want the newest value, not a backlog, so no queues and no
   mutexes.
@@ -81,10 +91,7 @@ and an Analog Discovery's CAN decoder watches it.
   -fno-threadsafe-statics`; no heap after start-up (`StaticQueue<T, N>`, `std::array`); `constexpr` constructors so
   nothing runs before `main()`; `BatteryNode` and `BodyNode` share `NodeBase` with no virtual functions, and each
   board's main uses only its own; RAII `CriticalSection` so no path leaves interrupts off.
+- **Clocks from the 40 MHz crystal.** The PLL runs from the crystal, not the internal oscillator, which measured 1.2 %
+  fast on one board. CAN, the FreeRTOS tick, UART and the servo PWM are all crystal-accurate.
 - **TI DriverLib and CMake, not CCS projects.** Builds headless on macOS and in CI; CCS is used only for its DSLite
   flasher.
-
-## Scope
-
-An earlier simulation-only version also had a bootloader, signed OTA, a UDP gateway, a Go/Postgres backend, a web
-dashboard and an in-car OBD-II node. None of it ran on hardware; it lives on the `full-platform` branch.

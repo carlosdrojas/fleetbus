@@ -4,7 +4,7 @@
  *      With two LaunchPads (both running this) on one terminated bus, each must print the other's counter;
  *      on the Analog Discovery CAN decoder, it must show 0x7F0 at 10 Hz from each node.
  * A third task prints error-state transitions for the P8 fault-injection bench.
- * Board-neutral (bsp.h only). NOT YET RUN ON A BOARD. */
+ * Board-neutral (bsp.h only). Ran on both boards 2026-11-24/25. */
 #include <string.h>
 #include "FreeRTOS.h"
 #include "task.h"

@@ -1,5 +1,5 @@
 #pragma once
-/* LP-MSPM0G3507 LaunchPad pin map for FleetBus. NOT YET VERIFIED ON A BOARD.
+/* LP-MSPM0G3507 LaunchPad pin map for FleetBus. Every pin below was exercised on the boards (2026-11-24/25).
  * Sources: TI LP-MSPM0G3507 example configs in MSPM0 SDK 2.11 (LED, HFXT, UART0, MCAN pins), datasheet SLASEX6C
  * pin table (ADC channels). Check every line against the LaunchPad schematic (SLAU873) during P2-P4 bring-up.
  *

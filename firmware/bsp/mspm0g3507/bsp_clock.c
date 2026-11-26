@@ -1,5 +1,5 @@
 /* MSPM0G3507 clocks, GPIO, delay, reset and watchdog.
- * Clock tree (from TI's LP-MSPM0G3507 sysctl_mclk_syspll and mcan examples, SDK 2.11; NOT YET RUN ON A BOARD):
+ * Clock tree (from TI's LP-MSPM0G3507 sysctl_mclk_syspll, mcan and secondary_bsl_can examples, SDK 2.11; verified on both boards):
  *   HFXT 40 MHz crystal (PA5/PA6) -> HFCLK -> SYSPLL -> MCLK/CPUCLK 80 MHz (2 flash wait states), ULPCLK 40 MHz
  *   HFCLK also clocks MCAN directly. PLL settings from TI's LP-MSPM0G3507 secondary_bsl_can example (SDK 2.11).
  *   Until 2026-11-25 the PLL ran from SYSOSC (internal RC); board B's MCLK measured +1.2 % (80.95 MHz) that way, so

@@ -1,7 +1,7 @@
 /* Sensor and actuator self-test (P4). Bench only. Every 500 ms prints both ADC channels (mV),
  * steps the servo through 0 / 45 / 90 / 135 / 180 degrees and cycles the lights (head, turn, fault LED).
  * Checks: turn the pot and watch ch2 move 0..3300 mV; warm the thermistor and watch ch1 move; scope the servo pin for 1.0..2.0 ms pulses at 20 ms.
- * Board-neutral (bsp.h only). NOT YET RUN ON A BOARD. */
+ * Board-neutral (bsp.h only). Ran on both boards 2026-11-24/25. */
 #include "FreeRTOS.h"
 #include "task.h"
 #include "bsp.h"

@@ -1,5 +1,5 @@
 /* Adafruit 1.8" TFT breakout (product 358: ST7735R, 160x128, RGB565) on the body node, FleetBus Lite option 4.
- * NOT YET RUN ON A BOARD. Init: the standard ST7735R sequence (frame rate, power, VCOM, then MADCTL/COLMOD), as in the
+ * Runs on board B (default black-tab panel, 2026-11-25). Init: the standard ST7735R sequence (frame rate, power, VCOM, then MADCTL/COLMOD), as in the
  * Sitronix datasheet and Adafruit's initR() "Rcmd1". Landscape.
  * Adafruit has shipped this breakout with different panel "tabs" (colour of the tab on the protective film) that need
  * different colour order and edge offsets, and the label is not always reliable. Default: black tab. If red and blue
