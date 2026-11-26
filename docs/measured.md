@@ -52,7 +52,7 @@ For each: symptom, how it was found, root cause, fix, commit. This becomes the f
 
 1. **Flash verify failed at 0x1600 (2026-11-24, both boards).** DSLite: "Length of block is 4, but it should be divisible
    by 8 since Flash Programmer writes in 64-bits". The `.data` load image was 4 bytes; the MSPM0 flash programs 64-bit
-   words. Host tests can't see it. Fix: pad every flash load block to 8 bytes in `common.ld` (commit f39ff57).
+   words. Host tests can't see it. Fix: pad every flash load block to 8 bytes in `common.ld` (commit 29c5964).
 
 2. **HardFault in TI's PLL setup, only in some images (2026-11-25, A).** Symptom: red LED solid, console blank, even
    after a power cycle; bring-up still worked, the CAN self-test did not, and it had worked one build earlier. Found by
