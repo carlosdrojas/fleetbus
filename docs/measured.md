@@ -38,8 +38,8 @@ P2 bring-up passed on both boards on 2026-11-24. P3 loopback and two-node CAN tr
 | L3 | Body `node_us_max` / `late_us_max` with the display vs battery without | same within tick resolution (TARGET) | | |
 | L3 | 0x102 heartbeat spacing while the display redraws | 100 ms ± 1 ms (TARGET) | | |
 | L3 | Panel tab that gives correct colours and edges | black tab (default) or `FB_LCD_GREENTAB` | | |
-| F1 | Battery dies → body limp-home (last 0x101 frame → body PA0) | 500–520 ms (timeout + polling) | | |
-| F2 | Battery back → body leaves limp-home (first 0x101 → PA0) | 1000–1020 ms (1 s hold) | | |
+| F1 | Battery dies → body limp-home (last 0x101 frame → body PA0) | 500–520 ms (timeout + polling) | 519.6 ms (end of A's last frame → PB13 rise) | 2026-11-25, AD2 record mode 500 kS/s × 20 s: ch1 = A's TX (PA12, its own frames: 0x101 + 0x200 back to back every 100 ms), ch2 = B's J4.35 test point (PB13, mirrors the fault light); A's reset held ~6.5 s by hand |
+| F2 | Battery back → body leaves limp-home (first 0x101 → PA0) | 1000–1020 ms (1 s hold) | 1010.3 ms; 1009.7 ms on a second run (start of A's first frame after reset → PB13 fall) | 2026-11-25, AD2 record mode 500 kS/s × 20 s: ch1 = A's TX (PA12, its own frames: 0x101 + 0x200 back to back every 100 ms), ch2 = B's J4.35 test point (PB13, mirrors the fault light); A's reset held ~6.5 s by hand; second run 12 s |
 | F3 | FAULT heartbeat on the bus → body acts (message-to-action latency) | < ~10 ms (10 ms poll) | | |
 | F4 | Bus stuck dominant ~1 s: bus-off, then recovery after release | recovery ≈ 2.8 ms + one poll (128 × 11 bits) | | |
 | F5 | Bus open (one node alone): TEC behaviour | error-passive, not bus-off | error-active → error-passive after 110 ms (tec=128 rec=0), no bus-off seen (short run, not the full F5 procedure) | 2026-11-25, A sending while B ran a broken image, `can_selftest` fault_task line |
