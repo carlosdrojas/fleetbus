@@ -37,7 +37,10 @@ BatterySample read_sample() {
     BatterySample s;
     s.sensor_ok = t_mv >= 0 && p_mv >= 0;
     s.temp_dc = t_mv >= 0 ? ntc_to_dc(t_mv * 1000 / 3300) : 0;
-    s.pack_mv = p_mv >= 0 ? 3000 + p_mv * 1200 / 3300 : 0;
+    // Pot 0..3300 mV -> "pack" 2800..4200 mV, the gauge's scale. Was 3000..4200: the pot's end stop sat exactly on the
+    // 3.000 V FAULT threshold, so FAULT only just tripped and SAFE took ~3 s instead of ~1 s on the bench (2026-11-25).
+    // Now FAULT trips at ~471 mV on the wiper (14 % of travel) and WARNING at ~943 mV.
+    s.pack_mv = p_mv >= 0 ? 2800 + p_mv * 1400 / 3300 : 0;
     s.ma = 0;
     return s;
 }
