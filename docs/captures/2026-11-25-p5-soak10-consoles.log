@@ -1,0 +1,1228 @@
+   0.00 BATT ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+   0.00 BATT t=22000 NORMAL peer=1 rx=448 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+   0.00 BATT t=23000 NORMAL peer=1 rx=468 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+   0.00 BATT t=24000 NORMAL peer=1 rx=488 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+   0.00 BATT t=25000 NORMAL peer=1 rx=508 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+   0.00 BODY rx=5529 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+   0.00 BODY t=357001 NORMAL peer=1 rx=5549 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+   0.00 BODY t=358001 NORMAL peer=1 rx=5569 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+   0.01 BATT t=26000 NORMAL peer=1 rx=528 can_err=0 tx_drop=0 tt=38000 NORMAL peer=1 rx=768 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+   0.45 BODY t=359001 NORMAL peer=1 rx=5589 can_err=1746 txt=371001 NORMAL peer=1 rx=5829 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+   1.01 BATT t=39000 NORMAL peer=1 rx=788 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+   1.45 BODY t=372001 NORMAL peer=1 rx=5849 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+   2.01 BATT t=40000 NORMAL peer=1 rx=808 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+   2.45 BODY t=373001 NORMAL peer=1 rx=5869 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+   3.01 BATT t=41000 NORMAL peer=1 rx=828 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+   3.45 BODY t=374001 NORMAL peer=1 rx=5889 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+   4.01 BATT t=42000 NORMAL peer=1 rx=848 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+   4.45 BODY t=375001 NORMAL peer=1 rx=5909 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+   5.01 BATT t=43000 NORMAL peer=1 rx=868 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+   5.45 BODY t=376001 NORMAL peer=1 rx=5929 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+   6.01 BATT t=44000 NORMAL peer=1 rx=888 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+   6.45 BODY t=377001 NORMAL peer=1 rx=5949 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+   7.01 BATT t=45000 NORMAL peer=1 rx=908 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+   7.46 BODY t=378001 NORMAL peer=1 rx=5969 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+   8.01 BATT t=46000 NORMAL peer=1 rx=928 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+   8.45 BODY t=379001 NORMAL peer=1 rx=5989 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+   9.01 BATT t=47000 NORMAL peer=1 rx=948 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+   9.45 BODY t=380001 NORMAL peer=1 rx=6009 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+  10.01 BATT t=48000 NORMAL peer=1 rx=968 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  10.45 BODY t=381001 NORMAL peer=1 rx=6029 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  11.01 BATT t=49000 NORMAL peer=1 rx=988 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  11.45 BODY t=382001 NORMAL peer=1 rx=6049 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+  12.01 BATT t=50000 NORMAL peer=1 rx=1008 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  12.45 BODY t=383001 NORMAL peer=1 rx=6069 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+  13.01 BATT t=51000 NORMAL peer=1 rx=1028 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  13.45 BODY t=384001 NORMAL peer=1 rx=6089 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9559 stk=1112,1060,792, heap=7288
+  14.01 BATT t=52000 NORMAL peer=1 rx=1048 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  14.45 BODY t=385001 NORMAL peer=1 rx=6109 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+  15.01 BATT t=53000 NORMAL peer=1 rx=1068 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  15.45 BODY t=386001 NORMAL peer=1 rx=6129 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+  16.01 BATT t=54000 NORMAL peer=1 rx=1088 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  16.45 BODY t=387001 NORMAL peer=1 rx=6149 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+  17.01 BATT t=55000 NORMAL peer=1 rx=1108 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  17.45 BODY t=388001 NORMAL peer=1 rx=6169 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  18.01 BATT t=56000 NORMAL peer=1 rx=1128 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  18.45 BODY t=389001 NORMAL peer=1 rx=6189 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  19.01 BATT t=57000 NORMAL peer=1 rx=1148 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  19.45 BODY t=390001 NORMAL peer=1 rx=6209 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  20.01 BATT t=58000 NORMAL peer=1 rx=1168 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  20.45 BODY t=391001 NORMAL peer=1 rx=6229 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6392 stk=1112,1060,792, heap=7288
+  21.01 BATT t=59000 NORMAL peer=1 rx=1188 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  21.45 BODY t=392001 NORMAL peer=1 rx=6249 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+  22.01 BATT t=60000 NORMAL peer=1 rx=1208 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  22.45 BODY t=393001 NORMAL peer=1 rx=6269 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+  23.01 BATT t=61000 NORMAL peer=1 rx=1228 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  23.45 BODY t=394001 NORMAL peer=1 rx=6289 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  24.01 BATT t=62000 NORMAL peer=1 rx=1248 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  24.45 BODY t=395001 NORMAL peer=1 rx=6309 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  25.01 BATT t=63000 NORMAL peer=1 rx=1268 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  25.45 BODY t=396001 NORMAL peer=1 rx=6329 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  26.01 BATT t=64000 NORMAL peer=1 rx=1288 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  26.45 BODY t=397001 NORMAL peer=1 rx=6349 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  27.01 BATT t=65000 NORMAL peer=1 rx=1308 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  27.45 BODY t=398001 NORMAL peer=1 rx=6369 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  28.01 BATT t=66000 NORMAL peer=1 rx=1328 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  28.45 BODY t=399001 NORMAL peer=1 rx=6389 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9677 stk=1112,1060,792, heap=7288
+  29.01 BATT t=67000 NORMAL peer=1 rx=1348 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  29.45 BODY t=400001 NORMAL peer=1 rx=6409 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  30.01 BATT t=68000 NORMAL peer=1 rx=1368 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  30.45 BODY t=401001 NORMAL peer=1 rx=6429 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  31.01 BATT t=69000 NORMAL peer=1 rx=1388 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  31.45 BODY t=402001 NORMAL peer=1 rx=6449 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  32.01 BATT t=70000 NORMAL peer=1 rx=1408 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  32.45 BODY t=403001 NORMAL peer=1 rx=6469 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  33.01 BATT t=71000 NORMAL peer=1 rx=1428 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  33.45 BODY t=404001 NORMAL peer=1 rx=6489 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+  34.01 BATT t=72000 NORMAL peer=1 rx=1448 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  34.45 BODY t=405001 NORMAL peer=1 rx=6509 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+  35.01 BATT t=73000 NORMAL peer=1 rx=1468 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  35.45 BODY t=406001 NORMAL peer=1 rx=6529 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  36.01 BATT t=74000 NORMAL peer=1 rx=1488 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  36.45 BODY t=407001 NORMAL peer=1 rx=6549 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+  37.01 BATT t=75000 NORMAL peer=1 rx=1508 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  37.45 BODY t=408001 NORMAL peer=1 rx=6569 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  38.01 BATT t=76000 NORMAL peer=1 rx=1528 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  38.45 BODY t=409001 NORMAL peer=1 rx=6589 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  39.01 BATT t=77000 NORMAL peer=1 rx=1548 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  39.45 BODY t=410001 NORMAL peer=1 rx=6609 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  40.01 BATT t=78000 NORMAL peer=1 rx=1568 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  40.45 BODY t=411001 NORMAL peer=1 rx=6629 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  41.01 BATT t=79000 NORMAL peer=1 rx=1588 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  41.45 BODY t=412001 NORMAL peer=1 rx=6649 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  42.01 BATT t=80000 NORMAL peer=1 rx=1608 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  42.45 BODY t=413001 NORMAL peer=1 rx=6669 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  43.01 BATT t=81000 NORMAL peer=1 rx=1628 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  43.45 BODY t=414001 NORMAL peer=1 rx=6689 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  44.01 BATT t=82000 NORMAL peer=1 rx=1648 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  44.45 BODY t=415001 NORMAL peer=1 rx=6709 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  45.01 BATT t=83000 NORMAL peer=1 rx=1668 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  45.45 BODY t=416001 NORMAL peer=1 rx=6729 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  46.01 BATT t=84000 NORMAL peer=1 rx=1688 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  46.45 BODY t=417001 NORMAL peer=1 rx=6749 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+  47.01 BATT t=85000 NORMAL peer=1 rx=1708 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  47.45 BODY t=418001 NORMAL peer=1 rx=6769 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  48.01 BATT t=86000 NORMAL peer=1 rx=1728 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  48.45 BODY t=419001 NORMAL peer=1 rx=6789 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6554 stk=1112,1060,792, heap=7288
+  49.01 BATT t=87000 NORMAL peer=1 rx=1748 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  49.45 BODY t=420001 NORMAL peer=1 rx=6809 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+  50.01 BATT t=88000 NORMAL peer=1 rx=1768 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  50.45 BODY t=421001 NORMAL peer=1 rx=6829 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+  51.01 BATT t=89000 NORMAL peer=1 rx=1788 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  51.45 BODY t=422001 NORMAL peer=1 rx=6849 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+  52.01 BATT t=90000 NORMAL peer=1 rx=1808 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  52.45 BODY t=423001 NORMAL peer=1 rx=6869 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+  53.01 BATT t=91000 NORMAL peer=1 rx=1828 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  53.45 BODY t=424001 NORMAL peer=1 rx=6889 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9517 stk=1112,1060,792, heap=7288
+  54.01 BATT t=92000 NORMAL peer=1 rx=1848 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  54.45 BODY t=425001 NORMAL peer=1 rx=6909 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  55.01 BATT t=93000 NORMAL peer=1 rx=1868 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  55.45 BODY t=426001 NORMAL peer=1 rx=6929 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  56.01 BATT t=94000 NORMAL peer=1 rx=1888 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  56.45 BODY t=427001 NORMAL peer=1 rx=6949 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  57.01 BATT t=95000 NORMAL peer=1 rx=1908 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  57.45 BODY t=428001 NORMAL peer=1 rx=6969 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+  58.01 BATT t=96000 NORMAL peer=1 rx=1928 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  58.45 BODY t=429001 NORMAL peer=1 rx=6989 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+  59.01 BATT t=97000 NORMAL peer=1 rx=1948 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  59.45 BODY t=430001 NORMAL peer=1 rx=7009 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+  60.01 BATT t=98000 NORMAL peer=1 rx=1968 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  60.45 BODY t=431001 NORMAL peer=1 rx=7029 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  61.01 BATT t=99000 NORMAL peer=1 rx=1988 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  61.45 BODY t=432001 NORMAL peer=1 rx=7049 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  62.01 BATT t=100000 NORMAL peer=1 rx=2008 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  62.45 BODY t=433001 NORMAL peer=1 rx=7069 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  63.01 BATT t=101000 NORMAL peer=1 rx=2028 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  63.45 BODY t=434001 NORMAL peer=1 rx=7089 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  64.01 BATT t=102000 NORMAL peer=1 rx=2048 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  64.45 BODY t=435001 NORMAL peer=1 rx=7109 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  65.01 BATT t=103000 NORMAL peer=1 rx=2068 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  65.45 BODY t=436001 NORMAL peer=1 rx=7129 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  66.01 BATT t=104000 NORMAL peer=1 rx=2088 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  66.45 BODY t=437001 NORMAL peer=1 rx=7149 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+  67.01 BATT t=105000 NORMAL peer=1 rx=2108 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  67.46 BODY t=438001 NORMAL peer=1 rx=7169 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+  68.01 BATT t=106000 NORMAL peer=1 rx=2128 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  68.45 BODY t=439001 NORMAL peer=1 rx=7189 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  69.01 BATT t=107000 NORMAL peer=1 rx=2148 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  69.45 BODY t=440001 NORMAL peer=1 rx=7209 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  70.01 BATT t=108000 NORMAL peer=1 rx=2168 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  70.45 BODY t=441001 NORMAL peer=1 rx=7229 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  71.01 BATT t=109000 NORMAL peer=1 rx=2188 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  71.45 BODY t=442001 NORMAL peer=1 rx=7249 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9399 stk=1112,1060,792, heap=7288
+  72.01 BATT t=110000 NORMAL peer=1 rx=2208 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  72.45 BODY t=443001 NORMAL peer=1 rx=7269 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9677 stk=1112,1060,792, heap=7288
+  73.01 BATT t=111000 NORMAL peer=1 rx=2228 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  73.45 BODY t=444001 NORMAL peer=1 rx=7289 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  74.01 BATT t=112000 NORMAL peer=1 rx=2248 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  74.45 BODY t=445001 NORMAL peer=1 rx=7309 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  75.01 BATT t=113000 NORMAL peer=1 rx=2268 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  75.45 BODY t=446001 NORMAL peer=1 rx=7329 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9663 stk=1112,1060,792, heap=7288
+  76.01 BATT t=114000 NORMAL peer=1 rx=2288 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  76.45 BODY t=447001 NORMAL peer=1 rx=7349 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+  77.01 BATT t=115000 NORMAL peer=1 rx=2308 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  77.45 BODY t=448001 NORMAL peer=1 rx=7369 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  78.01 BATT t=116000 NORMAL peer=1 rx=2328 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  78.45 BODY t=449001 NORMAL peer=1 rx=7389 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9399 stk=1112,1060,792, heap=7288
+  79.01 BATT t=117000 NORMAL peer=1 rx=2348 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  79.45 BODY t=450001 NORMAL peer=1 rx=7409 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  80.01 BATT t=118000 NORMAL peer=1 rx=2368 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  80.45 BODY t=451001 NORMAL peer=1 rx=7429 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  81.01 BATT t=119000 NORMAL peer=1 rx=2388 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  81.45 BODY t=452001 NORMAL peer=1 rx=7449 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  82.01 BATT t=120000 NORMAL peer=1 rx=2408 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  82.45 BODY t=453001 NORMAL peer=1 rx=7469 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  83.01 BATT t=121000 NORMAL peer=1 rx=2428 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  83.45 BODY t=454001 NORMAL peer=1 rx=7489 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9559 stk=1112,1060,792, heap=7288
+  84.01 BATT t=122000 NORMAL peer=1 rx=2448 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  84.45 BODY t=455001 NORMAL peer=1 rx=7509 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  85.01 BATT t=123000 NORMAL peer=1 rx=2468 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  85.45 BODY t=456001 NORMAL peer=1 rx=7529 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+  86.01 BATT t=124000 NORMAL peer=1 rx=2488 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  86.45 BODY t=457001 NORMAL peer=1 rx=7549 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+  87.01 BATT t=125000 NORMAL peer=1 rx=2508 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  87.45 BODY t=458001 NORMAL peer=1 rx=7569 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+  88.01 BATT t=126000 NORMAL peer=1 rx=2528 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  88.45 BODY t=459001 NORMAL peer=1 rx=7589 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  89.01 BATT t=127000 NORMAL peer=1 rx=2548 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  89.45 BODY t=460001 NORMAL peer=1 rx=7609 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  90.01 BATT t=128000 NORMAL peer=1 rx=2568 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  90.45 BODY t=461001 NORMAL peer=1 rx=7629 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  91.01 BATT t=129000 NORMAL peer=1 rx=2588 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  91.45 BODY t=462001 NORMAL peer=1 rx=7649 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  92.01 BATT t=130000 NORMAL peer=1 rx=2608 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  92.45 BODY t=463001 NORMAL peer=1 rx=7669 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9399 stk=1112,1060,792, heap=7288
+  93.01 BATT t=131000 NORMAL peer=1 rx=2628 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  93.45 BODY t=464001 NORMAL peer=1 rx=7689 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  94.01 BATT t=132000 NORMAL peer=1 rx=2648 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+  94.45 BODY t=465001 NORMAL peer=1 rx=7709 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  95.01 BATT t=133000 NORMAL peer=1 rx=2668 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  95.45 BODY t=466001 NORMAL peer=1 rx=7729 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  96.01 BATT t=134000 NORMAL peer=1 rx=2688 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  96.45 BODY t=467001 NORMAL peer=1 rx=7749 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  97.01 BATT t=135000 NORMAL peer=1 rx=2708 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  97.45 BODY t=468001 NORMAL peer=1 rx=7769 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+  98.01 BATT t=136000 NORMAL peer=1 rx=2728 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+  98.45 BODY t=469001 NORMAL peer=1 rx=7789 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+  99.01 BATT t=137000 NORMAL peer=1 rx=2748 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+  99.45 BODY t=470001 NORMAL peer=1 rx=7809 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 100.01 BATT t=138000 NORMAL peer=1 rx=2768 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 100.45 BODY t=471001 NORMAL peer=1 rx=7829 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 101.01 BATT t=139000 NORMAL peer=1 rx=2788 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3517 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 101.45 BODY t=472001 NORMAL peer=1 rx=7849 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 102.01 BATT t=140000 NORMAL peer=1 rx=2808 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 102.45 BODY t=473001 NORMAL peer=1 rx=7869 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 103.01 BATT t=141000 NORMAL peer=1 rx=2828 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 103.45 BODY t=474001 NORMAL peer=1 rx=7889 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 104.01 BATT t=142000 NORMAL peer=1 rx=2848 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 104.46 BODY t=475001 NORMAL peer=1 rx=7909 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 105.01 BATT t=143000 NORMAL peer=1 rx=2868 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 105.45 BODY t=476001 NORMAL peer=1 rx=7929 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 106.01 BATT t=144000 NORMAL peer=1 rx=2888 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 106.46 BODY t=477001 NORMAL peer=1 rx=7949 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9663 stk=1112,1060,792, heap=7288
+ 107.01 BATT t=145000 NORMAL peer=1 rx=2908 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 107.46 BODY t=478001 NORMAL peer=1 rx=7969 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 108.01 BATT t=146000 NORMAL peer=1 rx=2928 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 108.46 BODY t=479001 NORMAL peer=1 rx=7989 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 109.01 BATT t=147000 NORMAL peer=1 rx=2948 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 109.46 BODY t=480001 NORMAL peer=1 rx=8009 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 110.01 BATT t=148000 NORMAL peer=1 rx=2968 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 110.46 BODY t=481001 NORMAL peer=1 rx=8029 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6554 stk=1112,1060,792, heap=7288
+ 111.01 BATT t=149000 NORMAL peer=1 rx=2988 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 111.46 BODY t=482001 NORMAL peer=1 rx=8049 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 112.01 BATT t=150000 NORMAL peer=1 rx=3008 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 112.46 BODY t=483001 NORMAL peer=1 rx=8069 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 113.01 BATT t=151000 NORMAL peer=1 rx=3028 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 113.46 BODY t=484001 NORMAL peer=1 rx=8089 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 114.01 BATT t=152000 NORMAL peer=1 rx=3048 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 114.46 BODY t=485001 NORMAL peer=1 rx=8109 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9517 stk=1112,1060,792, heap=7288
+ 115.01 BATT t=153000 NORMAL peer=1 rx=3068 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 115.46 BODY t=486001 NORMAL peer=1 rx=8129 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 116.01 BATT t=154000 NORMAL peer=1 rx=3088 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 116.46 BODY t=487001 NORMAL peer=1 rx=8149 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 117.01 BATT t=155000 NORMAL peer=1 rx=3108 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 117.46 BODY t=488001 NORMAL peer=1 rx=8169 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 118.01 BATT t=156000 NORMAL peer=1 rx=3128 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 118.46 BODY t=489001 NORMAL peer=1 rx=8189 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 119.01 BATT t=157000 NORMAL peer=1 rx=3148 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 119.46 BODY t=490001 NORMAL peer=1 rx=8209 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9517 stk=1112,1060,792, heap=7288
+ 120.01 BATT t=158000 NORMAL peer=1 rx=3168 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 120.46 BODY t=491001 NORMAL peer=1 rx=8229 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 121.01 BATT t=159000 NORMAL peer=1 rx=3188 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 121.46 BODY t=492001 NORMAL peer=1 rx=8249 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6554 stk=1112,1060,792, heap=7288
+ 122.02 BATT t=160000 NORMAL peer=1 rx=3208 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 122.46 BODY t=493001 NORMAL peer=1 rx=8269 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6392 stk=1112,1060,792, heap=7288
+ 123.02 BATT t=161000 NORMAL peer=1 rx=3228 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 123.46 BODY t=494001 NORMAL peer=1 rx=8289 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 124.02 BATT t=162000 NORMAL peer=1 rx=3248 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 124.46 BODY t=495001 NORMAL peer=1 rx=8309 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 125.02 BATT t=163000 NORMAL peer=1 rx=3268 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 125.46 BODY t=496001 NORMAL peer=1 rx=8329 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 126.02 BATT t=164000 NORMAL peer=1 rx=3288 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 126.46 BODY t=497001 NORMAL peer=1 rx=8349 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 127.02 BATT t=165000 NORMAL peer=1 rx=3308 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 127.46 BODY t=498001 NORMAL peer=1 rx=8369 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 128.02 BATT t=166000 NORMAL peer=1 rx=3328 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 128.46 BODY t=499001 NORMAL peer=1 rx=8389 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 129.02 BATT t=167000 NORMAL peer=1 rx=3348 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 129.46 BODY t=500001 NORMAL peer=1 rx=8409 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 130.02 BATT t=168000 NORMAL peer=1 rx=3368 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 130.46 BODY t=501001 NORMAL peer=1 rx=8429 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 131.02 BATT t=169000 NORMAL peer=1 rx=3388 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 131.46 BODY t=502001 NORMAL peer=1 rx=8449 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 132.02 BATT t=170000 NORMAL peer=1 rx=3408 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 132.46 BODY t=503001 NORMAL peer=1 rx=8469 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 133.02 BATT t=171000 NORMAL peer=1 rx=3428 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 133.46 BODY t=504001 NORMAL peer=1 rx=8489 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 134.02 BATT t=172000 NORMAL peer=1 rx=3448 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 134.46 BODY t=505001 NORMAL peer=1 rx=8509 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6392 stk=1112,1060,792, heap=7288
+ 135.02 BATT t=173000 NORMAL peer=1 rx=3468 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 135.46 BODY t=506001 NORMAL peer=1 rx=8529 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 136.02 BATT t=174000 NORMAL peer=1 rx=3488 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 136.46 BODY t=507001 NORMAL peer=1 rx=8549 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 137.02 BATT t=175000 NORMAL peer=1 rx=3508 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 137.46 BODY t=508001 NORMAL peer=1 rx=8569 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 138.02 BATT t=176000 NORMAL peer=1 rx=3528 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 138.46 BODY t=509001 NORMAL peer=1 rx=8589 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 139.02 BATT t=177000 NORMAL peer=1 rx=3548 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 139.46 BODY t=510001 NORMAL peer=1 rx=8609 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9559 stk=1112,1060,792, heap=7288
+ 140.02 BATT t=178000 NORMAL peer=1 rx=3568 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 140.46 BODY t=511001 NORMAL peer=1 rx=8629 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 141.02 BATT t=179000 NORMAL peer=1 rx=3588 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 141.46 BODY t=512001 NORMAL peer=1 rx=8649 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 142.02 BATT t=180000 NORMAL peer=1 rx=3608 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 142.46 BODY t=513001 NORMAL peer=1 rx=8669 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 143.02 BATT t=181000 NORMAL peer=1 rx=3628 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 143.46 BODY t=514001 NORMAL peer=1 rx=8689 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 144.02 BATT t=182000 NORMAL peer=1 rx=3648 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 144.46 BODY t=515001 NORMAL peer=1 rx=8709 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 145.02 BATT t=183000 NORMAL peer=1 rx=3668 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 145.46 BODY t=516001 NORMAL peer=1 rx=8729 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 146.02 BATT t=184000 NORMAL peer=1 rx=3688 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 146.46 BODY t=517001 NORMAL peer=1 rx=8749 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 147.02 BATT t=185000 NORMAL peer=1 rx=3708 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 147.46 BODY t=518001 NORMAL peer=1 rx=8769 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 148.02 BATT t=186000 NORMAL peer=1 rx=3728 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 148.46 BODY t=519001 NORMAL peer=1 rx=8789 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 149.02 BATT t=187000 NORMAL peer=1 rx=3748 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 149.46 BODY t=520001 NORMAL peer=1 rx=8809 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 150.02 BATT t=188000 NORMAL peer=1 rx=3768 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 150.46 BODY t=521001 NORMAL peer=1 rx=8829 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 151.02 BATT t=189000 NORMAL peer=1 rx=3788 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 151.46 BODY t=522001 NORMAL peer=1 rx=8849 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 152.02 BATT t=190000 NORMAL peer=1 rx=3808 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 152.46 BODY t=523001 NORMAL peer=1 rx=8869 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6392 stk=1112,1060,792, heap=7288
+ 153.02 BATT t=191000 NORMAL peer=1 rx=3828 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 153.46 BODY t=524001 NORMAL peer=1 rx=8889 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 154.02 BATT t=192000 NORMAL peer=1 rx=3848 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 154.46 BODY t=525001 NORMAL peer=1 rx=8909 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 155.02 BATT t=193000 NORMAL peer=1 rx=3868 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 155.46 BODY t=526001 NORMAL peer=1 rx=8929 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 156.02 BATT t=194000 NORMAL peer=1 rx=3888 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 156.46 BODY t=527001 NORMAL peer=1 rx=8949 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 157.02 BATT t=195000 NORMAL peer=1 rx=3908 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 157.46 BODY t=528001 NORMAL peer=1 rx=8969 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 158.02 BATT t=196000 NORMAL peer=1 rx=3928 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 158.46 BODY t=529001 NORMAL peer=1 rx=8989 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 159.02 BATT t=197000 NORMAL peer=1 rx=3948 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 159.46 BODY t=530001 NORMAL peer=1 rx=9009 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 160.02 BATT t=198000 NORMAL peer=1 rx=3968 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 160.46 BODY t=531001 NORMAL peer=1 rx=9029 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9517 stk=1112,1060,792, heap=7288
+ 161.02 BATT t=199000 NORMAL peer=1 rx=3988 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 161.46 BODY t=532001 NORMAL peer=1 rx=9049 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 162.02 BATT t=200000 NORMAL peer=1 rx=4008 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 162.46 BODY t=533001 NORMAL peer=1 rx=9069 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 163.02 BATT t=201000 NORMAL peer=1 rx=4028 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 163.46 BODY t=534001 NORMAL peer=1 rx=9089 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 164.02 BATT t=202000 NORMAL peer=1 rx=4048 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 164.46 BODY t=535001 NORMAL peer=1 rx=9109 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 165.02 BATT t=203000 NORMAL peer=1 rx=4068 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 165.46 BODY t=536001 NORMAL peer=1 rx=9129 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 166.02 BATT t=204000 NORMAL peer=1 rx=4088 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 166.46 BODY t=537001 NORMAL peer=1 rx=9149 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 167.02 BATT t=205000 NORMAL peer=1 rx=4108 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 167.46 BODY t=538001 NORMAL peer=1 rx=9169 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 168.02 BATT t=206000 NORMAL peer=1 rx=4128 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 168.46 BODY t=539001 NORMAL peer=1 rx=9189 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9399 stk=1112,1060,792, heap=7288
+ 169.02 BATT t=207000 NORMAL peer=1 rx=4148 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 169.46 BODY t=540001 NORMAL peer=1 rx=9209 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 170.02 BATT t=208000 NORMAL peer=1 rx=4168 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 170.46 BODY t=541001 NORMAL peer=1 rx=9229 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 171.02 BATT t=209000 NORMAL peer=1 rx=4188 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 171.46 BODY t=542001 NORMAL peer=1 rx=9249 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 172.02 BATT t=210000 NORMAL peer=1 rx=4208 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 172.46 BODY t=543001 NORMAL peer=1 rx=9269 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 173.02 BATT t=211000 NORMAL peer=1 rx=4228 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 173.46 BODY t=544001 NORMAL peer=1 rx=9289 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 174.02 BATT t=212000 NORMAL peer=1 rx=4248 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 174.46 BODY t=545001 NORMAL peer=1 rx=9309 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 175.02 BATT t=213000 NORMAL peer=1 rx=4268 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 175.46 BODY t=546001 NORMAL peer=1 rx=9329 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 176.02 BATT t=214000 NORMAL peer=1 rx=4288 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 176.46 BODY t=547001 NORMAL peer=1 rx=9349 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 177.02 BATT t=215000 NORMAL peer=1 rx=4308 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 177.46 BODY t=548001 NORMAL peer=1 rx=9369 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 178.02 BATT t=216000 NORMAL peer=1 rx=4328 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 178.46 BODY t=549001 NORMAL peer=1 rx=9389 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 179.02 BATT t=217000 NORMAL peer=1 rx=4348 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 179.46 BODY t=550001 NORMAL peer=1 rx=9409 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 180.02 BATT t=218000 NORMAL peer=1 rx=4368 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 180.46 BODY t=551001 NORMAL peer=1 rx=9429 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6554 stk=1112,1060,792, heap=7288
+ 181.02 BATT t=219000 NORMAL peer=1 rx=4388 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 181.46 BODY t=552001 NORMAL peer=1 rx=9449 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 182.02 BATT t=220000 NORMAL peer=1 rx=4408 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 182.46 BODY t=553001 NORMAL peer=1 rx=9469 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 183.02 BATT t=221000 NORMAL peer=1 rx=4428 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3517 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 183.46 BODY t=554001 NORMAL peer=1 rx=9489 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 184.02 BATT t=222000 NORMAL peer=1 rx=4448 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 184.46 BODY t=555001 NORMAL peer=1 rx=9509 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 185.02 BATT t=223000 NORMAL peer=1 rx=4468 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 185.46 BODY t=556001 NORMAL peer=1 rx=9529 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9559 stk=1112,1060,792, heap=7288
+ 186.02 BATT t=224000 NORMAL peer=1 rx=4488 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3517 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 186.46 BODY t=557001 NORMAL peer=1 rx=9549 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 187.02 BATT t=225000 NORMAL peer=1 rx=4508 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 187.46 BODY t=558001 NORMAL peer=1 rx=9569 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 188.02 BATT t=226000 NORMAL peer=1 rx=4528 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 188.46 BODY t=559001 NORMAL peer=1 rx=9589 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9399 stk=1112,1060,792, heap=7288
+ 189.02 BATT t=227000 NORMAL peer=1 rx=4548 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 189.46 BODY t=560001 NORMAL peer=1 rx=9609 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 190.02 BATT t=228000 NORMAL peer=1 rx=4568 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 190.46 BODY t=561001 NORMAL peer=1 rx=9629 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 191.02 BATT t=229000 NORMAL peer=1 rx=4588 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 191.46 BODY t=562001 NORMAL peer=1 rx=9649 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9517 stk=1112,1060,792, heap=7288
+ 192.02 BATT t=230000 NORMAL peer=1 rx=4608 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 192.46 BODY t=563001 NORMAL peer=1 rx=9669 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 193.02 BATT t=231000 NORMAL peer=1 rx=4628 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3517 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 193.46 BODY t=564001 NORMAL peer=1 rx=9689 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 194.02 BATT t=232000 NORMAL peer=1 rx=4648 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 194.46 BODY t=565001 NORMAL peer=1 rx=9709 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 195.02 BATT t=233000 NORMAL peer=1 rx=4668 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 195.46 BODY t=566001 NORMAL peer=1 rx=9729 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 196.02 BATT t=234000 NORMAL peer=1 rx=4688 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 196.46 BODY t=567001 NORMAL peer=1 rx=9749 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 197.02 BATT t=235000 NORMAL peer=1 rx=4708 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 197.46 BODY t=568001 NORMAL peer=1 rx=9769 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 198.02 BATT t=236000 NORMAL peer=1 rx=4728 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 198.46 BODY t=569001 NORMAL peer=1 rx=9789 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 199.02 BATT t=237000 NORMAL peer=1 rx=4748 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 199.46 BODY t=570001 NORMAL peer=1 rx=9809 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 200.02 BATT t=238000 NORMAL peer=1 rx=4768 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 200.46 BODY t=571001 NORMAL peer=1 rx=9829 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 201.02 BATT t=239000 NORMAL peer=1 rx=4788 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 201.46 BODY t=572001 NORMAL peer=1 rx=9849 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 202.02 BATT t=240000 NORMAL peer=1 rx=4808 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 202.46 BODY t=573001 NORMAL peer=1 rx=9869 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 203.02 BATT t=241000 NORMAL peer=1 rx=4828 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 203.46 BODY t=574001 NORMAL peer=1 rx=9889 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 204.02 BATT t=242000 NORMAL peer=1 rx=4848 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 204.46 BODY t=575001 NORMAL peer=1 rx=9909 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 205.02 BATT t=243000 NORMAL peer=1 rx=4868 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 205.46 BODY t=576001 NORMAL peer=1 rx=9929 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6554 stk=1112,1060,792, heap=7288
+ 206.02 BATT t=244000 NORMAL peer=1 rx=4888 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 206.46 BODY t=577001 NORMAL peer=1 rx=9949 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 207.02 BATT t=245000 NORMAL peer=1 rx=4908 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 207.46 BODY t=578001 NORMAL peer=1 rx=9969 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 208.02 BATT t=246000 NORMAL peer=1 rx=4928 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 208.46 BODY t=579001 NORMAL peer=1 rx=9989 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 209.02 BATT t=247000 NORMAL peer=1 rx=4948 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 209.46 BODY t=580001 NORMAL peer=1 rx=10009 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 210.02 BATT t=248000 NORMAL peer=1 rx=4968 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 210.46 BODY t=581001 NORMAL peer=1 rx=10029 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 211.02 BATT t=249000 NORMAL peer=1 rx=4988 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 211.46 BODY t=582001 NORMAL peer=1 rx=10049 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 212.02 BATT t=250000 NORMAL peer=1 rx=5008 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 212.46 BODY t=583001 NORMAL peer=1 rx=10069 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 213.02 BATT t=251000 NORMAL peer=1 rx=5028 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 213.46 BODY t=584001 NORMAL peer=1 rx=10089 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 214.02 BATT t=252000 NORMAL peer=1 rx=5048 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 214.46 BODY t=585001 NORMAL peer=1 rx=10109 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 215.02 BATT t=253000 NORMAL peer=1 rx=5068 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 215.46 BODY t=586001 NORMAL peer=1 rx=10129 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 216.02 BATT t=254000 NORMAL peer=1 rx=5088 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 216.46 BODY t=587001 NORMAL peer=1 rx=10149 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 217.02 BATT t=255000 NORMAL peer=1 rx=5108 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3517 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 217.46 BODY t=588001 NORMAL peer=1 rx=10169 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9824 stk=1112,1060,792, heap=7288
+ 218.02 BATT t=256000 NORMAL peer=1 rx=5128 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 218.46 BODY t=589001 NORMAL peer=1 rx=10189 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 219.02 BATT t=257000 NORMAL peer=1 rx=5148 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 219.46 BODY t=590001 NORMAL peer=1 rx=10209 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 220.02 BATT t=258000 NORMAL peer=1 rx=5168 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 220.46 BODY t=591001 NORMAL peer=1 rx=10229 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 221.02 BATT t=259000 NORMAL peer=1 rx=5188 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 221.46 BODY t=592001 NORMAL peer=1 rx=10249 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 222.02 BATT t=260000 NORMAL peer=1 rx=5208 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 222.46 BODY t=593001 NORMAL peer=1 rx=10269 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9559 stk=1112,1060,792, heap=7288
+ 223.02 BATT t=261000 NORMAL peer=1 rx=5228 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 223.46 BODY t=594001 NORMAL peer=1 rx=10289 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 224.02 BATT t=262000 NORMAL peer=1 rx=5248 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3517 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 224.46 BODY t=595001 NORMAL peer=1 rx=10309 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 225.02 BATT t=263000 NORMAL peer=1 rx=5268 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 225.46 BODY t=596001 NORMAL peer=1 rx=10329 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 226.02 BATT t=264000 NORMAL peer=1 rx=5288 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 226.46 BODY t=597001 NORMAL peer=1 rx=10349 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 227.02 BATT t=265000 NORMAL peer=1 rx=5308 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 227.46 BODY t=598001 NORMAL peer=1 rx=10369 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 228.02 BATT t=266000 NORMAL peer=1 rx=5328 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 228.46 BODY t=599001 NORMAL peer=1 rx=10389 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 229.02 BATT t=267000 NORMAL peer=1 rx=5348 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 229.46 BODY t=600001 NORMAL peer=1 rx=10409 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 230.02 BATT t=268000 NORMAL peer=1 rx=5368 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 230.46 BODY t=601001 NORMAL peer=1 rx=10429 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 231.02 BATT t=269000 NORMAL peer=1 rx=5388 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 231.46 BODY t=602001 NORMAL peer=1 rx=10449 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 232.02 BATT t=270000 NORMAL peer=1 rx=5408 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 232.46 BODY t=603001 NORMAL peer=1 rx=10469 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 233.02 BATT t=271000 NORMAL peer=1 rx=5428 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 233.46 BODY t=604001 NORMAL peer=1 rx=10489 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 234.02 BATT t=272000 NORMAL peer=1 rx=5448 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 234.46 BODY t=605001 NORMAL peer=1 rx=10509 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 235.02 BATT t=273000 NORMAL peer=1 rx=5468 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 235.46 BODY t=606001 NORMAL peer=1 rx=10529 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 236.02 BATT t=274000 NORMAL peer=1 rx=5488 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 236.46 BODY t=607001 NORMAL peer=1 rx=10549 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 237.02 BATT t=275000 NORMAL peer=1 rx=5508 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 237.46 BODY t=608001 NORMAL peer=1 rx=10569 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 238.02 BATT t=276000 NORMAL peer=1 rx=5528 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 238.46 BODY t=609001 NORMAL peer=1 rx=10589 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 239.02 BATT t=277000 NORMAL peer=1 rx=5548 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 239.46 BODY t=610001 NORMAL peer=1 rx=10609 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 240.02 BATT t=278000 NORMAL peer=1 rx=5568 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 240.46 BODY t=611001 NORMAL peer=1 rx=10629 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9399 stk=1112,1060,792, heap=7288
+ 241.02 BATT t=279000 NORMAL peer=1 rx=5588 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 241.46 BODY t=612001 NORMAL peer=1 rx=10649 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 242.02 BATT t=280000 NORMAL peer=1 rx=5608 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 242.46 BODY t=613001 NORMAL peer=1 rx=10669 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6392 stk=1112,1060,792, heap=7288
+ 243.02 BATT t=281000 NORMAL peer=1 rx=5628 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 243.46 BODY t=614001 NORMAL peer=1 rx=10689 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 244.02 BATT t=282000 NORMAL peer=1 rx=5648 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 244.46 BODY t=615001 NORMAL peer=1 rx=10709 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 245.02 BATT t=283000 NORMAL peer=1 rx=5668 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 245.46 BODY t=616001 NORMAL peer=1 rx=10729 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 246.02 BATT t=284000 NORMAL peer=1 rx=5688 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 246.46 BODY t=617001 NORMAL peer=1 rx=10749 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 247.02 BATT t=285000 NORMAL peer=1 rx=5708 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 247.46 BODY t=618001 NORMAL peer=1 rx=10769 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 248.02 BATT t=286000 NORMAL peer=1 rx=5728 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 248.46 BODY t=619001 NORMAL peer=1 rx=10789 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 249.02 BATT t=287000 NORMAL peer=1 rx=5748 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 249.46 BODY t=620001 NORMAL peer=1 rx=10809 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 250.02 BATT t=288000 NORMAL peer=1 rx=5768 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 250.46 BODY t=621001 NORMAL peer=1 rx=10829 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6392 stk=1112,1060,792, heap=7288
+ 251.02 BATT t=289000 NORMAL peer=1 rx=5788 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 251.46 BODY t=622001 NORMAL peer=1 rx=10849 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 252.02 BATT t=290000 NORMAL peer=1 rx=5808 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 252.46 BODY t=623001 NORMAL peer=1 rx=10869 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 253.02 BATT t=291000 NORMAL peer=1 rx=5828 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 253.46 BODY t=624001 NORMAL peer=1 rx=10889 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 254.02 BATT t=292000 NORMAL peer=1 rx=5848 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 254.46 BODY t=625001 NORMAL peer=1 rx=10909 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 255.02 BATT t=293000 NORMAL peer=1 rx=5868 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 255.46 BODY t=626001 NORMAL peer=1 rx=10929 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 256.02 BATT t=294000 NORMAL peer=1 rx=5888 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 256.46 BODY t=627001 NORMAL peer=1 rx=10949 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 257.02 BATT t=295000 NORMAL peer=1 rx=5908 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 257.46 BODY t=628001 NORMAL peer=1 rx=10969 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 258.02 BATT t=296000 NORMAL peer=1 rx=5928 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 258.46 BODY t=629001 NORMAL peer=1 rx=10989 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 259.02 BATT t=297000 NORMAL peer=1 rx=5948 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 259.46 BODY t=630001 NORMAL peer=1 rx=11009 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 260.02 BATT t=298000 NORMAL peer=1 rx=5968 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 260.46 BODY t=631001 NORMAL peer=1 rx=11029 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 261.02 BATT t=299000 NORMAL peer=1 rx=5988 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 261.46 BODY t=632001 NORMAL peer=1 rx=11049 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 262.02 BATT t=300000 NORMAL peer=1 rx=6008 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 262.46 BODY t=633001 NORMAL peer=1 rx=11069 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 263.02 BATT t=301000 NORMAL peer=1 rx=6028 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 263.46 BODY t=634001 NORMAL peer=1 rx=11089 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 264.02 BATT t=302000 NORMAL peer=1 rx=6048 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 264.46 BODY t=635001 NORMAL peer=1 rx=11109 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9824 stk=1112,1060,792, heap=7288
+ 265.02 BATT t=303000 NORMAL peer=1 rx=6068 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 265.46 BODY t=636001 NORMAL peer=1 rx=11129 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 266.02 BATT t=304000 NORMAL peer=1 rx=6088 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 266.46 BODY t=637001 NORMAL peer=1 rx=11149 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 267.02 BATT t=305000 NORMAL peer=1 rx=6108 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 267.46 BODY t=638001 NORMAL peer=1 rx=11169 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 268.02 BATT t=306000 NORMAL peer=1 rx=6128 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 268.46 BODY t=639001 NORMAL peer=1 rx=11189 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 269.02 BATT t=307000 NORMAL peer=1 rx=6148 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 269.46 BODY t=640001 NORMAL peer=1 rx=11209 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 270.02 BATT t=308000 NORMAL peer=1 rx=6168 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 270.46 BODY t=641001 NORMAL peer=1 rx=11229 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 271.02 BATT t=309000 NORMAL peer=1 rx=6188 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 271.46 BODY t=642001 NORMAL peer=1 rx=11249 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 272.02 BATT t=310000 NORMAL peer=1 rx=6208 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 272.46 BODY t=643001 NORMAL peer=1 rx=11269 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 273.02 BATT t=311000 NORMAL peer=1 rx=6228 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 273.46 BODY t=644001 NORMAL peer=1 rx=11289 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 274.02 BATT t=312000 NORMAL peer=1 rx=6248 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 274.46 BODY t=645001 NORMAL peer=1 rx=11309 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 275.02 BATT t=313000 NORMAL peer=1 rx=6268 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 275.46 BODY t=646001 NORMAL peer=1 rx=11329 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 276.02 BATT t=314000 NORMAL peer=1 rx=6288 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 276.46 BODY t=647001 NORMAL peer=1 rx=11349 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 277.02 BATT t=315000 NORMAL peer=1 rx=6308 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 277.46 BODY t=648001 NORMAL peer=1 rx=11369 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 278.02 BATT t=316000 NORMAL peer=1 rx=6328 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 278.46 BODY t=649001 NORMAL peer=1 rx=11389 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 279.02 BATT t=317000 NORMAL peer=1 rx=6348 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 279.46 BODY t=650001 NORMAL peer=1 rx=11409 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 280.02 BATT t=318000 NORMAL peer=1 rx=6368 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 280.46 BODY t=651001 NORMAL peer=1 rx=11429 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 281.02 BATT t=319000 NORMAL peer=1 rx=6388 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 281.46 BODY t=652001 NORMAL peer=1 rx=11449 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 282.02 BATT t=320000 NORMAL peer=1 rx=6408 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 282.46 BODY t=653001 NORMAL peer=1 rx=11469 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 283.02 BATT t=321000 NORMAL peer=1 rx=6428 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 283.46 BODY t=654001 NORMAL peer=1 rx=11489 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 284.02 BATT t=322000 NORMAL peer=1 rx=6448 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 284.46 BODY t=655001 NORMAL peer=1 rx=11509 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 285.02 BATT t=323000 NORMAL peer=1 rx=6468 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 285.46 BODY t=656001 NORMAL peer=1 rx=11529 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6392 stk=1112,1060,792, heap=7288
+ 286.02 BATT t=324000 NORMAL peer=1 rx=6488 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 286.46 BODY t=657001 NORMAL peer=1 rx=11549 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 287.02 BATT t=325000 NORMAL peer=1 rx=6508 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 287.46 BODY t=658001 NORMAL peer=1 rx=11569 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 288.02 BATT t=326000 NORMAL peer=1 rx=6528 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 288.46 BODY t=659001 NORMAL peer=1 rx=11589 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 289.02 BATT t=327000 NORMAL peer=1 rx=6548 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 289.46 BODY t=660001 NORMAL peer=1 rx=11609 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 290.02 BATT t=328000 NORMAL peer=1 rx=6568 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 290.46 BODY t=661001 NORMAL peer=1 rx=11629 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 291.02 BATT t=329000 NORMAL peer=1 rx=6588 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 291.46 BODY t=662001 NORMAL peer=1 rx=11649 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 292.02 BATT t=330000 NORMAL peer=1 rx=6608 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 292.46 BODY t=663001 NORMAL peer=1 rx=11669 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 293.02 BATT t=331000 NORMAL peer=1 rx=6628 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 293.46 BODY t=664001 NORMAL peer=1 rx=11689 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 294.02 BATT t=332000 NORMAL peer=1 rx=6648 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 294.46 BODY t=665001 NORMAL peer=1 rx=11709 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 295.02 BATT t=333000 NORMAL peer=1 rx=6668 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 295.46 BODY t=666001 NORMAL peer=1 rx=11729 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 296.02 BATT t=334000 NORMAL peer=1 rx=6688 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 296.46 BODY t=667001 NORMAL peer=1 rx=11749 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6554 stk=1112,1060,792, heap=7288
+ 297.02 BATT t=335000 NORMAL peer=1 rx=6708 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 297.46 BODY t=668001 NORMAL peer=1 rx=11769 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 298.02 BATT t=336000 NORMAL peer=1 rx=6728 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 298.46 BODY t=669001 NORMAL peer=1 rx=11789 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 299.02 BATT t=337000 NORMAL peer=1 rx=6748 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 299.46 BODY t=670001 NORMAL peer=1 rx=11809 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 300.02 BATT t=338000 NORMAL peer=1 rx=6768 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 300.46 BODY t=671001 NORMAL peer=1 rx=11829 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 301.02 BATT t=339000 NORMAL peer=1 rx=6788 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 301.46 BODY t=672001 NORMAL peer=1 rx=11849 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 302.02 BATT t=340000 NORMAL peer=1 rx=6808 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 302.46 BODY t=673001 NORMAL peer=1 rx=11869 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 303.02 BATT t=341000 NORMAL peer=1 rx=6828 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 303.46 BODY t=674001 NORMAL peer=1 rx=11889 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 304.02 BATT t=342000 NORMAL peer=1 rx=6848 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 304.46 BODY t=675001 NORMAL peer=1 rx=11909 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 305.02 BATT t=343000 NORMAL peer=1 rx=6868 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 305.46 BODY t=676001 NORMAL peer=1 rx=11929 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 306.02 BATT t=344000 NORMAL peer=1 rx=6888 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 306.46 BODY t=677001 NORMAL peer=1 rx=11949 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 307.02 BATT t=345000 NORMAL peer=1 rx=6908 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 307.46 BODY t=678001 NORMAL peer=1 rx=11969 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 308.02 BATT t=346000 NORMAL peer=1 rx=6928 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 308.46 BODY t=679001 NORMAL peer=1 rx=11989 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 309.02 BATT t=347000 NORMAL peer=1 rx=6948 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 309.46 BODY t=680001 NORMAL peer=1 rx=12009 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 310.02 BATT t=348000 NORMAL peer=1 rx=6968 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 310.46 BODY t=681001 NORMAL peer=1 rx=12029 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 311.02 BATT t=349000 NORMAL peer=1 rx=6988 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 311.46 BODY t=682001 NORMAL peer=1 rx=12049 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 312.02 BATT t=350000 NORMAL peer=1 rx=7008 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 312.46 BODY t=683001 NORMAL peer=1 rx=12069 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 313.02 BATT t=351000 NORMAL peer=1 rx=7028 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 313.46 BODY t=684001 NORMAL peer=1 rx=12089 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 314.02 BATT t=352000 NORMAL peer=1 rx=7048 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 314.46 BODY t=685001 NORMAL peer=1 rx=12109 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6554 stk=1112,1060,792, heap=7288
+ 315.02 BATT t=353000 NORMAL peer=1 rx=7068 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 315.46 BODY t=686001 NORMAL peer=1 rx=12129 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 316.02 BATT t=354000 NORMAL peer=1 rx=7088 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 316.46 BODY t=687001 NORMAL peer=1 rx=12149 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 317.02 BATT t=355000 NORMAL peer=1 rx=7108 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 317.46 BODY t=688001 NORMAL peer=1 rx=12169 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 318.02 BATT t=356000 NORMAL peer=1 rx=7128 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 318.46 BODY t=689001 NORMAL peer=1 rx=12189 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 319.02 BATT t=357000 NORMAL peer=1 rx=7148 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 319.46 BODY t=690001 NORMAL peer=1 rx=12209 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 320.02 BATT t=358000 NORMAL peer=1 rx=7168 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 320.46 BODY t=691001 NORMAL peer=1 rx=12229 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 321.02 BATT t=359000 NORMAL peer=1 rx=7188 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 321.46 BODY t=692001 NORMAL peer=1 rx=12249 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 322.02 BATT t=360000 NORMAL peer=1 rx=7208 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 322.46 BODY t=693001 NORMAL peer=1 rx=12269 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 323.02 BATT t=361000 NORMAL peer=1 rx=7228 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 323.46 BODY t=694001 NORMAL peer=1 rx=12289 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6554 stk=1112,1060,792, heap=7288
+ 324.02 BATT t=362000 NORMAL peer=1 rx=7248 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 324.46 BODY t=695001 NORMAL peer=1 rx=12309 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 325.02 BATT t=363000 NORMAL peer=1 rx=7268 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 325.46 BODY t=696001 NORMAL peer=1 rx=12329 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 326.02 BATT t=364000 NORMAL peer=1 rx=7288 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 326.46 BODY t=697001 NORMAL peer=1 rx=12349 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 327.02 BATT t=365000 NORMAL peer=1 rx=7308 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 327.46 BODY t=698001 NORMAL peer=1 rx=12369 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 328.02 BATT t=366000 NORMAL peer=1 rx=7328 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 328.46 BODY t=699001 NORMAL peer=1 rx=12389 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 329.02 BATT t=367000 NORMAL peer=1 rx=7348 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 329.46 BODY t=700001 NORMAL peer=1 rx=12409 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 330.02 BATT t=368000 NORMAL peer=1 rx=7368 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 330.46 BODY t=701001 NORMAL peer=1 rx=12429 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 331.02 BATT t=369000 NORMAL peer=1 rx=7388 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 331.46 BODY t=702001 NORMAL peer=1 rx=12449 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 332.02 BATT t=370000 NORMAL peer=1 rx=7408 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 332.46 BODY t=703001 NORMAL peer=1 rx=12469 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 333.02 BATT t=371000 NORMAL peer=1 rx=7428 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 333.46 BODY t=704001 NORMAL peer=1 rx=12489 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 334.02 BATT t=372000 NORMAL peer=1 rx=7448 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 334.46 BODY t=705001 NORMAL peer=1 rx=12509 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9517 stk=1112,1060,792, heap=7288
+ 335.02 BATT t=373000 NORMAL peer=1 rx=7468 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 335.46 BODY t=706001 NORMAL peer=1 rx=12529 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 336.02 BATT t=374000 NORMAL peer=1 rx=7488 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 336.46 BODY t=707001 NORMAL peer=1 rx=12549 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 337.02 BATT t=375000 NORMAL peer=1 rx=7508 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 337.46 BODY t=708001 NORMAL peer=1 rx=12569 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 338.02 BATT t=376000 NORMAL peer=1 rx=7528 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 338.46 BODY t=709001 NORMAL peer=1 rx=12589 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 339.02 BATT t=377000 NORMAL peer=1 rx=7548 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 339.46 BODY t=710001 NORMAL peer=1 rx=12609 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9517 stk=1112,1060,792, heap=7288
+ 340.02 BATT t=378000 NORMAL peer=1 rx=7568 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 340.46 BODY t=711001 NORMAL peer=1 rx=12629 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6554 stk=1112,1060,792, heap=7288
+ 341.02 BATT t=379000 NORMAL peer=1 rx=7588 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 341.46 BODY t=712001 NORMAL peer=1 rx=12649 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 342.02 BATT t=380000 NORMAL peer=1 rx=7608 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 342.46 BODY t=713001 NORMAL peer=1 rx=12669 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6392 stk=1112,1060,792, heap=7288
+ 343.02 BATT t=381000 NORMAL peer=1 rx=7628 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 343.46 BODY t=714001 NORMAL peer=1 rx=12689 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 344.02 BATT t=382000 NORMAL peer=1 rx=7648 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 344.46 BODY t=715001 NORMAL peer=1 rx=12709 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 345.02 BATT t=383000 NORMAL peer=1 rx=7668 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 345.46 BODY t=716001 NORMAL peer=1 rx=12729 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 346.02 BATT t=384000 NORMAL peer=1 rx=7688 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 346.46 BODY t=717001 NORMAL peer=1 rx=12749 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 347.02 BATT t=385000 NORMAL peer=1 rx=7708 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 347.46 BODY t=718001 NORMAL peer=1 rx=12769 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 348.02 BATT t=386000 NORMAL peer=1 rx=7728 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 348.46 BODY t=719001 NORMAL peer=1 rx=12789 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 349.02 BATT t=387000 NORMAL peer=1 rx=7748 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 349.46 BODY t=720001 NORMAL peer=1 rx=12809 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 350.02 BATT t=388000 NORMAL peer=1 rx=7768 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 350.46 BODY t=721001 NORMAL peer=1 rx=12829 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 351.02 BATT t=389000 NORMAL peer=1 rx=7788 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 351.46 BODY t=722001 NORMAL peer=1 rx=12849 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9676 stk=1112,1060,792, heap=7288
+ 352.02 BATT t=390000 NORMAL peer=1 rx=7808 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 352.46 BODY t=723001 NORMAL peer=1 rx=12869 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 353.02 BATT t=391000 NORMAL peer=1 rx=7828 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 353.46 BODY t=724001 NORMAL peer=1 rx=12889 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 354.02 BATT t=392000 NORMAL peer=1 rx=7848 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 354.46 BODY t=725001 NORMAL peer=1 rx=12909 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 355.02 BATT t=393000 NORMAL peer=1 rx=7868 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 355.46 BODY t=726001 NORMAL peer=1 rx=12929 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 356.02 BATT t=394000 NORMAL peer=1 rx=7888 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 356.46 BODY t=727001 NORMAL peer=1 rx=12949 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 357.02 BATT t=395000 NORMAL peer=1 rx=7908 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 357.46 BODY t=728001 NORMAL peer=1 rx=12969 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 358.02 BATT t=396000 NORMAL peer=1 rx=7928 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 358.46 BODY t=729001 NORMAL peer=1 rx=12989 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 359.02 BATT t=397000 NORMAL peer=1 rx=7948 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 359.46 BODY t=730001 NORMAL peer=1 rx=13009 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 360.02 BATT t=398000 NORMAL peer=1 rx=7968 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 360.46 BODY t=731001 NORMAL peer=1 rx=13029 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 361.02 BATT t=399000 NORMAL peer=1 rx=7988 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 361.46 BODY t=732001 NORMAL peer=1 rx=13049 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 362.02 BATT t=400000 NORMAL peer=1 rx=8008 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 362.46 BODY t=733001 NORMAL peer=1 rx=13069 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9663 stk=1112,1060,792, heap=7288
+ 363.02 BATT t=401000 NORMAL peer=1 rx=8028 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 363.46 BODY t=734001 NORMAL peer=1 rx=13089 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 364.02 BATT t=402000 NORMAL peer=1 rx=8048 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 364.46 BODY t=735001 NORMAL peer=1 rx=13109 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 365.02 BATT t=403000 NORMAL peer=1 rx=8068 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 365.46 BODY t=736001 NORMAL peer=1 rx=13129 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 366.02 BATT t=404000 NORMAL peer=1 rx=8088 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 366.46 BODY t=737001 NORMAL peer=1 rx=13149 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 367.02 BATT t=405000 NORMAL peer=1 rx=8108 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 367.46 BODY t=738001 NORMAL peer=1 rx=13169 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 368.03 BATT t=406000 NORMAL peer=1 rx=8128 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 368.46 BODY t=739001 NORMAL peer=1 rx=13189 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 369.03 BATT t=407000 NORMAL peer=1 rx=8148 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 369.46 BODY t=740001 NORMAL peer=1 rx=13209 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 370.03 BATT t=408000 NORMAL peer=1 rx=8168 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 370.46 BODY t=741001 NORMAL peer=1 rx=13229 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 371.03 BATT t=409000 NORMAL peer=1 rx=8188 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 371.46 BODY t=742001 NORMAL peer=1 rx=13249 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 372.03 BATT t=410000 NORMAL peer=1 rx=8208 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 372.46 BODY t=743001 NORMAL peer=1 rx=13269 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9677 stk=1112,1060,792, heap=7288
+ 373.03 BATT t=411000 NORMAL peer=1 rx=8228 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 373.46 BODY t=744001 NORMAL peer=1 rx=13289 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 374.03 BATT t=412000 NORMAL peer=1 rx=8248 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 374.46 BODY t=745001 NORMAL peer=1 rx=13309 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 375.03 BATT t=413000 NORMAL peer=1 rx=8268 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 375.46 BODY t=746001 NORMAL peer=1 rx=13329 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 376.03 BATT t=414000 NORMAL peer=1 rx=8288 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 376.46 BODY t=747001 NORMAL peer=1 rx=13349 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 377.03 BATT t=415000 NORMAL peer=1 rx=8308 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 377.46 BODY t=748001 NORMAL peer=1 rx=13369 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9399 stk=1112,1060,792, heap=7288
+ 378.03 BATT t=416000 NORMAL peer=1 rx=8328 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 378.46 BODY t=749001 NORMAL peer=1 rx=13389 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 379.03 BATT t=417000 NORMAL peer=1 rx=8348 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 379.46 BODY t=750001 NORMAL peer=1 rx=13409 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6554 stk=1112,1060,792, heap=7288
+ 380.03 BATT t=418000 NORMAL peer=1 rx=8368 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 380.46 BODY t=751001 NORMAL peer=1 rx=13429 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 381.03 BATT t=419000 NORMAL peer=1 rx=8388 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 381.46 BODY t=752001 NORMAL peer=1 rx=13449 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 382.03 BATT t=420000 NORMAL peer=1 rx=8408 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 382.46 BODY t=753001 NORMAL peer=1 rx=13469 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 383.03 BATT t=421000 NORMAL peer=1 rx=8428 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 383.46 BODY t=754001 NORMAL peer=1 rx=13489 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 384.03 BATT t=422000 NORMAL peer=1 rx=8448 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 384.46 BODY t=755001 NORMAL peer=1 rx=13509 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 385.03 BATT t=423000 NORMAL peer=1 rx=8468 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 385.47 BODY t=756001 NORMAL peer=1 rx=13529 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9824 stk=1112,1060,792, heap=7288
+ 386.03 BATT t=424000 NORMAL peer=1 rx=8488 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 386.46 BODY t=757001 NORMAL peer=1 rx=13549 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 387.03 BATT t=425000 NORMAL peer=1 rx=8508 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 387.47 BODY t=758001 NORMAL peer=1 rx=13569 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9663 stk=1112,1060,792, heap=7288
+ 388.03 BATT t=426000 NORMAL peer=1 rx=8528 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=221 ok=1 stk=1104,784, heap=8912
+ 388.47 BODY t=759001 NORMAL peer=1 rx=13589 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3545 stk=1112,1060,792, heap=7288
+ 389.03 BATT t=427000 NORMAL peer=1 rx=8548 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=220 ok=1 stk=1104,784, heap=8912
+ 389.47 BODY t=760001 NORMAL peer=1 rx=13609 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3279 stk=1112,1060,792, heap=7288
+ 390.03 BATT t=428000 NORMAL peer=1 rx=8568 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 390.47 BODY t=761001 NORMAL peer=1 rx=13629 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6392 stk=1112,1060,792, heap=7288
+ 391.03 BATT t=429000 NORMAL peer=1 rx=8588 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=222 ok=1 stk=1104,784, heap=8912
+ 391.47 BODY t=762001 NORMAL peer=1 rx=13649 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 392.03 BATT t=430000 NORMAL peer=1 rx=8608 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 392.47 BODY t=763001 NORMAL peer=1 rx=13669 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 393.03 BATT t=431000 NORMAL peer=1 rx=8628 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 393.47 BODY t=764001 NORMAL peer=1 rx=13689 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 394.03 BATT t=432000 NORMAL peer=1 rx=8648 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 394.47 BODY t=765001 NORMAL peer=1 rx=13709 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 395.03 BATT t=433000 NORMAL peer=1 rx=8668 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 395.47 BODY t=766001 NORMAL peer=1 rx=13729 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9517 stk=1112,1060,792, heap=7288
+ 396.03 BATT t=434000 NORMAL peer=1 rx=8688 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 396.47 BODY t=767001 NORMAL peer=1 rx=13749 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 397.03 BATT t=435000 NORMAL peer=1 rx=8708 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 397.47 BODY t=768001 NORMAL peer=1 rx=13769 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 398.03 BATT t=436000 NORMAL peer=1 rx=8728 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 398.47 BODY t=769001 NORMAL peer=1 rx=13789 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 399.03 BATT t=437000 NORMAL peer=1 rx=8748 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 399.47 BODY t=770001 NORMAL peer=1 rx=13809 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 400.03 BATT t=438000 NORMAL peer=1 rx=8768 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 400.47 BODY t=771001 NORMAL peer=1 rx=13829 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 401.03 BATT t=439000 NORMAL peer=1 rx=8788 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 401.47 BODY t=772001 NORMAL peer=1 rx=13849 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 402.03 BATT t=440000 NORMAL peer=1 rx=8808 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 402.47 BODY t=773001 NORMAL peer=1 rx=13869 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 403.03 BATT t=441000 NORMAL peer=1 rx=8828 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 403.47 BODY t=774001 NORMAL peer=1 rx=13889 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 404.03 BATT t=442000 NORMAL peer=1 rx=8848 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 404.47 BODY t=775001 NORMAL peer=1 rx=13909 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 405.03 BATT t=443000 NORMAL peer=1 rx=8868 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 405.47 BODY t=776001 NORMAL peer=1 rx=13929 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 406.03 BATT t=444000 NORMAL peer=1 rx=8888 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 406.47 BODY t=777001 NORMAL peer=1 rx=13949 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 407.03 BATT t=445000 NORMAL peer=1 rx=8908 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 407.47 BODY t=778001 NORMAL peer=1 rx=13969 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 408.03 BATT t=446000 NORMAL peer=1 rx=8928 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 408.47 BODY t=779001 NORMAL peer=1 rx=13989 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 409.03 BATT t=447000 NORMAL peer=1 rx=8948 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 409.47 BODY t=780001 NORMAL peer=1 rx=14009 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 410.03 BATT t=448000 NORMAL peer=1 rx=8968 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 410.47 BODY t=781001 NORMAL peer=1 rx=14029 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 411.03 BATT t=449000 NORMAL peer=1 rx=8988 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=229 ok=1 stk=1104,784, heap=8912
+ 411.47 BODY t=782001 NORMAL peer=1 rx=14049 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 412.03 BATT t=450000 NORMAL peer=1 rx=9008 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 412.47 BODY t=783001 NORMAL peer=1 rx=14069 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6554 stk=1112,1060,792, heap=7288
+ 413.03 BATT t=451000 NORMAL peer=1 rx=9028 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=229 ok=1 stk=1104,784, heap=8912
+ 413.47 BODY t=784001 NORMAL peer=1 rx=14089 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 414.03 BATT t=452000 NORMAL peer=1 rx=9048 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 414.47 BODY t=785001 NORMAL peer=1 rx=14109 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 415.03 BATT t=453000 NORMAL peer=1 rx=9068 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 415.47 BODY t=786001 NORMAL peer=1 rx=14129 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9547 stk=1112,1060,792, heap=7288
+ 416.03 BATT t=454000 NORMAL peer=1 rx=9088 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 416.47 BODY t=787001 NORMAL peer=1 rx=14149 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 417.03 BATT t=455000 NORMAL peer=1 rx=9108 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 417.47 BODY t=788001 NORMAL peer=1 rx=14169 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 418.03 BATT t=456000 NORMAL peer=1 rx=9128 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 418.47 BODY t=789001 NORMAL peer=1 rx=14189 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 419.03 BATT t=457000 NORMAL peer=1 rx=9148 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 419.47 BODY t=790001 NORMAL peer=1 rx=14209 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9547 stk=1112,1060,792, heap=7288
+ 420.03 BATT t=458000 NORMAL peer=1 rx=9168 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 420.47 BODY t=791001 NORMAL peer=1 rx=14229 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9708 stk=1112,1060,792, heap=7288
+ 421.03 BATT t=459000 NORMAL peer=1 rx=9188 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 421.47 BODY t=792001 NORMAL peer=1 rx=14249 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 422.03 BATT t=460000 NORMAL peer=1 rx=9208 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 422.47 BODY t=793001 NORMAL peer=1 rx=14269 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 423.03 BATT t=461000 NORMAL peer=1 rx=9228 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 423.47 BODY t=794001 NORMAL peer=1 rx=14289 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 424.05 BATT t=462000 NORMAL peer=1 rx=9248 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 424.47 BODY t=795001 NORMAL peer=1 rx=14309 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 425.03 BATT t=463000 NORMAL peer=1 rx=9268 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 425.47 BODY t=796001 NORMAL peer=1 rx=14329 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 426.03 BATT t=464000 NORMAL peer=1 rx=9288 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 426.47 BODY t=797001 NORMAL peer=1 rx=14349 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 427.03 BATT t=465000 NORMAL peer=1 rx=9308 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 427.47 BODY t=798001 NORMAL peer=1 rx=14369 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 428.03 BATT t=466000 NORMAL peer=1 rx=9328 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 428.47 BODY t=799001 NORMAL peer=1 rx=14389 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 429.03 BATT t=467000 NORMAL peer=1 rx=9348 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 429.47 BODY t=800001 NORMAL peer=1 rx=14409 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 430.03 BATT t=468000 NORMAL peer=1 rx=9368 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 430.47 BODY t=801001 NORMAL peer=1 rx=14429 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 431.03 BATT t=469000 NORMAL peer=1 rx=9388 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 431.47 BODY t=802001 NORMAL peer=1 rx=14449 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 432.03 BATT t=470000 NORMAL peer=1 rx=9408 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 432.47 BODY t=803001 NORMAL peer=1 rx=14469 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 433.03 BATT t=471000 NORMAL peer=1 rx=9428 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 433.47 BODY t=804001 NORMAL peer=1 rx=14489 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 434.03 BATT t=472000 NORMAL peer=1 rx=9448 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 434.47 BODY t=805001 NORMAL peer=1 rx=14509 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 435.03 BATT t=473000 NORMAL peer=1 rx=9468 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 435.47 BODY t=806001 NORMAL peer=1 rx=14529 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 436.03 BATT t=474000 NORMAL peer=1 rx=9488 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 436.47 BODY t=807001 NORMAL peer=1 rx=14549 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 437.03 BATT t=475000 NORMAL peer=1 rx=9508 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 437.47 BODY t=808001 NORMAL peer=1 rx=14569 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9707 stk=1112,1060,792, heap=7288
+ 438.03 BATT t=476000 NORMAL peer=1 rx=9528 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 438.47 BODY t=809001 NORMAL peer=1 rx=14589 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 439.03 BATT t=477000 NORMAL peer=1 rx=9548 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 439.47 BODY t=810001 NORMAL peer=1 rx=14609 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 440.03 BATT t=478000 NORMAL peer=1 rx=9568 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 440.47 BODY t=811001 NORMAL peer=1 rx=14629 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 441.03 BATT t=479000 NORMAL peer=1 rx=9588 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 441.47 BODY t=812001 NORMAL peer=1 rx=14649 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 442.03 BATT t=480000 NORMAL peer=1 rx=9608 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 442.47 BODY t=813001 NORMAL peer=1 rx=14669 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 443.03 BATT t=481000 NORMAL peer=1 rx=9628 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 443.47 BODY t=814001 NORMAL peer=1 rx=14689 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 444.03 BATT t=482000 NORMAL peer=1 rx=9648 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 444.47 BODY t=815001 NORMAL peer=1 rx=14709 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 445.03 BATT t=483000 NORMAL peer=1 rx=9668 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 445.47 BODY t=816001 NORMAL peer=1 rx=14729 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 446.03 BATT t=484000 NORMAL peer=1 rx=9688 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 446.47 BODY t=817001 NORMAL peer=1 rx=14749 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 447.03 BATT t=485000 NORMAL peer=1 rx=9708 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 447.47 BODY t=818001 NORMAL peer=1 rx=14769 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 448.03 BATT t=486000 NORMAL peer=1 rx=9728 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 448.47 BODY t=819001 NORMAL peer=1 rx=14789 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 449.03 BATT t=487000 NORMAL peer=1 rx=9748 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 449.47 BODY t=820001 NORMAL peer=1 rx=14809 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 450.03 BATT t=488000 NORMAL peer=1 rx=9768 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 450.47 BODY t=821001 NORMAL peer=1 rx=14829 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6554 stk=1112,1060,792, heap=7288
+ 451.03 BATT t=489000 NORMAL peer=1 rx=9788 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 451.47 BODY t=822001 NORMAL peer=1 rx=14849 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 452.03 BATT t=490000 NORMAL peer=1 rx=9808 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 452.47 BODY t=823001 NORMAL peer=1 rx=14869 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 453.03 BATT t=491000 NORMAL peer=1 rx=9828 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=229 ok=1 stk=1104,784, heap=8912
+ 453.47 BODY t=824001 NORMAL peer=1 rx=14889 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 454.03 BATT t=492000 NORMAL peer=1 rx=9848 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 454.47 BODY t=825001 NORMAL peer=1 rx=14909 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 455.03 BATT t=493000 NORMAL peer=1 rx=9868 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 455.47 BODY t=826001 NORMAL peer=1 rx=14929 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 456.03 BATT t=494000 NORMAL peer=1 rx=9888 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 456.47 BODY t=827001 NORMAL peer=1 rx=14949 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9429 stk=1112,1060,792, heap=7288
+ 457.03 BATT t=495000 NORMAL peer=1 rx=9908 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 457.47 BODY t=828001 NORMAL peer=1 rx=14969 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 458.03 BATT t=496000 NORMAL peer=1 rx=9928 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 458.47 BODY t=829001 NORMAL peer=1 rx=14989 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 459.03 BATT t=497000 NORMAL peer=1 rx=9948 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 459.47 BODY t=830001 NORMAL peer=1 rx=15009 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 460.03 BATT t=498000 NORMAL peer=1 rx=9968 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 460.47 BODY t=831001 NORMAL peer=1 rx=15029 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 461.03 BATT t=499000 NORMAL peer=1 rx=9988 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 461.47 BODY t=832001 NORMAL peer=1 rx=15049 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9429 stk=1112,1060,792, heap=7288
+ 462.03 BATT t=500000 NORMAL peer=1 rx=10008 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 462.47 BODY t=833001 NORMAL peer=1 rx=15069 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6554 stk=1112,1060,792, heap=7288
+ 463.03 BATT t=501000 NORMAL peer=1 rx=10028 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 463.47 BODY t=834001 NORMAL peer=1 rx=15089 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=6392 stk=1112,1060,792, heap=7288
+ 464.03 BATT t=502000 NORMAL peer=1 rx=10048 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 464.47 BODY t=835001 NORMAL peer=1 rx=15109 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 465.03 BATT t=503000 NORMAL peer=1 rx=10068 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 465.47 BODY t=836001 NORMAL peer=1 rx=15129 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 466.03 BATT t=504000 NORMAL peer=1 rx=10088 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 466.47 BODY t=837001 NORMAL peer=1 rx=15149 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 467.03 BATT t=505000 NORMAL peer=1 rx=10108 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 467.47 BODY t=838001 NORMAL peer=1 rx=15169 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 468.03 BATT t=506000 NORMAL peer=1 rx=10128 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 468.47 BODY t=839001 NORMAL peer=1 rx=15189 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 469.03 BATT t=507000 NORMAL peer=1 rx=10148 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 469.47 BODY t=840001 NORMAL peer=1 rx=15209 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 470.03 BATT t=508000 NORMAL peer=1 rx=10168 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 470.47 BODY t=841001 NORMAL peer=1 rx=15229 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 471.03 BATT t=509000 NORMAL peer=1 rx=10188 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 471.47 BODY t=842001 NORMAL peer=1 rx=15249 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 472.03 BATT t=510000 NORMAL peer=1 rx=10208 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 472.47 BODY t=843001 NORMAL peer=1 rx=15269 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 473.03 BATT t=511000 NORMAL peer=1 rx=10228 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 473.47 BODY t=844001 NORMAL peer=1 rx=15289 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 474.03 BATT t=512000 NORMAL peer=1 rx=10248 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 474.47 BODY t=845001 NORMAL peer=1 rx=15309 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 475.03 BATT t=513000 NORMAL peer=1 rx=10268 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 475.47 BODY t=846001 NORMAL peer=1 rx=15329 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 476.03 BATT t=514000 NORMAL peer=1 rx=10288 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 476.47 BODY t=847001 NORMAL peer=1 rx=15349 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 477.03 BATT t=515000 NORMAL peer=1 rx=10308 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 477.47 BODY t=848001 NORMAL peer=1 rx=15369 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 478.03 BATT t=516000 NORMAL peer=1 rx=10328 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 478.47 BODY t=849001 NORMAL peer=1 rx=15389 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 479.03 BATT t=517000 NORMAL peer=1 rx=10348 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 479.47 BODY t=850001 NORMAL peer=1 rx=15409 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 480.03 BATT t=518000 NORMAL peer=1 rx=10368 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 480.47 BODY t=851001 NORMAL peer=1 rx=15429 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 481.03 BATT t=519000 NORMAL peer=1 rx=10388 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 481.47 BODY t=852001 NORMAL peer=1 rx=15449 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 482.03 BATT t=520000 NORMAL peer=1 rx=10408 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 482.47 BODY t=853001 NORMAL peer=1 rx=15469 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 483.03 BATT t=521000 NORMAL peer=1 rx=10428 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 483.47 BODY t=854001 NORMAL peer=1 rx=15489 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 484.03 BATT t=522000 NORMAL peer=1 rx=10448 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 484.47 BODY t=855001 NORMAL peer=1 rx=15509 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9589 stk=1112,1060,792, heap=7288
+ 485.03 BATT t=523000 NORMAL peer=1 rx=10468 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 485.47 BODY t=856001 NORMAL peer=1 rx=15529 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 486.03 BATT t=524000 NORMAL peer=1 rx=10488 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 486.47 BODY t=857001 NORMAL peer=1 rx=15549 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 487.03 BATT t=525000 NORMAL peer=1 rx=10508 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 487.47 BODY t=858001 NORMAL peer=1 rx=15569 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 488.03 BATT t=526000 NORMAL peer=1 rx=10528 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 488.47 BODY t=859001 NORMAL peer=1 rx=15589 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 489.03 BATT t=527000 NORMAL peer=1 rx=10548 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 489.47 BODY t=860001 NORMAL peer=1 rx=15609 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 490.03 BATT t=528000 NORMAL peer=1 rx=10568 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 490.47 BODY t=861001 NORMAL peer=1 rx=15629 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 491.03 BATT t=529000 NORMAL peer=1 rx=10588 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 491.47 BODY t=862001 NORMAL peer=1 rx=15649 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 492.03 BATT t=530000 NORMAL peer=1 rx=10608 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 492.47 BODY t=863001 NORMAL peer=1 rx=15669 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 493.03 BATT t=531000 NORMAL peer=1 rx=10628 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 493.47 BODY t=864001 NORMAL peer=1 rx=15689 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 494.03 BATT t=532000 NORMAL peer=1 rx=10648 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 494.47 BODY t=865001 NORMAL peer=1 rx=15709 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 495.03 BATT t=533000 NORMAL peer=1 rx=10668 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 495.47 BODY t=866001 NORMAL peer=1 rx=15729 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9429 stk=1112,1060,792, heap=7288
+ 496.03 BATT t=534000 NORMAL peer=1 rx=10688 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 496.47 BODY t=867001 NORMAL peer=1 rx=15749 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 497.03 BATT t=535000 NORMAL peer=1 rx=10708 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 497.47 BODY t=868001 NORMAL peer=1 rx=15769 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 498.03 BATT t=536000 NORMAL peer=1 rx=10728 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 498.47 BODY t=869001 NORMAL peer=1 rx=15789 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 499.03 BATT t=537000 NORMAL peer=1 rx=10748 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 499.47 BODY t=870001 NORMAL peer=1 rx=15809 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9766 stk=1112,1060,792, heap=7288
+ 500.03 BATT t=538000 NORMAL peer=1 rx=10768 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 500.47 BODY t=871001 NORMAL peer=1 rx=15829 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 501.03 BATT t=539000 NORMAL peer=1 rx=10788 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 501.47 BODY t=872001 NORMAL peer=1 rx=15849 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 502.03 BATT t=540000 NORMAL peer=1 rx=10808 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 502.47 BODY t=873001 NORMAL peer=1 rx=15869 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 503.03 BATT t=541000 NORMAL peer=1 rx=10828 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 503.47 BODY t=874001 NORMAL peer=1 rx=15889 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 504.03 BATT t=542000 NORMAL peer=1 rx=10848 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 504.47 BODY t=875001 NORMAL peer=1 rx=15909 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 505.03 BATT t=543000 NORMAL peer=1 rx=10868 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 505.47 BODY t=876001 NORMAL peer=1 rx=15929 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 506.03 BATT t=544000 NORMAL peer=1 rx=10888 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 506.47 BODY t=877001 NORMAL peer=1 rx=15949 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 507.03 BATT t=545000 NORMAL peer=1 rx=10908 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 507.47 BODY t=878001 NORMAL peer=1 rx=15969 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 508.03 BATT t=546000 NORMAL peer=1 rx=10928 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 508.47 BODY t=879001 NORMAL peer=1 rx=15989 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 509.03 BATT t=547000 NORMAL peer=1 rx=10948 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 509.47 BODY t=880001 NORMAL peer=1 rx=16009 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 510.03 BATT t=548000 NORMAL peer=1 rx=10968 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 510.47 BODY t=881001 NORMAL peer=1 rx=16029 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 511.03 BATT t=549000 NORMAL peer=1 rx=10988 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 511.47 BODY t=882001 NORMAL peer=1 rx=16049 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9517 stk=1112,1060,792, heap=7288
+ 512.03 BATT t=550000 NORMAL peer=1 rx=11008 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 512.47 BODY t=883001 NORMAL peer=1 rx=16069 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 513.03 BATT t=551000 NORMAL peer=1 rx=11028 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 513.47 BODY t=884001 NORMAL peer=1 rx=16089 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 514.03 BATT t=552000 NORMAL peer=1 rx=11048 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 514.47 BODY t=885001 NORMAL peer=1 rx=16109 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 515.03 BATT t=553000 NORMAL peer=1 rx=11068 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 515.47 BODY t=886001 NORMAL peer=1 rx=16129 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 516.03 BATT t=554000 NORMAL peer=1 rx=11088 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 516.47 BODY t=887001 NORMAL peer=1 rx=16149 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 517.03 BATT t=555000 NORMAL peer=1 rx=11108 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=223 ok=1 stk=1104,784, heap=8912
+ 517.47 BODY t=888001 NORMAL peer=1 rx=16169 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 518.03 BATT t=556000 NORMAL peer=1 rx=11128 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 518.47 BODY t=889001 NORMAL peer=1 rx=16189 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 519.03 BATT t=557000 NORMAL peer=1 rx=11148 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 519.47 BODY t=890001 NORMAL peer=1 rx=16209 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 520.03 BATT t=558000 NORMAL peer=1 rx=11168 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 520.47 BODY t=891001 NORMAL peer=1 rx=16229 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 521.03 BATT t=559000 NORMAL peer=1 rx=11188 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 521.47 BODY t=892001 NORMAL peer=1 rx=16249 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 522.03 BATT t=560000 NORMAL peer=1 rx=11208 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 522.47 BODY t=893001 NORMAL peer=1 rx=16269 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 523.03 BATT t=561000 NORMAL peer=1 rx=11228 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 523.47 BODY t=894001 NORMAL peer=1 rx=16289 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 524.03 BATT t=562000 NORMAL peer=1 rx=11248 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 524.47 BODY t=895001 NORMAL peer=1 rx=16309 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 525.03 BATT t=563000 NORMAL peer=1 rx=11268 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 525.47 BODY t=896001 NORMAL peer=1 rx=16329 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 526.03 BATT t=564000 NORMAL peer=1 rx=11288 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 526.47 BODY t=897001 NORMAL peer=1 rx=16349 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 527.03 BATT t=565000 NORMAL peer=1 rx=11308 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 527.47 BODY t=898001 NORMAL peer=1 rx=16369 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 528.03 BATT t=566000 NORMAL peer=1 rx=11328 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 528.47 BODY t=899001 NORMAL peer=1 rx=16389 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 529.03 BATT t=567000 NORMAL peer=1 rx=11348 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 529.47 BODY t=900001 NORMAL peer=1 rx=16409 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 530.03 BATT t=568000 NORMAL peer=1 rx=11368 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 530.47 BODY t=901001 NORMAL peer=1 rx=16429 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 531.03 BATT t=569000 NORMAL peer=1 rx=11388 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 531.47 BODY t=902001 NORMAL peer=1 rx=16449 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 532.03 BATT t=570000 NORMAL peer=1 rx=11408 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=229 ok=1 stk=1104,784, heap=8912
+ 532.47 BODY t=903001 NORMAL peer=1 rx=16469 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 533.03 BATT t=571000 NORMAL peer=1 rx=11428 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=229 ok=1 stk=1104,784, heap=8912
+ 533.47 BODY t=904001 NORMAL peer=1 rx=16489 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 534.03 BATT t=572000 NORMAL peer=1 rx=11448 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=230 ok=1 stk=1104,784, heap=8912
+ 534.47 BODY t=905001 NORMAL peer=1 rx=16509 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 535.03 BATT t=573000 NORMAL peer=1 rx=11468 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 535.47 BODY t=906001 NORMAL peer=1 rx=16529 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 536.03 BATT t=574000 NORMAL peer=1 rx=11488 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=229 ok=1 stk=1104,784, heap=8912
+ 536.47 BODY t=907001 NORMAL peer=1 rx=16549 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 537.03 BATT t=575000 NORMAL peer=1 rx=11508 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=229 ok=1 stk=1104,784, heap=8912
+ 537.47 BODY t=908001 NORMAL peer=1 rx=16569 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 538.03 BATT t=576000 NORMAL peer=1 rx=11528 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=229 ok=1 stk=1104,784, heap=8912
+ 538.47 BODY t=909001 NORMAL peer=1 rx=16589 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 539.03 BATT t=577000 NORMAL peer=1 rx=11548 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=229 ok=1 stk=1104,784, heap=8912
+ 539.47 BODY t=910001 NORMAL peer=1 rx=16609 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 540.03 BATT t=578000 NORMAL peer=1 rx=11568 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=230 ok=1 stk=1104,784, heap=8912
+ 540.47 BODY t=911001 NORMAL peer=1 rx=16629 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 541.03 BATT t=579000 NORMAL peer=1 rx=11588 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 541.47 BODY t=912001 NORMAL peer=1 rx=16649 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 542.03 BATT t=580000 NORMAL peer=1 rx=11608 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=230 ok=1 stk=1104,784, heap=8912
+ 542.47 BODY t=913001 NORMAL peer=1 rx=16669 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 543.03 BATT t=581000 NORMAL peer=1 rx=11628 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=229 ok=1 stk=1104,784, heap=8912
+ 543.47 BODY t=914001 NORMAL peer=1 rx=16689 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 544.03 BATT t=582000 NORMAL peer=1 rx=11648 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=229 ok=1 stk=1104,784, heap=8912
+ 544.47 BODY t=915001 NORMAL peer=1 rx=16709 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 545.03 BATT t=583000 NORMAL peer=1 rx=11668 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 545.47 BODY t=916001 NORMAL peer=1 rx=16729 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 546.03 BATT t=584000 NORMAL peer=1 rx=11688 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 546.47 BODY t=917001 NORMAL peer=1 rx=16749 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 547.03 BATT t=585000 NORMAL peer=1 rx=11708 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 547.47 BODY t=918001 NORMAL peer=1 rx=16769 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 548.03 BATT t=586000 NORMAL peer=1 rx=11728 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=229 ok=1 stk=1104,784, heap=8912
+ 548.47 BODY t=919001 NORMAL peer=1 rx=16789 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 549.03 BATT t=587000 NORMAL peer=1 rx=11748 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 549.47 BODY t=920001 NORMAL peer=1 rx=16809 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 550.03 BATT t=588000 NORMAL peer=1 rx=11768 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 550.47 BODY t=921001 NORMAL peer=1 rx=16829 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 551.03 BATT t=589000 NORMAL peer=1 rx=11788 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3520 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 551.47 BODY t=922001 NORMAL peer=1 rx=16849 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 552.03 BATT t=590000 NORMAL peer=1 rx=11808 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 552.47 BODY t=923001 NORMAL peer=1 rx=16869 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 553.03 BATT t=591000 NORMAL peer=1 rx=11828 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 553.47 BODY t=924001 NORMAL peer=1 rx=16889 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 554.03 BATT t=592000 NORMAL peer=1 rx=11848 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 554.47 BODY t=925001 NORMAL peer=1 rx=16909 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 555.03 BATT t=593000 NORMAL peer=1 rx=11868 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 555.47 BODY t=926001 NORMAL peer=1 rx=16929 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 556.03 BATT t=594000 NORMAL peer=1 rx=11888 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 556.47 BODY t=927001 NORMAL peer=1 rx=16949 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 557.03 BATT t=595000 NORMAL peer=1 rx=11908 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 557.47 BODY t=928001 NORMAL peer=1 rx=16969 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 558.03 BATT t=596000 NORMAL peer=1 rx=11928 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 558.47 BODY t=929001 NORMAL peer=1 rx=16989 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 559.03 BATT t=597000 NORMAL peer=1 rx=11948 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 559.47 BODY t=930001 NORMAL peer=1 rx=17009 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 560.03 BATT t=598000 NORMAL peer=1 rx=11968 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 560.47 BODY t=931001 NORMAL peer=1 rx=17029 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 561.03 BATT t=599000 NORMAL peer=1 rx=11988 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 561.47 BODY t=932001 NORMAL peer=1 rx=17049 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 562.03 BATT t=600000 NORMAL peer=1 rx=12008 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 562.47 BODY t=933001 NORMAL peer=1 rx=17069 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 563.03 BATT t=601000 NORMAL peer=1 rx=12028 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 563.47 BODY t=934001 NORMAL peer=1 rx=17089 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 564.03 BATT t=602000 NORMAL peer=1 rx=12048 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 564.47 BODY t=935001 NORMAL peer=1 rx=17109 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 565.03 BATT t=603000 NORMAL peer=1 rx=12068 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 565.47 BODY t=936001 NORMAL peer=1 rx=17129 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 566.03 BATT t=604000 NORMAL peer=1 rx=12088 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 566.47 BODY t=937001 NORMAL peer=1 rx=17149 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 567.03 BATT t=605000 NORMAL peer=1 rx=12108 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 567.47 BODY t=938001 NORMAL peer=1 rx=17169 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 568.03 BATT t=606000 NORMAL peer=1 rx=12128 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 568.47 BODY t=939001 NORMAL peer=1 rx=17189 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 569.03 BATT t=607000 NORMAL peer=1 rx=12148 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 569.47 BODY t=940001 NORMAL peer=1 rx=17209 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 570.03 BATT t=608000 NORMAL peer=1 rx=12168 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 570.47 BODY t=941001 NORMAL peer=1 rx=17229 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 571.03 BATT t=609000 NORMAL peer=1 rx=12188 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 571.47 BODY t=942001 NORMAL peer=1 rx=17249 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9429 stk=1112,1060,792, heap=7288
+ 572.03 BATT t=610000 NORMAL peer=1 rx=12208 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 572.47 BODY t=943001 NORMAL peer=1 rx=17269 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 573.03 BATT t=611000 NORMAL peer=1 rx=12228 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 573.47 BODY t=944001 NORMAL peer=1 rx=17289 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 574.03 BATT t=612000 NORMAL peer=1 rx=12248 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 574.47 BODY t=945001 NORMAL peer=1 rx=17309 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 575.03 BATT t=613000 NORMAL peer=1 rx=12268 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 575.47 BODY t=946001 NORMAL peer=1 rx=17329 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 576.03 BATT t=614000 NORMAL peer=1 rx=12288 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 576.47 BODY t=947001 NORMAL peer=1 rx=17349 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 577.03 BATT t=615000 NORMAL peer=1 rx=12308 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 577.47 BODY t=948001 NORMAL peer=1 rx=17369 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 578.03 BATT t=616000 NORMAL peer=1 rx=12328 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 578.47 BODY t=949001 NORMAL peer=1 rx=17389 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9547 stk=1112,1060,792, heap=7288
+ 579.03 BATT t=617000 NORMAL peer=1 rx=12348 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 579.47 BODY t=950001 NORMAL peer=1 rx=17409 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 580.03 BATT t=618000 NORMAL peer=1 rx=12368 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 580.47 BODY t=951001 NORMAL peer=1 rx=17429 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 581.03 BATT t=619000 NORMAL peer=1 rx=12388 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 581.47 BODY t=952001 NORMAL peer=1 rx=17449 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 582.03 BATT t=620000 NORMAL peer=1 rx=12408 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 582.47 BODY t=953001 NORMAL peer=1 rx=17469 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 583.03 BATT t=621000 NORMAL peer=1 rx=12428 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 583.47 BODY t=954001 NORMAL peer=1 rx=17489 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 584.03 BATT t=622000 NORMAL peer=1 rx=12448 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 584.47 BODY t=955001 NORMAL peer=1 rx=17509 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 585.03 BATT t=623000 NORMAL peer=1 rx=12468 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=226 ok=1 stk=1104,784, heap=8912
+ 585.47 BODY t=956001 NORMAL peer=1 rx=17529 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 586.03 BATT t=624000 NORMAL peer=1 rx=12488 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 586.47 BODY t=957001 NORMAL peer=1 rx=17549 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 587.03 BATT t=625000 NORMAL peer=1 rx=12508 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 587.47 BODY t=958001 NORMAL peer=1 rx=17569 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 588.03 BATT t=626000 NORMAL peer=1 rx=12528 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 588.47 BODY t=959001 NORMAL peer=1 rx=17589 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 589.03 BATT t=627000 NORMAL peer=1 rx=12548 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 589.47 BODY t=960001 NORMAL peer=1 rx=17609 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 590.03 BATT t=628000 NORMAL peer=1 rx=12568 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 590.47 BODY t=961001 NORMAL peer=1 rx=17629 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 591.03 BATT t=629000 NORMAL peer=1 rx=12588 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 591.47 BODY t=962001 NORMAL peer=1 rx=17649 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 592.03 BATT t=630000 NORMAL peer=1 rx=12608 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=229 ok=1 stk=1104,784, heap=8912
+ 592.47 BODY t=963001 NORMAL peer=1 rx=17669 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 593.03 BATT t=631000 NORMAL peer=1 rx=12628 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 593.47 BODY t=964001 NORMAL peer=1 rx=17689 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 594.03 BATT t=632000 NORMAL peer=1 rx=12648 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 594.47 BODY t=965001 NORMAL peer=1 rx=17709 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 595.03 BATT t=633000 NORMAL peer=1 rx=12668 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 595.47 BODY t=966001 NORMAL peer=1 rx=17729 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9589 stk=1112,1060,792, heap=7288
+ 596.03 BATT t=634000 NORMAL peer=1 rx=12688 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 596.47 BODY t=967001 NORMAL peer=1 rx=17749 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 597.03 BATT t=635000 NORMAL peer=1 rx=12708 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 597.47 BODY t=968001 NORMAL peer=1 rx=17769 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 598.03 BATT t=636000 NORMAL peer=1 rx=12728 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 598.47 BODY t=969001 NORMAL peer=1 rx=17789 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 599.03 BATT t=637000 NORMAL peer=1 rx=12748 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=230 ok=1 stk=1104,784, heap=8912
+ 599.47 BODY t=970001 NORMAL peer=1 rx=17809 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 600.03 BATT t=638000 NORMAL peer=1 rx=12768 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 600.47 BODY t=971001 NORMAL peer=1 rx=17829 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 601.03 BATT t=639000 NORMAL peer=1 rx=12788 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=228 ok=1 stk=1104,784, heap=8912
+ 601.47 BODY t=972001 NORMAL peer=1 rx=17849 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
+ 602.03 BATT t=640000 NORMAL peer=1 rx=12808 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 602.47 BODY t=973001 NORMAL peer=1 rx=17869 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=9589 stk=1112,1060,792, heap=7288
+ 603.03 BATT t=641000 NORMAL peer=1 rx=12828 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 603.47 BODY t=974001 NORMAL peer=1 rx=17889 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 604.03 BATT t=642000 NORMAL peer=1 rx=12848 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=224 ok=1 stk=1104,784, heap=8912
+ 604.47 BODY t=975001 NORMAL peer=1 rx=17909 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3487 stk=1112,1060,792, heap=7288
+ 605.03 BATT t=643000 NORMAL peer=1 rx=12868 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 605.47 BODY t=976001 NORMAL peer=1 rx=17929 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 606.03 BATT t=644000 NORMAL peer=1 rx=12888 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 606.47 BODY t=977001 NORMAL peer=1 rx=17949 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3309 stk=1112,1060,792, heap=7288
+ 607.03 BATT t=645000 NORMAL peer=1 rx=12908 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 607.47 BODY t=978001 NORMAL peer=1 rx=17969 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3398 stk=1112,1060,792, heap=7288
+ 608.03 BATT t=646000 NORMAL peer=1 rx=12928 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3518 ma=0 dc=227 ok=1 stk=1104,784, heap=8912
+ 608.47 BODY t=979001 NORMAL peer=1 rx=17989 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=3428 stk=1112,1060,792, heap=7288
+ 609.03 BATT t=647000 NORMAL peer=1 rx=12948 can_err=0 tx_drop=0 tx_fail=0 node_us_max=626 late_us_max=3 mv=3519 ma=0 dc=225 ok=1 stk=1104,784, heap=8912
+ 609.47 BODY t=980001 NORMAL peer=1 rx=18009 can_err=1746 tx_drop=0 tx_fail=1746 node_us_max=175 late_us_max=7 disp_us=238 stk=1112,1060,792, heap=7288
